@@ -15,17 +15,17 @@ def populate():
         {"module":"ADS","rating":2,"likes":14,"dislikes":5,"body":"Poor","title":"Poor"}
     ]
     students=[
-        {"username":"bob","password":12345678,"email":"ad@gmail.com","first":"Bob","sur":"Ryu","bio":"I like trains","reviews":[reviews[0]]},
-        {"username":"sam","password":12345678,"email":"sf2@gmail.com","first":"Sam","sur":"Nut","bio":"I see dead people","reviews":[reviews[1],reviews[2]]}
+        {"username":"bob","password":12345678,"email":"ad@gmail.com","first":"Bob","sur":"Ryu","bio":"I like trains","reviews":[reviews[0]],"img":"profile_images/kid1.jpg"},
+        {"username":"sam","password":12345678,"email":"sf2@gmail.com","first":"Sam","sur":"Nut","bio":"I see dead people","reviews":[reviews[1],reviews[2]],"img":"profile_images/kid2.jpg"}
     ]  
     lecturers=[
-        {"username":"julia","password":12345678,"email":"asv@gmail.com","first":"Julia","sur":"Ass","bio":"Easy-going Lecturer","uni":"University of North Korea","depart":"Computer Science","reviews":[reviews[0],reviews[2]]},
-        {"username":"john","password":12345678,"email":"vzs@gmail.com","first":"John","sur":"Kami","bio":"The meme machine","uni":"University of your Mom","depart":"Your mom's department","reviews":[reviews[1]]}
+        {"username":"julia","password":12345678,"email":"asv@gmail.com","first":"Julia","sur":"Ass","bio":"Easy-going Lecturer","uni":"University of North Korea","depart":"Computer Science","reviews":[reviews[0],reviews[2]],"img":"profile_images/adult2.jpg"},
+        {"username":"john","password":12345678,"email":"vzs@gmail.com","first":"John","sur":"Kami","bio":"The meme machine","uni":"University of your Mom","depart":"Your mom's department","reviews":[reviews[1]],"img":"profile_images/adult1.jpg"}
     ]
     for student in students:
-        s=add_student(student["username"],student["password"],student["email"],student["first"],student["sur"],student["bio"])
+        s=add_student(student["username"],student["password"],student["email"],student["first"],student["sur"],student["bio"],student["img"])
         for lecturer in lecturers:
-            l= add_lecturer(lecturer["username"],lecturer["password"],lecturer["email"],lecturer["first"],lecturer["sur"],lecturer["bio"],lecturer["uni"],lecturer["depart"])
+            l= add_lecturer(lecturer["username"],lecturer["password"],lecturer["email"],lecturer["first"],lecturer["sur"],lecturer["bio"],lecturer["uni"],lecturer["depart"],lecturer["img"])
             for review in reviews:
                 if (review in student["reviews"] and review in lecturer["reviews"]):
                     add_review(l,s,review["module"],review["rating"],review["likes"],review["dislikes"],review["body"], review["title"])
@@ -36,7 +36,7 @@ def populate():
         print("Creating Lecturer "+ l.first_name+" "+l.surname)
 
 
-def add_student(user, pas, email,first, sur,bio):
+def add_student(user, pas, email,first, sur,bio,img):
     user,created=User.objects.get_or_create(username=user, email=email)
     if created:
         user.set_password(pas) # This line will hash the password
@@ -45,9 +45,10 @@ def add_student(user, pas, email,first, sur,bio):
     s.surname=sur
     s.first_name=first
     s.bio=bio
+    s.picture=img
     s.save()
     return s
-def add_lecturer(user, pas, email,first, sur,bio,uni,depart):
+def add_lecturer(user, pas, email,first, sur,bio,uni,depart,img):
     user,created=User.objects.get_or_create(username=user, email=email)
     if created:
         user.set_password(pas) # This line will hash the password
@@ -58,6 +59,7 @@ def add_lecturer(user, pas, email,first, sur,bio,uni,depart):
     l.bio=bio
     l.university=uni
     l.department=depart
+    l.picture=img
     l.save()
     return l
 
