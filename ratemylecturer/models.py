@@ -8,6 +8,8 @@ class StudentProfile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     first_name= models.CharField(max_length=30)
     surname= models.CharField(max_length=30)
+    university = models.CharField(max_length=30, blank=True)
+    course = models.CharField(max_length=30, blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
     bio=models.CharField(max_length=200, blank=True)
 
