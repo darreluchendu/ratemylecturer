@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-{% load staticfiles %}
+
 <html>
+{% load staticfiles %}
     <head>
         
         <title>Rate My Lecturer</title>
@@ -9,7 +10,7 @@
     </head>
     <body>
         <p>Sup</p>
-        <img src="media/images/cat.jpg">
+        <img src="{{ MEDIA_URL }}images/cat.jpg">
         <img src="{% static "images/cat2.jpg/" %}" alt="">
     </body>
 </html>
