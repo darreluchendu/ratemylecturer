@@ -1,19 +1,21 @@
 {% extends 'ratemylecturer/base.html' %}
 {% load staticfiles %}
 
+    {% block title_block %}
+    <title>Rate My Lecturer - Registration</title>
+    {% endblock %}
+
 {% block body_block %}
-<h1> Register for Rate my Lecturer</h1>
 {% if registered %}
+    <strong>Thank you for registering</strong>
     <a href="{% url 'index' %}">Return to homepage</a>
 {% else %}
     Register here!<br />
-<form id="user_form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
+<form id="user_form" method="post" action="{% url 'register_lecturer' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <!-- display form -->
     {{ user_form.as_p }}
-    # whichever is valid will be displayed
-    {{ student_profile_form.as_p }}
-    {{ lecturer_profile_form.as_p }}
+            {{ lecturer_profile_form.as_p }}
     <input type="submit", name="submit" value="Register">
 </form>
     {% endif %}
