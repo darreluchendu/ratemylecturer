@@ -1,24 +1,26 @@
-<!DOCTYPE html>
-
-<html>
+{% extends 'ratemylecturer/base.html' %}
 {% load staticfiles %}
-    <head>
-        
-        <title>Rate My Lecturer</title>
-        
-    
-    </head>
-    <body>
-         <p>Sup</p>
+    {% block body_block %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("p").click(function(){
+        $(this).hide();
+    });
+});
+</script>
+        <p>{% if user.is_authenticated %}
+            howdy {{ user.username }}
+        {% else %}
+         Sup
+        {% endif %}
+         </p>
         <img src="{{ MEDIA_URL }}images/cat.jpg">
         <img src="{% static "images/cat2.jpg/" %}" alt="">
 
     <div>
-        <ul>
-            <li>
-            <a name="sign_in" href="{% url 'login' %}">Sign In</a>
-        </li>
-        <li>
+    <ul>
+         <li>
             <a id="student"  href="{% url 'register_student' %}">Student Registration</a>  <br/>
         </li>
         <li>
@@ -27,6 +29,4 @@
         </li>
         </ul>
     </div>
-
-    </body>
-</html>
+    {% endblock %}

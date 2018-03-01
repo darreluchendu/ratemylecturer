@@ -1,14 +1,54 @@
 <!DOCTYPE html>
+{% load staticfiles %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     {% block title_block %}
     <title>Rate My Lecturer</title>
     {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}">
 </head>
 <body>
+{% block link_block %}
+        <div>
+        <table id="header_link">
+            <tr>
+                <th>
+                    <a id="home" href="{% url 'index' %}">Home</a>
+                </th>
+                <th>
+                    <a id="about" href="{% url 'about' %}">About</a>
+                </th>
+                <th>
+                    <a name="sign_in" href="{% url 'login' %}">Sign In</a>
+                </th>
+                                <th>
+                    <a name="sign_in" href="{% url 'login' %}">Sign Out</a>
+                </th>
+                <th>
+                    <a id="register"  href="{% url 'register' %}">Register</a>
+                </th>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
 {% block body_block %}
-    This is Base
+
+        <div>
+        <ul>
+            <li>
+
+        </li>
+        <li>
+            <a id="student"  href="{% url 'register_student' %}">Student Registration</a>  <br/>
+        </li>
+        <li>
+            <a id="lecturer" class="button" href="{% url 'register_lecturer' %}">Lecturer Registration</a>
+
+        </li>
+        </ul>
+    </div>
 {% endblock %}
 
 
