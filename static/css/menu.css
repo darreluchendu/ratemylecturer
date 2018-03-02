@@ -1,0 +1,11 @@
+table{
+        padding: 5px;
+        border: 1px solid #4CAF50;
+}
+th{
+        padding: 0px;
+        border: 1px solid #000000;
+}
+a:link{
+    text-decoration: none;
+}

@@ -1,5 +1,36 @@
 {% extends 'ratemylecturer/base.html' %}
 {% load staticfiles %}
+<<<<<<< HEAD
+    {% block body_block %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("p").click(function(){
+        $(this).hide();
+    });
+});
+</script>
+        <p>{% if user.is_authenticated %}
+            howdy {{ user.username }}
+        {% else %}
+         Sup
+        {% endif %}
+         </p>
+        <img src="{{ MEDIA_URL }}images/cat.jpg">
+        <img src="{% static "images/cat2.jpg/" %}" alt="">
+
+    <div>
+    <ul>
+         <li>
+            <a id="student"  href="{% url 'register_student' %}">Student Registration</a>  <br/>
+        </li>
+        <li>
+            <a id="lecturer" class="button" href="{% url 'register_lecturer' %}">Lecturer Registration</a>
+
+        </li>
+        </ul>
+    </div>
+    {% endblock %}
 
 {% block title_block %}
     <title>Home</title>
@@ -22,3 +53,35 @@
 
     
 {% endblock %}
+=======
+    {% block body_block %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("p").click(function(){
+        $(this).hide();
+    });
+});
+</script>
+        <p>{% if user.is_authenticated %}
+            howdy {{ user.username }}
+        {% else %}
+         Sup
+        {% endif %}
+         </p>
+        <img src="{{ MEDIA_URL }}images/cat.jpg">
+        <img src="{% static "images/cat2.jpg/" %}" alt="">
+
+    <div>
+    <ul>
+         <li>
+            <a id="student"  href="{% url 'register_student' %}">Student Registration</a>  <br/>
+        </li>
+        <li>
+            <a id="lecturer" class="button" href="{% url 'register_lecturer' %}">Lecturer Registration</a>
+
+        </li>
+        </ul>
+    </div>
+    {% endblock %}
+>>>>>>> e2316caab2b38cf06218242c1440e61c7e45dda8
