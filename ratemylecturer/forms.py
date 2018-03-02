@@ -14,7 +14,7 @@ class UserForm(forms.ModelForm):
 class LecturerProfileForm(forms.ModelForm):
     class Meta:
         model=LecturerProfile
-        fields = ('first_name','surname','university', 'department', 'bio', 'picture')
+        fields = ('name','university', 'department', 'bio', 'picture')
 
 # StudentProfile model's form
 class StudentProfileForm(forms.ModelForm):
@@ -24,6 +24,8 @@ class StudentProfileForm(forms.ModelForm):
 
 # Review model's form
 class ReviewForm(forms.ModelForm):
+    likes=forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    dislikes= forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     class Meta:
         model=Review
         fields = ('module','rating', 'likes', 'dislikes', 'title', 'review_body')

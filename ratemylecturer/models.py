@@ -18,8 +18,8 @@ class StudentProfile(models.Model):
     
 class LecturerProfile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name= models.CharField(max_length=30)
-    surname= models.CharField(max_length=30)
+    name= models.CharField(max_length=30)
+
     university=models.CharField(max_length=30)
     department=models.CharField(max_length=30)
     bio=models.CharField(max_length=200, blank=True)

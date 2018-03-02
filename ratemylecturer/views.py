@@ -1,12 +1,22 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.urls import reverse
+from .models import LecturerProfile,StudentProfile
 from ratemylecturer.forms import UserForm,LecturerProfileForm, StudentProfileForm, ReviewForm
+from django.contrib.auth.models import User
+import json
 
 
 def index(request):
-    return render(request,'ratemylecturer/index.html',{})
+    user_id=request.user.id
+    try:
+        user = StudentProfile.objects.get(user_id=user_id)
+        isStudent=True
+    except StudentProfile.DoesNotExist:
+        isStudent= False
+    return render(request,'ratemylecturer/index.html',{"user_id":user_id, "isStudent": isStudent})
 
 # view for registration
 def register_student(request):
@@ -63,6 +73,7 @@ def register_lecturer(request):
 
 # login page view
 def user_login(request):
+    login_error=False
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -75,11 +86,68 @@ def user_login(request):
             else: # account inactive
                 return HttpResponse("Your account is disabled.")
         else: # invalid login details
-            print("invalid login details: {0}, {1}".format(username, password))
-            return HttpResponse("Invalid login details supplied.")
+            login_error = True
+            return render(request, 'rango/login.html', {'error': login_error})
     else: # not a HTTP POST, hence blank dictionary object
         context_dict = {}
         return render(request,'ratemylecturer/login.html',context_dict)
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
+
+
+def is_student(user):
+    try:
+        user_profile = StudentProfile.objects.get(user=user)
+        return True
+    except StudentProfile.DoesNotExist:
+        return False
+
+
+@user_passes_test(is_student, login_url='/ratemylecturer/login/')
+@login_required
+def create_lecturer(request,user_id ):
+
+    created=False
+        # flag to tell if registration is successful
+    if request.method == 'POST':
+
+        lecturer_profile_form = LecturerProfileForm(data=request.POST)
+        if lecturer_profile_form.is_valid():
+            # save user form data
+            lecturer_profile = lecturer_profile_form.save(commit=False)
+            rand_password = User.objects.make_random_password()
+            proxy_user_count=LecturerProfile.objects.all().count()+1
+            user = User.objects.create(username="proxy_user"+proxy_user_count ,
+                                       email="proxy_user"+proxy_user_count+'@gmail.com')
+            user.set_password(rand_password)
+            user.save()
+
+            lecturer_profile.user = user
+
+            if 'picture' in request.FILES:
+                lecturer_profile.picture = request.FILES['picture']
+            lecturer_profile.save()
+            created = True
+
+        else:  # invalid form, for whatever reason
+            print(lecturer_profile_form.errors)
+
+    else:# not http POST
+        lecturer_profile_form  = LecturerProfileForm()
+        name_list_raw = LecturerProfile.objects.all().values_list('name', 'university')
+        name_list = []
+        for name, uni in name_list_raw:
+            data = {"name": name, "uni": uni,"value": name + " - " + uni}
+            name_list.append(data)
+        js_data = json.dumps(name_list)
+
+    return render( request,'ratemylecturer/create_lecturer.html',{'created': created, 'lecturer_profile_form':
+        lecturer_profile_form, 'user_id':user_id,"name_list":js_data})
+
+
+
 
 
 

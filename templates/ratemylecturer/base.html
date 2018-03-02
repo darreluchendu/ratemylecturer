@@ -1,16 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    {% block title_block %}
-    <title>Rate My Lecturer</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Rate My Lecturer-
+            {% block title_block %}
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+           {% block link_block %}
+            <div>
+            <table id="header_link">
+                <tr>
+                    <th>
+                        <a id="home" href="{% url 'index' %}">Home</a>
+                    </th>
+                    <th>
+                        <a id="about" href="{% url 'about' %}">About</a>
+                    </th>
+                    <th>
+                        <a name="sign_in" href="{% url 'login' %}">Sign In</a>
+                    </th>
+                    <th>
+                        <a name="sign_in" href="{% url 'login' %}">Sign Out</a>
+                    </th>
+                    <th>
+                        <a id="register"  href="{% url 'register' %}">Register</a>
+                    </th>
+                </tr>
+            </table>
+        </div>
     {% endblock %}
-</head>
-<body>
-{% block body_block %}
-    This is Base
-{% endblock %}
+    {% block body_block %}
+    {% endblock %}
+     <div>
+         {% block sidebar_block %}
 
+         {% endblock %}
+     </div>
 
-</body>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src='{% static "js/ratemylecturer-jquery.js" %}'></script>
+    </body>
 </html>

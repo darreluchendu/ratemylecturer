@@ -1,32 +1,24 @@
-<!DOCTYPE html>
-
-<html>
+{% extends 'ratemylecturer/base.html' %}
 {% load staticfiles %}
-    <head>
-        
-        <title>Rate My Lecturer</title>
-        
+
+{% block title_block %}
+    <title>Home</title>
+{% endblock %}
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        Sup {{ user.username }}!
+    {% else %}
+        hey there partner!
+    {% endif %}
+
+
+
+
+    <div class="ui-widget">
+        <label for="tags">Tags: </label>
+        <input id="tags">
+      </div>
+
     
-    </head>
-    <body>
-         <p>Sup</p>
-        <img src="{{ MEDIA_URL }}images/cat.jpg">
-        <img src="{% static "images/cat2.jpg/" %}" alt="">
-
-    <div>
-        <ul>
-            <li>
-            <a name="sign_in" href="{% url 'login' %}">Sign In</a>
-        </li>
-        <li>
-            <a id="student"  href="{% url 'register_student' %}">Student Registration</a>  <br/>
-        </li>
-        <li>
-            <a id="lecturer" class="button" href="{% url 'register_lecturer' %}">Lecturer Registration</a>
-
-        </li>
-        </ul>
-    </div>
-
-    </body>
-</html>
+{% endblock %}

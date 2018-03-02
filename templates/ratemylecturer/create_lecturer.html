@@ -1,0 +1,27 @@
+{% extends 'ratemylecturer/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    <title>Rate My Lecturer - Add a Lecturer</title>
+{% endblock %}
+
+{% block body_block %}
+{% if created %}
+    <strong>Thank you for Adding a Lecturer</strong>
+    <a href="{% url 'index' %}">Return to homepage</a>
+{% else %}
+    Add a Lecturer<br />
+<form id="user_form" method="post" action="{% url 'create_lecturer' user_id %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- display form -->
+    {{ lecturer_profile_form.as_p }}
+    <input type="submit", name="submit" value="Add Lecturer">
+</form>
+    {% endif %}
+<script>
+    var name_list = {{ name_list|safe }};
+    var name_id={{lecturer_profile_form.name.auto_id }}
+    console.log(name_id)
+
+</script>
+{% endblock %}
