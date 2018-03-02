@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Login to Rate my Lecturer</h1>
+    <h1>Login or click <a href="{% url 'register' %}">here</a> to register</h1>
 <form id="login_form" method="post" action="{% url 'login' %}">
     {% csrf_token %}
     Username: <input type="text" name="username" value="" size="50"/>

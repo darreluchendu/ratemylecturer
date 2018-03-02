@@ -3,10 +3,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from ratemylecturer.forms import UserForm, LecturerProfileForm, StudentProfileForm, ReviewForm
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
     return render(request, 'ratemylecturer/index.html', {})
+
 
 # login page view
 def user_login(request):
@@ -66,9 +68,18 @@ def register(request):
         lecturer_profile_form = LecturerProfileForm()
         student_profile_form = StudentProfileForm()
     return render(request, 'ratemylecturer/register.html',
-                  {'user_form':user_form, 'registered':registered, 'lecturer_profile_form':lecturer_profile_form,
-                       'student_profile_form':student_profile_form, 'user_type': checked_user_type})
+                  {'user_form': user_form, 'registered': registered, 'lecturer_profile_form': lecturer_profile_form,
+                   'student_profile_form': student_profile_form, 'user_type': checked_user_type})
 
-
+@login_required()
 def profile(request):
     return render(request, 'ratemylecturer/profile.html', {})
+
+
+def review(request):
+    return render(request, 'ratemylecturer/review.html')
+
+
+@login_required()
+def add_review(request):
+    return render(request, 'ratemylecturer/add_review.html')

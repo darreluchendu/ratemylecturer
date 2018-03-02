@@ -22,6 +22,7 @@ class StudentProfileForm(forms.ModelForm):
         model=StudentProfile
         fields = ('first_name','surname','university', 'course', 'bio', 'picture')
 
+
 # Review model's form
 class ReviewForm(forms.ModelForm):
     class Meta:
