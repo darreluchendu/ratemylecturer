@@ -20,15 +20,27 @@
                 <th>
                     <a id="about" href="{% url 'about' %}">About</a>
                 </th>
+                {% if not user.is_authenticated %}<!-- if user not signed in, show sign in and register link -->
                 <th>
-                    <a name="sign_in" href="{% url 'login' %}">Sign In</a>
+                    <a name="sign_in" href="{% url 'auth_login' %}">Sign In</a>
+                    <th>
+                    <a href="{% url 'registration_register' %}">Register</a>
                 </th>
-                                <th>
-                    <a name="sign_in" href="{% url 'login' %}">Sign Out</a>
+                </th>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <th>
+                    <a name="sign_out" href="{% url 'auth_logout' %}?next=/ratemylecturer/">Sign Out</a>
                 </th>
                 <th>
-                    <a id="register"  href="{% url 'register' %}">Register</a>
+                    <a href="{% url 'profile' %}">Profile</a>
                 </th>
+                <th>
+                    <a href="{% url 'review' %}">Reviews</a>
+                </th>
+
+
+                {% endif %}
             </tr>
         </table>
     </div>

@@ -32,11 +32,25 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# django registration framework variable
+
+#if True, users can register
+REGISTRATION_OPEN = True
+# One week actication window, different value can be used
+ACCOUNT_ACTIVATION_DAYS = 7
+#If True, the user will be automatically logged in
+REGISTRATION_AUTO_LOGIN = True
+# Page to redirect to after successfully log in
+LOGIN_REDIRECT_URL = '/ratemylecturer/'
+# page directed to when they are trying to access pages requiring authentication
+LOGIN_URL = '/accounts/login/'
+REGISTRATION_FORM = 'ratemylecturer.forms.LecturerProfileForm'
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -109,7 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LOGIN_URL = '/ratemylecturer/login/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -134,3 +147,4 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 MEDIA_ROOT = MEDIA_DIR
 
 MEDIA_URL = '/media/'
+
