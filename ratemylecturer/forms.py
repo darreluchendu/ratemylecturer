@@ -12,12 +12,18 @@ class UserForm(forms.ModelForm):
 
 # LecturerProfile model's form
 class LecturerProfileForm(forms.ModelForm):
+
+    bio = forms.CharField(widget=forms.Textarea(),required=False)
+    name = forms.CharField(widget=forms.TextInput(attrs={'id': 'lecturer_name'}))
+    department = forms.CharField(widget=forms.TextInput(attrs={'id': 'lecturer_depart'}))
+    university= forms.CharField(widget=forms.TextInput(attrs={'id': 'lecturer_uni'}))
     class Meta:
-        model=LecturerProfile
+        model = LecturerProfile
         fields = ('name','university', 'department', 'bio', 'picture')
 
 # StudentProfile model's form
 class StudentProfileForm(forms.ModelForm):
+    bio = forms.CharField(widget=forms.Textarea(),required=False)
     class Meta:
         model=StudentProfile
         fields = ('first_name','surname','university', 'course', 'bio', 'picture')

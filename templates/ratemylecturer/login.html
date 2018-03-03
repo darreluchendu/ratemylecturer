@@ -2,14 +2,14 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Rate My Lecturer - Login
+    Login
 {% endblock %}
 
 {% block body_block %}
     <h1>Login to Rate my Lecturer</h1>
     {% if error %}
-        Invalid login details supplied.
-        <br> <br>
+        <h3>Invalid login details supplied.</h3>
+        <br>
     {% endif %}
     <form id="login_form" method="post" action="{% url 'login' %}">
         {% csrf_token %}
@@ -17,6 +17,8 @@
         <br>
         Password: <input type="text" name="password" value="" size="50"/>
         <br>
-        <input type="submit", value="submit">
+        <input type="submit", value="Login">
     </form>
+
+    <p>Don't Have an account? <a id="register"  href="{% url 'register' %}">Register</a></p>
 {% endblock %}

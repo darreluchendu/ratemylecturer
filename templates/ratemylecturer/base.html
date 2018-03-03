@@ -2,98 +2,52 @@
 {% load staticfiles %}
 
 <html lang="en">
-    {% load staticfiles %}
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Rate My Lecturer-
-            {% block title_block %}
-            {% endblock %}
-        </title>
-    </head>
-    <body>
-           {% block link_block %}
-            <div>
-            <table id="header_link">
-                <tr>
-                    <th>
-                        <a id="home" href="{% url 'index' %}">Home</a>
-                    </th>
-                    <th>
-                        <a id="about" href="{% url 'about' %}">About</a>
-                    </th>
-                    <th>
-                        <a name="sign_in" href="{% url 'login' %}">Sign In</a>
-                    </th>
-                    <th>
-                        <a name="sign_in" href="{% url 'login' %}">Sign Out</a>
-                    </th>
-                    <th>
-                        <a id="register"  href="{% url 'register' %}">Register</a>
-                    </th>
-                </tr>
-            </table>
-        </div>
-    {% endblock %}
-<<<<<<< HEAD
-    {% block body_block %}
-    {% endblock %}
-     <div>
-         {% block sidebar_block %}
-
-         {% endblock %}
-     </div>
-=======
-    <link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}">
+{% load staticfiles %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/menu.css'  %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rate My Lecturer -
+        {% block title_block %}
+        {% endblock %}
+    </title>
 </head>
 <body>
-{% block link_block %}
-        <div>
-        <table id="header_link">
-            <tr>
-                <th>
-                    <a id="home" href="{% url 'index' %}">Home</a>
-                </th>
-                <th>
-                    <a id="about" href="{% url 'about' %}">About</a>
-                </th>
-                <th>
-                    <a name="sign_in" href="{% url 'login' %}">Sign In</a>
-                </th>
-                                <th>
-                    <a name="sign_in" href="{% url 'login' %}">Sign Out</a>
-                </th>
-                <th>
-                    <a id="register"  href="{% url 'register' %}">Register</a>
-                </th>
-            </tr>
-        </table>
+<header id="main-header">
+    <div class="container">
+        <h1>Rate My Lecturer</h1>
     </div>
-{% endblock %}
-{% block body_block %}
+</header>
 
-        <div>
+<nav id="navbar">
+    <div class="container">
         <ul>
-            <li>
-
-        </li>
-        <li>
-            <a id="student"  href="{% url 'register_student' %}">Student Registration</a>  <br/>
-        </li>
-        <li>
-            <a id="lecturer" class="button" href="{% url 'register_lecturer' %}">Lecturer Registration</a>
-
-        </li>
+            <li><a id="home" href="{% url 'index' %}">Home</a></li>
+            <li><a id="about" href="{% url 'about' %}">About</a></li>
+            {% if user.is_authenticated %}
+                <li><a name="sign_out" href="{% url 'logout' %}">Sign Out</a></li>
+                <li><a name="profile" href="{% url 'profile' user.id%}">My Profile</a></li>
+                    {% if is_student %}
+                         <li><a name="create_lecturer" href="{% url 'create_lecturer' user.id %}">Add Lecturer</a></li>
+                    {% endif %}
+            {% else %}
+                <li><a name="sign_in" href="{% url 'login' %}">Login</a></li>
+                <li><a id="register"  href="{% url 'register' %}">Register</a></li>
+            {% endif %}
         </ul>
     </div>
+</nav>
+{% block body_block %}
 {% endblock %}
->>>>>>> e2316caab2b38cf06218242c1440e61c7e45dda8
+<div>
+    {% block sidebar_block %}
+    {% endblock %}
+</div>
 
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src='{% static "js/ratemylecturer-jquery.js" %}'></script>
-    </body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src='{% static "js/ratemylecturer-jquery.js" %}'></script>
+</body>
 </html>

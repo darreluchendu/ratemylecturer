@@ -1,72 +1,23 @@
 {% extends 'ratemylecturer/base.html' %}
-{% comment %}
-{% extends 'ratemylecturer/base.html' %}
-{% load staticfiles %}
-
-    {% block title_block %}
-    <title>Rate My Lecturer - Register</title>
-    {% endblock %}
-
-{% block body_block %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-   $('input[type=radio]').click(function(){
-        var user = this.value;
-       if (user === "lecturer") {
-           $("#student").hide();
-           $("#lecturer").show();
-       }else {
-           $("#student").show();
-           $("#lecturer").hide();
-       }
-
-   });
-});
-</script>
-    {% if registered %}
-    <strong>Thank you for registering</strong>
-    <a href="{% url 'index' %}">Return to homepage</a>
-{% else %}
-        <p>Register here!</p><br />
-<form id="user_form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input id="student_radio" type="radio" name="user" value="student" checked>
-    <label for="student">Student</label>
-    <input id="lecturer_radio" type="radio" name="user" value="lecturer" >
-    <label for="lecturer">Lecturer</label>
-    <!-- display form -->
-    {{ user_form.as_p }}
-    <div id="student">{{ student_profile_form.as_p }}</div>
-    <div id="lecturer">{{ lecturer_profile_form.as_p }}</div>
-
-    <input type="submit", name="submit" value="Register">
-</form>
-    {% endif %}
-
-        <script type="text/javascript">document.getElementById("lecturer").style.display='none'
-    </script>
-
-{% endblock %}
-{% endcomment %}
-
 
 {% block title_block %}
-    Rate my Lecturer - Register
+    Register
 {% endblock %}
 
 {% block body_block %}
+
 {% if registered %}
     <p>Thank you for registering</p>
-    {% else %}
-    <input id="student_radio" type="radio" name="user" value="student" checked>
+    <a href="{% url 'login' %}">Login</a>
+
+{% else %}
+    <h2 id="register_header">Register as a Student</h2>
+    <input class=user_radio id="student_radio" type="radio" name="user" value="student" checked>
     <label for="student">Student</label>
-    <input id="lecturer_radio" type="radio" name="user" value="lecturer" >
+    <input class=user_radio id="lecturer_radio" type="radio" name="user" value="lecturer" >
     <label for="lecturer">Lecturer</label>
     <form id="user_form_student" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
         {% csrf_token %}
-
-
         {{ user_form.as_p }}
         {{ student_profile_form.as_p }}
     <input type="submit" name="submit" value="Submit">
@@ -77,24 +28,11 @@ $(document).ready(function(){
         {{ lecturer_profile_form.as_p }}
     <input type="submit" name="submit" value="Submit">
     </form>
-    {% endif %}
+{% endif %}
+ <script>
+        var registered="{{ registered }}"
+        var name_list = {{ name_list|safe }};
+        var is_student="{{ is_student }}"
+ </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <script>
-$(document).ready(function(){
-    $('#user_form_lecturer').hide();
-   $('input[type=radio]').click(function(){
-        var user = this.value;
-       if (user === "lecturer") {
-           $("#user_form_student").hide();
-           $("#user_form_lecturer").show();
-       }else {
-           $("#user_form_student").show();
-           $("#user_form_lecturer").hide();
-       }
-
-   });
-});
-</script>
 {% endblock %}
