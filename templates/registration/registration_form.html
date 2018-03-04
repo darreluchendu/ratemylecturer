@@ -1,12 +1,10 @@
 {% extends 'ratemylecturer/base.html' %}
 {% load staticfiles %}
-
 {% block title_block %}
     Register
 {% endblock %}
 
 {% block body_block %}
-
     {% if registered %}
         <p>Thank you for registering</p>
         <a name="sign_in" href="{% url 'auth_login' %}">Login</a>
@@ -27,7 +25,6 @@
                 {{ student_profile_form.as_p }}
                 <input type="submit" value="Register">
             </form>
-
         </div>
         <div id="lec_id">
             <form id="user_form_lecturer" method="post" action="{% url 'registration_register' %}" enctype="multipart/form-data">
