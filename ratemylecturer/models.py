@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-import datetime
+
 
 # Create your models here.
 class StudentProfile(models.Model):
@@ -27,7 +27,9 @@ class LecturerProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+
 class Review(models.Model):
+
     lecturer=models.ForeignKey(LecturerProfile, on_delete=models.CASCADE)
     student=models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     module= models.CharField(max_length=30)

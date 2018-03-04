@@ -1,0 +1,22 @@
+{% extends 'ratemylecturer/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    <title>Login</title>
+{% endblock %}
+
+{% block body_block %}
+    <h1>Login or click <a href="{% url 'registration_register' %}">here</a> to register</h1>
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Log in">
+        <input type="hidden" name="next"  value="{{ next }}">
+    </form>
+
+<p>
+    Don't Have an account?
+    <a href="{% url 'registration_register' %}">Register</a>
+</p>
+
+{% endblock %}
