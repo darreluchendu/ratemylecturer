@@ -1,6 +1,8 @@
-from registration.backends.simple.views import RegistrationView
+from registration.backends.default.views import RegistrationView
 from .forms import LecturerProfileForm, StudentProfileForm
 from .models import LecturerProfile, StudentProfile
+
+# custom view for user registration
 
 
 class MyRegistrationView(RegistrationView):

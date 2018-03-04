@@ -1,3 +1,5 @@
+{% extends "ratemylecturer/base.html" %}
+{% load staticfiles %}
 {% block title_block %}
  <title>   Rate my Lecturer - Register </title>
 {% endblock %}
@@ -24,24 +26,6 @@
     </form>
     {% endif %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <script>
-$(document).ready(function(){
-    $('#user_form_lecturer').hide();
-   $('input[type=radio]').click(function(){
-        var user = this.value;
-       if (user === "lecturer") {
-           $("#user_form_student").hide();
-           $("#user_form_lecturer").show();
-       }else {
-           $("#user_form_student").show();
-           $("#user_form_lecturer").hide();
-       }
-
-   });
-});
-</script>
 {% endblock %}
 {% endcomment %}
 {% block body_block %}
@@ -60,21 +44,6 @@ $(document).ready(function(){
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script>
-$(document).ready(function(){
-    var csrftoken = Cookies.get('csrftoken')
-    $('#lec_id').hide();
-   $('input[type=radio]').click(function(){
-        var user = this.value;
-       if (user === "lecturer") {
-           $("#stu_id").hide();
-           $("#lec_id").show();
-       }else {
-           $("#stu_id").show();
-           $("#lec_id").hide();
-       }
-   });
-});
-</script>
+    <script src="{% static "js/ratemylecturer_jquery.js" %}"></script>
 
 {% endblock %}
