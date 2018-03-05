@@ -19,8 +19,8 @@ def populate():
         {"username":"sam","password":12345678,"email":"sf2@gmail.com","first":"Sam","sur":"Nut","bio":"I see dead people","reviews":[reviews[1],reviews[2]],"img":"profile_images/kid2.jpg"}
     ]  
     lecturers=[
-        {"username":"julia","password":12345678,"email":"asv@gmail.com","first":"Julia","sur":"Ass","bio":"Easy-going Lecturer","uni":"University of North Korea","depart":"Computer Science","reviews":[reviews[0],reviews[2]],"img":"profile_images/adult2.jpg"},
-        {"username":"john","password":12345678,"email":"vzs@gmail.com","first":"John","sur":"Kami","bio":"The meme machine","uni":"University of your Mom","depart":"Your mom's department","reviews":[reviews[1]],"img":"profile_images/adult1.jpg"}
+        {"username":"julia","password":12345678,"email":"asv@gmail.com","name":"Julia Ass","bio":"Easy-going Lecturer","uni":"University of North Korea","depart":"Computer Science","reviews":[reviews[0],reviews[2]],"img":"profile_images/adult2.jpg"},
+        {"username":"john","password":12345678,"email":"vzs@gmail.com","name":"John Kami","bio":"The meme machine","uni":"University of your Mom","depart":"Your mom's department","reviews":[reviews[1]],"img":"profile_images/adult1.jpg"}
     ]
     for student in students:
         s=add_student(student["username"],student["password"],student["email"],student["first"],student["sur"],student["bio"],student["img"])
