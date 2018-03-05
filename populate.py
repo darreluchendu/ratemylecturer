@@ -25,7 +25,7 @@ def populate():
     for student in students:
         s=add_student(student["username"],student["password"],student["email"],student["first"],student["sur"],student["bio"],student["img"])
         for lecturer in lecturers:
-            l= add_lecturer(lecturer["username"],lecturer["password"],lecturer["email"],lecturer["first"],lecturer["sur"],lecturer["bio"],lecturer["uni"],lecturer["depart"],lecturer["img"])
+            l= add_lecturer(lecturer["username"],lecturer["password"],lecturer["email"],lecturer["name"],lecturer["bio"],lecturer["uni"],lecturer["depart"],lecturer["img"])
             for review in reviews:
                 if (review in student["reviews"] and review in lecturer["reviews"]):
                     add_review(l,s,review["module"],review["rating"],review["likes"],review["dislikes"],review["body"], review["title"])
@@ -33,7 +33,7 @@ def populate():
     for s in StudentProfile.objects.all():
         print("Creating Student "+ s.first_name+" "+s.surname)
     for l in LecturerProfile.objects.all():
-        print("Creating Lecturer "+ l.first_name+" "+l.surname)
+        print("Creating Lecturer "+ l.name)
 
 
 def add_student(user, pas, email,first, sur,bio,img):
@@ -48,14 +48,14 @@ def add_student(user, pas, email,first, sur,bio,img):
     s.picture=img
     s.save()
     return s
-def add_lecturer(user, pas, email,first, sur,bio,uni,depart,img):
+def add_lecturer(user, pas, email,name,bio,uni,depart,img):
     user,created=User.objects.get_or_create(username=user, email=email)
     if created:
         user.set_password(pas) # This line will hash the password
     user.save()
     l=LecturerProfile.objects.get_or_create(user=user)[0]
-    l.surname=sur
-    l.first_name=first
+    l.name=name
+
     l.bio=bio
     l.university=uni
     l.department=depart
