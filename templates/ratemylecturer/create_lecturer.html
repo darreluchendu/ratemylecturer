@@ -18,10 +18,12 @@
             {{ lecturer_profile_form.as_p }}
             <input type="submit", name="submit" value="Add Lecturer">
         </form>
-        <form id="review" method="post" action="." enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ review.as_p }}
-    </form>
     {% endif %}
 
+{% endblock %}
+{% block script_block %}
+    <script language="JavaScript" type="text/javascript">
+        $("label[for=id_bio],#id_bio").hide();
+        $()
+    </script>
 {% endblock %}

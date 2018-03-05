@@ -30,7 +30,7 @@ SECRET_KEY = '!29gbs26gkds*#^0iuvm6be$j4igq#_fcel1757uz6l&)-g6r&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ratemylecturerr.pythonanywhere.com']
+ALLOWED_HOSTS = {'ratemylecturerr.pythonanywhere.com', '127.0.0.1', 'localhost'}
 
 # django registration framework variable
 
@@ -146,7 +146,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR, ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticroot')
 
 MEDIA_ROOT = MEDIA_DIR
 

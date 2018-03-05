@@ -36,6 +36,8 @@
         </div>
 
     {% endif %}
+{% endblock %}
+{% block script_block %}
     <script type="text/javascript">
         var registered = "{{ registered }}"
         var name_list = {{ name_list|safe }};
