@@ -1,16 +1,17 @@
-<!DOCTYPE html>
-
-<html>
+{% extends 'ratemylecturer/base.html' %}
 {% load staticfiles %}
-    <head>
-        
-        <title>Rate My Lecturer</title>
-        
-    
-    </head>
-    <body>
-        <p>Sup</p>
-        <img src="{{ MEDIA_URL }}images/cat.jpg">
-        <img src="{% static "images/cat2.jpg/" %}" alt="">
-    </body>
-</html>
+
+{% block title_block %}
+    Home
+{% endblock %}
+
+{% block body_block %}
+{#    <h1>Welcome to Rate my Lecturer</h1>#}
+    {% if user.is_authenticated %}
+        Sup {{ user.username }}!
+    {% else %}
+        <br>
+        You Should Probably Sign In
+    {% endif %}
+
+{% endblock %}

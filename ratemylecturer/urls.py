@@ -4,5 +4,10 @@ from ratemylecturer import views
 urlpatterns = [
 
 url(r'^$', views.index, name='index'),
-
+url(r'^about/$', views.about, name='about'),
+url(r'^add_lecturer/(?P<user_id>[\w\-]+)/$', views.create_lecturer, name='create_lecturer'),
+url(r'^profile/(?P<user_id>[\w\-]+)/$', views.profile, name='profile'),
+url(r'^register/lecturer_ajax_data/$', views.lecturer_ajax_data, name='lecturer_ajax_data'),
+url(r'^add_review/$', views.add_review, name = 'add_review'),
+url(r'^review/$', views.review, name = 'review'),
 ]

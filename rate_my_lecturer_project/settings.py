@@ -20,6 +20,7 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -29,19 +30,35 @@ SECRET_KEY = '!29gbs26gkds*#^0iuvm6be$j4igq#_fcel1757uz6l&)-g6r&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ratemylecturerr.pythonanywhere.com']
 
+# django registration framework variable
+
+#if True, users can register
+REGISTRATION_OPEN = True
+# One week actication window, different value can be used
+ACCOUNT_ACTIVATION_DAYS = 7
+#If True, the user will be automatically logged in
+REGISTRATION_AUTO_LOGIN = True
+# Page to redirect to after successfully log in
+LOGIN_REDIRECT_URL = '/ratemylecturer/'
+# page directed to when they are trying to access pages requiring authentication
+LOGIN_URL = '/accounts/login/'
+REGISTRATION_FORM = 'ratemylecturer.forms.LecturerProfileForm'
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ratemylecturer'
+    'ratemylecturer',
+
+
 ]
 
 MIDDLEWARE = [
@@ -61,7 +78,7 @@ ROOT_URLCONF = 'rate_my_lecturer_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR],
+        'DIRS': [TEMPLATE_DIR,],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,6 +87,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'ratemylecturer.context_processors.glb_var'
             ],
         },
     },
@@ -106,7 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-LOGIN_URL = '/ratemylecturer/login/'
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -127,7 +146,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR, ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = MEDIA_DIR
 
 MEDIA_URL = '/media/'
+

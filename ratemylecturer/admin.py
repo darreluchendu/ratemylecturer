@@ -14,7 +14,7 @@ class StudentAdmin(admin.ModelAdmin):
 admin.site.register(StudentProfile,StudentAdmin)
 
 class LecturerAdmin(admin.ModelAdmin):
-    list_display = ("user","first_name","surname","university","department")
+    list_display = ("user","name","university","department")
     inlines =[ReviewInline]
 admin.site.register(LecturerProfile,LecturerAdmin)
 

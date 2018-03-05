@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html lang="en">
+{% load staticfiles %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rate My Lecturer -
+        {% block title_block %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+
+<header id="main-header">
+    <div class="container">
+        <h1>Rate My Lecturer</h1>
+
+    </div>
+</header>
+
+
+<nav id="navbar">
+    <div class="container">
+        <ul>
+            <li><a id="home" href="{% url 'index' %}">Home</a></li>
+            <li><a id="about" href="{% url 'about' %}">About</a></li>
+            {% if user.is_authenticated %}
+                <li><a name="sign_out" href="{% url 'auth_logout' %}?next=/ratemylecturer/">Sign Out</a></li>
+                <li><a name="profile" href="{% url 'profile' user.id%}">My Profile</a></li>
+                <li><a href="{% url 'review' %}">Reviews</a></li>
+                    {% if is_student %}
+                         <li><a name="create_lecturer" href="{% url 'create_lecturer' user.id%}">Add Lecturer</a></li>
+                    {% endif %}
+            {% else %}
+                <li><a name="sign_in" href="{% url 'auth_login' %}">Login</a></li>
+                <li><a href="{% url 'registration_register' %}">Register</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+{% block body_block %}
+{% endblock %}
+<div>
+    {% block sidebar_block %}
+    {% endblock %}
+</div>
+<content>
+
+</content>
+
+<script language="JavaScript" type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script language="JavaScript" type="text/javascript" src='{% static "js/ratemylecturer-jquery.js" %}'></script>
+</body>
+</html>
