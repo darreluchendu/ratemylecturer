@@ -36,8 +36,8 @@ class StudentProfileForm(forms.ModelForm):
         self.fields.pop("user")
     first_name = forms.CharField(max_length=30)
     surname = forms.CharField(max_length=30)
-    university = forms.CharField(max_length=30)
-    course = forms.CharField(max_length=30)
+    university = forms.CharField(max_length=30,required=False)
+    course = forms.CharField(max_length=30,required=False)
     bio = forms.CharField(widget=forms.Textarea(), required=False)
     picture = forms.ImageField(required=False)
 
