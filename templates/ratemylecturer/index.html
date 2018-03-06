@@ -6,12 +6,24 @@
 {% endblock %}
 
 {% block body_block %}
-{#    <h1>Welcome to Rate my Lecturer</h1>#}
+    <div class = "container" style="background-color: #006699">
+   <h2 class="">Welcome to Rate my Lecturer</h2>
     {% if user.is_authenticated %}
-        Sup {{ user.username }}!
+     <p2>   Sup {{ user.username }}! </p2>
     {% else %}
         <br>
-        You Should Probably Sign In
+       <p2> You Should Probably Sign In </p2>
     {% endif %}
+</div>
+<div class="container">
+	{% if reviews %}
+        <h1>Most Recent </h1>
+	<ul>
+		{% for review in reviews %}
+            <li><a href="{{ review.url }}">{{ review.lecturer }}</a></li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+</div>
 
 {% endblock %}
