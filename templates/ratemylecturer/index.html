@@ -6,16 +6,16 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class = "container" style="background-color: #006699">
-   <h2 class="">Welcome to Rate my Lecturer</h2>
+    <div class = "container">
+   <h1 class="text-left">Welcome to Rate my Lecturer</h1>
     {% if user.is_authenticated %}
      <p2>   Sup {{ user.username }}! </p2>
     {% else %}
         <br>
-       <p2> You Should Probably Sign In </p2>
+       <p2> Where you get to see all the lecturers that you just love. Or hate.</p2>
     {% endif %}
 </div>
-<div class="container">
+<div class="container" style="justify-content: left">
 	{% if reviews %}
         <h1>Most Recent </h1>
 	<ul>
@@ -23,7 +23,9 @@
             <li><a href="{{ review.url }}">{{ review.lecturer }}</a></li>
 		{% endfor %}
 	</ul>
-	{% endif %}
+	{% else %}
+        <h2 style="font-family:'Segoe UI Light'">There isn't any recent reviews.</h2>
+    {% endif %}
 </div>
 
 {% endblock %}
