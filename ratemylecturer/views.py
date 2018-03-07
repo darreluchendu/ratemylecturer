@@ -24,6 +24,7 @@ def lecturer_ajax_data(request):
     return HttpResponse("")
 
 def register(request):
+
     registered = False  # flag to tell if registration is successful
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
@@ -72,9 +73,10 @@ def register(request):
         user_form=UserForm()
         lecturer_profile_form = LecturerProfileForm()
         student_profile_form = StudentProfileForm()
-
+    name_list_raw=[]
     request.session["is_ajax"] = False
-    name_list_raw = LecturerProfile.objects.all().values_list('name', 'university', "user_id","department")
+    for user in User.objects.filter(username__startswith="proxy_user"):
+        name_list_raw = LecturerProfile.objects.filter(user=user).values_list("name", 'university', "user_id","department")
     name_list = []
     for name, uni, user,depart in name_list_raw:
         data = {"name": name, "uni": uni, "value": name + " - " + uni, "user": user,"depart":depart }
