@@ -1,6 +1,6 @@
 import json
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -148,6 +148,8 @@ def review(request):
 def add_review(request):
     return render(request, 'ratemylecturer/add_review.html')
 
-def logout(request):
-    return render(request, 'ratemylecturer/logout.html')
+@login_required()
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
 
