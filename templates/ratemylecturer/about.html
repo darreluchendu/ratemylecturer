@@ -1,1 +1,32 @@
 {% extends 'ratemylecturer/base.html' %}
+{%  load staticfiles %}
+
+{% block title_block %}
+    Home
+{% endblock %}
+
+{% block body_block %}
+    <div class="container-fluid">
+        <h1 class="text-left" style="font-family: 'Segoe UI'">
+            About
+        </h1>
+        <br/>
+        <div class="container" style="border-spacing:12px">
+        <h3 style="font-family: 'Segoe UI Light'">Students</h3>
+        <p1 style="font-family: 'Segoe UI Light'">
+            This project is made to help those students who would like to know more about his/her lecturer of a class they're taking, in order
+            to know what to expect before coming to class. The lecturer's policy on assignments, how they mark their exam papers. These are all necessary
+            for students to survive and thrive in the class.
+        </p1>
+        </div>
+        <br/>
+        <div class="container" style="border-spacing:12px">
+        <h3 style="font-family: 'Segoe UI Light'">Lecturers</h3>
+        <p1 style="font-family: 'Segoe UI Light'">
+            This project aims to paint a better picture for lecturers to gauge how their material appeals to the students taking their course. RateMyLecturer
+            would allow lecturers to see what the students are thinking about them and hopefully, encourage the lecturers to improve further their methods of\
+            teaching.
+        </p1>
+        </div>
+    </div>
+{%  endblock %}
