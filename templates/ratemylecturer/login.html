@@ -1,0 +1,24 @@
+{% extends 'ratemylecturer/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Rate my Lecturer - Login
+{% endblock %}
+
+{% block body_block %}
+    <div class="container-fluid">
+    <h1 class="text-left" style="font-family:'Segoe UI' ">Login </h1>
+        <br/>
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    Username: <input type="text" name="username" value="" size="50"/> <br />
+    Password: <input type="password" name="password" value="" size="50"/> <br />
+    <input type="submit" value="Log in">
+    </form>
+<br/>
+<p style="font-family: 'Segoe UI Light'">
+    Don't Have an account?
+    <a href="{% url 'register' %}">Register Here</a>
+</p>
+    </div>
+{% endblock %}

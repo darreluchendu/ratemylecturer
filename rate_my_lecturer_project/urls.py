@@ -25,8 +25,8 @@ urlpatterns = [
    url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^ratemylecturer/', include('ratemylecturer.urls')),
-    url(r'^accounts/register/$', views.register, name='registration_register'),
-    url(r'^accounts/', include('registration.backends.default.urls')),
+    #url(r'^accounts/register/$', views.register, name='registration_register'),
+    #url(r'^accounts/', include('registration.backends.default.urls')),
 
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

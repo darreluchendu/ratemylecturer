@@ -1,0 +1,47 @@
+{% extends 'ratemylecturer/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block body_block %}
+    {% if registered %}
+        <p>Thank you for registering</p>
+        <a name="sign_in" href="{% url 'login' %}">Login</a>
+
+    {% else %}
+        <h2 id="register_header">Register as a Student</h2>
+
+        <input class=user_radio id="student_radio" type="radio" name="user" value="student" checked>
+        <label for="student">Student</label>
+
+        <input class=user_radio id="lecturer_radio" type="radio" name="user" value="lecturer" >
+        <label for="lecturer">Lecturer</label>
+
+        <div id="stu_id">
+            <form id="user_form_student" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ user_form.as_p }}
+                {{ student_profile_form.as_p }}
+                <input type="submit" value="Register">
+            </form>
+        </div>
+        <div id="lec_id">
+            <form id="user_form_lecturer" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ user_form.as_p }}
+                {{ lecturer_profile_form.as_p }}
+                <input type="submit"  value="Register">
+            </form>
+        </div>
+
+    {% endif %}
+{% endblock %}
+{% block script_block %}
+    <script type="text/javascript">
+        var registered = "{{ registered }}"
+        var name_list = {{ name_list|safe }};
+        var is_student = "{{ is_student }}"
+    </script>
+{% endblock %}

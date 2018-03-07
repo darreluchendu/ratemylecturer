@@ -27,7 +27,7 @@
             </form>
         </div>
         <div id="lec_id">
-            <form id="user_form_lecturer" method="post" action="{% url 'registration_register' %}" enctype="multipart/form-data">
+            <form id="user_form_lecturer" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ user_form.as_p }}
                 {{ lecturer_profile_form.as_p }}

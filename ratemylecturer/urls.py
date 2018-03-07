@@ -10,4 +10,8 @@ url(r'^profile/(?P<user_id>[\w\-]+)/$', views.profile, name='profile'),
 url(r'^register/lecturer_ajax_data/$', views.lecturer_ajax_data, name='lecturer_ajax_data'),
 url(r'^add_review/$', views.add_review, name = 'add_review'),
 url(r'^review/$', views.review, name = 'review'),
+url(r'^register/&',views.register,name='register'),
+url(r'^login/$', views.user_login, name='login'),
+url(r'^logout/$', views.user_logout, name='logout'),
+
 ]

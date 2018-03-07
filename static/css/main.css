@@ -14,7 +14,7 @@ body{
 }
 
 #main-header{
-	background-color:coral;
+	background-color:magenta;
 	color:#fff;
 }
 
@@ -37,4 +37,10 @@ body{
 	text-decoration: none;
 	font-size:18px;
 	padding-right:15px;
+}
+#trial{
+	color: cadetblue;
+	font-family: Helvetica;
+	font-size: 15px;
+	background-color: crimson;
 }

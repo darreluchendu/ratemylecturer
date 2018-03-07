@@ -6,12 +6,33 @@
 {% endblock %}
 
 {% block body_block %}
-{#    <h1>Welcome to Rate my Lecturer</h1>#}
-    {% if user.is_authenticated %}
-        Sup {{ user.username }}!
-    {% else %}
-        <br>
-        You Should Probably Sign In
-    {% endif %}
+    <div class="row">
+    <div class="col-sm-9">
+        <div class = "container-fluid" style="justify-content: center">
+            <h1 class="text-left" style="font-family: 'Segoe UI'">Welcome to Rate My Lecturer</h1>
+            {% if user.is_authenticated %}
+            <p1 style="font-family: 'Segoe UI Light'">   Hey there, {{ user.username }}! </p1>
+            {% else %}
+            <br/>
 
+            <p1 style="font-family: 'Segoe UI Light'"> Where you get to see all the lecturers that you just love. Or hate.</p1>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="container-fluid" style="justify-content: center">
+            <h1 style="font-family: 'Segoe UI'">Most Recent </h1>
+            <br/>
+	        {% if reviews %}
+	            <ul>
+		        {% for review in reviews %}
+                    <li><a style="font-family: 'Segoe UI Light'" href="{{ review.url }}">{{ review.lecturer }}</a></li>
+                {% endfor %}
+	            </ul>
+	        {% else %}
+                <p1 style="font-family:'Segoe UI Light'">There isn't any recent reviews.</p1>
+            {% endif %}
+        </div>
+    </div>
+    </div>
 {% endblock %}

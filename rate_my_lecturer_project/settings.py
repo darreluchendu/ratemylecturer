@@ -36,15 +36,10 @@ ALLOWED_HOSTS = {'ratemylecturerr.pythonanywhere.com', '127.0.0.1', 'localhost'}
 
 #if True, users can register
 REGISTRATION_OPEN = True
-# One week actication window, different value can be used
-ACCOUNT_ACTIVATION_DAYS = 7
-#If True, the user will be automatically logged in
-REGISTRATION_AUTO_LOGIN = True
 # Page to redirect to after successfully log in
 LOGIN_REDIRECT_URL = '/ratemylecturer/'
 # page directed to when they are trying to access pages requiring authentication
-LOGIN_URL = '/accounts/login/'
-REGISTRATION_FORM = 'ratemylecturer.forms.LecturerProfileForm'
+LOGIN_URL = '/ratemylecturer/login/'
 
 # Application definition
 
