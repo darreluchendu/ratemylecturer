@@ -1,6 +1,6 @@
 # forms
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from ratemylecturer.models import LecturerProfile, StudentProfile, Review
 from registration.forms import RegistrationForm, RegistrationFormUniqueEmail
 
@@ -8,11 +8,18 @@ class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
 
-        self.fields['email'].required = True
     password = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
+
+
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email is already in use")
+        return email
 
 # LecturerProfile model's form
 
