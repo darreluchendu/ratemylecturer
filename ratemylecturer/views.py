@@ -9,10 +9,13 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm
 from .models import LecturerProfile, UserMethods
-
+from ratemylecturer.models import Review
 
 def index(request):
-    return render(request,'ratemylecturer/index.html',{})
+	reviews_list = Review.objects.order_by('-date')[:3]
+	context_dict = {'reviews': reviews_list}
+
+    return render(request,'ratemylecturer/index.html', context_dict)
 
 def about(request):
     return render(request, 'ratemylecturer/about.html', {})
