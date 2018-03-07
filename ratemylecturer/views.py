@@ -81,7 +81,7 @@ def register(request):
         name_list.append(data)
     js_data = json.dumps(name_list)
 
-    return render(request, 'registration/registration_form.html',
+    return render(request, 'ratemylecturer/register.html',
                   {"user_form":user_form,'registered':registered, 'lecturer_profile_form':lecturer_profile_form,
                    'student_profile_form':student_profile_form, "name_list":js_data})
 
@@ -125,9 +125,14 @@ def profile(request):
 def review(request):
     return render(request, 'ratemylecturer/review.html')
 
-@user_passes_test(UserMethods.is_student, login_url='/accounts/login/')
+@user_passes_test(UserMethods.is_student, login_url='/login/')
 @login_required()
 def add_review(request):
     return render(request, 'ratemylecturer/add_review.html')
 
+def login(request):
+    return render(request, 'ratemylecturer/login.html')
+
+def logout(request):
+    return render(request, 'ratemylecturer/logout.html')
 

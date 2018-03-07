@@ -1,5 +1,6 @@
 {% extends 'ratemylecturer/base.html' %}
 {% load staticfiles %}
+
 {% block title_block %}
     Register
 {% endblock %}
@@ -7,7 +8,7 @@
 {% block body_block %}
     {% if registered %}
         <p>Thank you for registering</p>
-        <a name="sign_in" href="{% url 'auth_login' %}">Login</a>
+        <a name="sign_in" href="{% url 'login' %}">Login</a>
 
     {% else %}
         <h2 id="register_header">Register as a Student</h2>
@@ -19,7 +20,7 @@
         <label for="lecturer">Lecturer</label>
 
         <div id="stu_id">
-            <form id="user_form_student" method="post" action="{% url 'registration_register' %}" enctype="multipart/form-data">
+            <form id="user_form_student" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ user_form.as_p }}
                 {{ student_profile_form.as_p }}

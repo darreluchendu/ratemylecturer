@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Login or click <a href="{% url 'registration_register' %}">here</a> to register</h1>
+    <h1>Login or click <a href="{% url 'register' %}">here</a> to register</h1>
 <form method="post" action="">
     {% csrf_token %}
     {{ form.as_p }}
@@ -16,7 +16,7 @@
 
 <p>
     Don't Have an account?
-    <a href="{% url 'registration_register' %}">Register</a>
+    <a href="{% url 'register' %}">Register</a>
 </p>
 
 {% endblock %}
