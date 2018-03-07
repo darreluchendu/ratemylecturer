@@ -2,16 +2,16 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    <title>Login</title>
+    Rate my Lecturer - Login
 {% endblock %}
 
 {% block body_block %}
-    <h1>Login or click <a href="{% url 'register' %}">here</a> to register</h1>
-<form method="post" action="">
+    <h1>Login</h1>
+<form method="post" action="{% url 'login' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+    Username: <input type="text" name="username" value="" size="50"/> <br />
+    Password: <input type="text" name="password" value="" size="50"/> <br />
     <input type="submit" value="Log in">
-        <input type="hidden" name="next"  value="{{ next }}">
     </form>
 
 <p>

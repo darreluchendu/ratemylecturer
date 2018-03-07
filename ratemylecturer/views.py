@@ -1,4 +1,6 @@
 import json
+
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -22,6 +24,22 @@ def lecturer_ajax_data(request):
     request.session["user_id"]=proxy_user
     request.session["is_ajax"] =True
     return HttpResponse("")
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password = password)
+        if user:
+            if user.is_active:
+                login(request,user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponse("Your account is disabled")
+        else:
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request,'ratemylecturer/login.html')
 
 def register(request):
     registered = False  # flag to tell if registration is successful
@@ -129,9 +147,6 @@ def review(request):
 @login_required()
 def add_review(request):
     return render(request, 'ratemylecturer/add_review.html')
-
-def login(request):
-    return render(request, 'ratemylecturer/login.html')
 
 def logout(request):
     return render(request, 'ratemylecturer/logout.html')

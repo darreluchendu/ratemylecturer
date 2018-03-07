@@ -11,7 +11,7 @@ url(r'^register/lecturer_ajax_data/$', views.lecturer_ajax_data, name='lecturer_
 url(r'^add_review/$', views.add_review, name = 'add_review'),
 url(r'^review/$', views.review, name = 'review'),
 url(r'^register/&',views.register,name='register'),
-url(r'^login/$', views.login, name='login'),
+url(r'^login/$', views.user_login, name='login'),
 url(r'^logout/$', views.logout, name='logout'),
 
 ]
