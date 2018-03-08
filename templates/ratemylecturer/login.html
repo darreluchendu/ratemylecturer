@@ -11,13 +11,35 @@
         <br/>
 <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
+
+    <div class="form-row">
+    <div class="col-5">
+        <div class="form-group">
+            <label style="font-family: 'Segoe UI Light'" for="username">Username</label>
+            <input type="text" class="form-control" name="username" placeholder="Username">
+        </div>
+    </div>
+    </div>
+    <br/>
+    <div class="form-row">
+    <div class="col-5">
+        <div class="form-group">
+            <label style="font-family: 'Segoe UI Light'" for="password">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+    </div>
+    </div>
+    <button type="submit" class="btn btn-primary" style="font-family: 'Segoe UI Light'">Log In</button>
+    <!--
     Username: <input type="text" name="username" value="" size="50"/> <br />
     Password: <input type="password" name="password" value="" size="50"/> <br />
     <input type="submit" value="Log in">
+    </div>
+<-->
     </form>
 <br/>
 <p style="font-family: 'Segoe UI Light'">
-    Don't Have an account?
+    Don't have an account?
     <a href="{% url 'register' %}">Register Here</a>
 </p>
     </div>

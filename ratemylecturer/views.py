@@ -12,9 +12,8 @@ from .models import LecturerProfile, UserMethods
 from ratemylecturer.models import Review
 
 def index(request):
-	reviews_list = Review.objects.order_by('-date')[:3]
-	context_dict = {'reviews': reviews_list}
-
+    reviews_list = Review.objects.order_by('-date')[:3]
+    context_dict = {'reviews': reviews_list}
     return render(request,'ratemylecturer/index.html', context_dict)
 
 def about(request):
