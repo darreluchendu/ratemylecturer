@@ -37,10 +37,13 @@ ALLOWED_HOSTS = {'ratemylecturerr.pythonanywhere.com', '127.0.0.1', 'localhost'}
 #if True, users can register
 REGISTRATION_OPEN = True
 # Page to redirect to after successfully log in
+LOGOUT_URL = '/ratemylecturer/logout/'
 LOGIN_REDIRECT_URL = '/ratemylecturer/'
 # page directed to when they are trying to access pages requiring authentication
 LOGIN_URL = '/ratemylecturer/login/'
-
+SOCIAL_AUTH_FACEBOOK_KEY = '357586754649658'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '545762c7c3a9fe275795e6ca4e437895'  # App Secret
+SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.11'
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,7 +54,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'ratemylecturer',
+
 
 
 ]
@@ -64,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
     
 ]
 
@@ -82,11 +88,19 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
-                'ratemylecturer.context_processors.glb_var'
+                'ratemylecturer.context_processors.glb_var',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 WSGI_APPLICATION = 'rate_my_lecturer_project.wsgi.application'
 

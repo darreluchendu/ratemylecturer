@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from ratemylecturer import views, regbackend
+from django.contrib.auth import views as auth_views
 
 
 
@@ -25,6 +26,10 @@ urlpatterns = [
    url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^ratemylecturer/', include('ratemylecturer.urls')),
+    url(r'^$', views.index, name='home'),
+    url(r'^ratemylecturer/login/$', auth_views.login, name='login'),
+    url(r'^ratemylecturer/logout/$', auth_views.logout, name='logout'),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
     #url(r'^accounts/register/$', views.register, name='registration_register'),
     #url(r'^accounts/', include('registration.backends.default.urls')),
 

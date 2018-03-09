@@ -7,6 +7,7 @@
 
 {% block body_block %}
 
+
     <div class="container-fluid">
     <h1 class="text-left" style="font-family:'Segoe UI' ">Login </h1>
         <br/>
@@ -31,6 +32,8 @@
     </div>
     </div>
     <button type="submit" class="btn btn-primary" style="font-family: 'Segoe UI Light'">Log In</button>
+    <h3>OR</h3>
+      <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
 
     <!--
     Username: <input type="text" name="username" value="" size="50"/> <br />
@@ -39,6 +42,7 @@
     </div>
 <-->
     </form>
+
 <br/>
 <p style="font-family: 'Segoe UI Light'">
     Don't have an account?
