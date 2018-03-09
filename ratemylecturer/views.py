@@ -147,7 +147,7 @@ def student_profile(request, user):
 	student_reviews = Review.objects.filter(student=student_profile)
 	context_dict['student_profile'] = student_profile
 	context_dict['student_reviews'] = student_reviews
-    return render(request, 'ratemylecturer/student_profile.html', context_dict)
+    	return render(request, 'ratemylecturer/student_profile.html', context_dict)
 
 # Lecturer Profile
 def lecturer_profile(request, user):
