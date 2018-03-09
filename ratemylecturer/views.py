@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm
 from .models import LecturerProfile, UserMethods
-from ratemylecturer.models import Review
+from ratemylecturer.models import Review, StudentProfile, LecturerProfile
 
 def index(request):
     reviews_list = Review.objects.order_by('-date')[:3]
@@ -141,19 +141,45 @@ def create_lecturer(request,user_id):
     return render( request,'ratemylecturer/create_lecturer.html',{'created': created, 'lecturer_profile_form':lecturer_profile_form,"user_id":user_id,})
 
 @login_required()
-def profile(request):
-    return render(request, 'ratemylecturer/profile.html', {})
+def student_profile(request, user):
+	context_dict = {}
+	student_profile = StudentProfile.objects.filter(user=user)
+	student_reviews = Review.objects.filter(student=student_profile)
+	context_dict['student_profile'] = student_profile
+	context_dict['student_reviews'] = student_reviews
+    return render(request, 'ratemylecturer/student_profile.html', context_dict)
+
+# Lecturer Profile
+def lecturer_profile(request, user):
+	context_dict = {}
+	lecturer_profile = LecturerProfile.objects.filter(user=user)
+	lecturer_reviews = Review.objects.filter(lecturer=lecturer_profile)
+	context_dict['lecturer_profile'] = lecturer_profile
+	context_dict['lecturer_reviews'] = lecturer_reviews
+	return render(request, 'ratemylecturer/lecturer_profile.html', context_dict)
 
 def review(request):
+	context_dict = {}
     return render(request, 'ratemylecturer/review.html')
 
 @user_passes_test(UserMethods.is_student, login_url='/login/')
 @login_required()
-def add_review(request):
-    return render(request, 'ratemylecturer/add_review.html')
+def add_review(request):	
+	added=False
+	if request.method == 'POST':
+	    review_form = ReviewForm(data=request.POST)
+        if review_form.is_valid():
+			review = review_form.save(commit=False)
+            review.save()
+            added = True
+        else:  # invalid form, for whatever reason
+            print(review_form.errors)
+    else:# not http POST
+        review_form  =ReviewForm()
+
+    return render(request, 'ratemylecturer/add_review.html', {})
 
 @login_required()
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
-
