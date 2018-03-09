@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
+
     <div class="container-fluid">
     <h1 class="text-left" style="font-family:'Segoe UI' ">Login </h1>
         <br/>
@@ -30,6 +31,7 @@
     </div>
     </div>
     <button type="submit" class="btn btn-primary" style="font-family: 'Segoe UI Light'">Log In</button>
+
     <!--
     Username: <input type="text" name="username" value="" size="50"/> <br />
     Password: <input type="password" name="password" value="" size="50"/> <br />
@@ -43,4 +45,7 @@
     <a href="{% url 'register' %}">Register Here</a>
 </p>
     </div>
+{% endblock %}
+{% block script_block %}
+
 {% endblock %}

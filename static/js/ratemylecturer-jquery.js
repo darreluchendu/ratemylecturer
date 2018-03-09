@@ -1,6 +1,22 @@
 $(document).ready(function() {
         $('#lec_id').hide();
 
+        $('.user_radio').click(function () {
+            var user = this.value;
+            if (user === "lecturer") {
+                $("#stu_id").hide();
+                $("#lec_id").show();
+                $("#register_header").html("Register as a Lecturer");
+
+            }
+            else {
+                $("#stu_id").show();
+                $("#lec_id").hide();
+                $("#register_header").html("Register as a Student");
+            }
+        });
+
+
         $("#lecturer_name").autocomplete({
             source: name_list,
             select: function (event, ui) {
@@ -19,20 +35,6 @@ $(document).ready(function() {
             }
         });
 
-        $('.user_radio').click(function () {
-            var user = this.value;
-            if (user === "lecturer") {
-                $("#stu_id").hide();
-                $("#lec_id").show();
-                $("#register_header").html("Register as a Lecturer");
-
-            }
-            else {
-                $("#stu_id").show();
-                $("#lec_id").hide();
-                $("#register_header").html("Register as a Student");
-            }
-        });
 
     });
 
