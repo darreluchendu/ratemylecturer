@@ -142,12 +142,12 @@ def create_lecturer(request,user_id):
 
 @login_required()
 def student_profile(request, user):
-	context_dict = {}
-	student_profile = StudentProfile.objects.filter(user=user)
-	student_reviews = Review.objects.filter(student=student_profile)
-	context_dict['student_profile'] = student_profile
-	context_dict['student_reviews'] = student_reviews
-    	return render(request, 'ratemylecturer/student_profile.html', context_dict)
+    context_dict = {}
+    student_profile = StudentProfile.objects.filter(user=user)
+    student_reviews = Review.objects.filter(student=student_profile)
+    context_dict['student_profile'] = student_profile
+    context_dict['student_reviews'] = student_reviews
+    return render(request, 'ratemylecturer/student_profile.html', context_dict)
 
 # Lecturer Profile
 def lecturer_profile(request, user):
@@ -159,17 +159,17 @@ def lecturer_profile(request, user):
 	return render(request, 'ratemylecturer/lecturer_profile.html', context_dict)
 
 def review(request):
-	context_dict = {}
+    context_dict = {}
     return render(request, 'ratemylecturer/review.html')
 
 @user_passes_test(UserMethods.is_student, login_url='/login/')
 @login_required()
-def add_review(request):	
-	added=False
-	if request.method == 'POST':
-	    review_form = ReviewForm(data=request.POST)
+def add_review(request):
+    added=False
+    if request.method == 'POST':
+        review_form = ReviewForm(data=request.POST)
         if review_form.is_valid():
-			review = review_form.save(commit=False)
+            review = review_form.save(commit=False)
             review.save()
             added = True
         else:  # invalid form, for whatever reason
