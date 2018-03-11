@@ -8,8 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm
-from .models import LecturerProfile, UserMethods
-from ratemylecturer.models import Review, StudentProfile, LecturerProfile
+from ratemylecturer.models import Review, StudentProfile, LecturerProfile,UserMethods
 
 def index(request):
     reviews_list = Review.objects.order_by('-date')[:3]
@@ -110,7 +109,7 @@ def register(request):
 
 
 
-@user_passes_test(UserMethods.is_student, login_url='/accounts/login/')
+@user_passes_test(UserMethods.is_student)
 @login_required
 def create_lecturer(request,user_id):
 
@@ -140,36 +139,43 @@ def create_lecturer(request,user_id):
         lecturer_profile_form  =LecturerProfileForm()
     return render( request,'ratemylecturer/create_lecturer.html',{'created': created, 'lecturer_profile_form':lecturer_profile_form,"user_id":user_id,})
 
-@login_required()
-def student_profile(request, user):
-    context_dict = {}
-    student_profile = StudentProfile.objects.filter(user=user)
-    student_reviews = Review.objects.filter(student=student_profile)
-    context_dict['student_profile'] = student_profile
-    context_dict['student_reviews'] = student_reviews
-    return render(request, 'ratemylecturer/student_profile.html', context_dict)
+@login_required
+# Profile
+def profile(request,username):
+    profile_user=User.objects.get(username=username)
+    context_dict ={}
+    if UserMethods.is_student(profile_user):
+        student_profile = StudentProfile.objects.get(user=profile_user)
+        student_reviews = Review.objects.filter(student= student_profile)
+        context_dict['profile'] = student_profile
+        context_dict['reviews'] = student_reviews
+        context_dict["student_profile"] = True
+    else:
+        lecturer_profile = LecturerProfile.objects.get(user=profile_user)
+        lecturer_reviews = Review.objects.filter(lecturer= lecturer_profile)
+        context_dict['profile'] = lecturer_profile
+        context_dict['reviews'] = lecturer_reviews
+        context_dict["student_profile"] = False
+    context_dict["profile_user"]=username
 
-# Lecturer Profile
-def lecturer_profile(request, user):
-	context_dict = {}
-	lecturer_profile = LecturerProfile.objects.filter(user=user)
-	lecturer_reviews = Review.objects.filter(lecturer=lecturer_profile)
-	context_dict['lecturer_profile'] = lecturer_profile
-	context_dict['lecturer_reviews'] = lecturer_reviews
-	return render(request, 'ratemylecturer/lecturer_profile.html', context_dict)
+    return render(request, 'ratemylecturer/profile.html', context_dict)
 
 def review(request):
     context_dict = {}
     return render(request, 'ratemylecturer/review.html')
 
-@user_passes_test(UserMethods.is_student, login_url='/login/')
+@user_passes_test(UserMethods.is_student)
 @login_required()
-def add_review(request):
+def add_review(request,username):
     added=False
+    lecturer=User.objects.get(username=username)
+    lecturer_id=lecturer.id
     if request.method == 'POST':
         review_form = ReviewForm(data=request.POST)
         if review_form.is_valid():
             review = review_form.save(commit=False)
+            review.lecturer=lecturer_id
+            review.student=request.user.id
             review.save()
             added = True
         else:  # invalid form, for whatever reason

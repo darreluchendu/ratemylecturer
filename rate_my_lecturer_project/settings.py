@@ -35,7 +35,7 @@ ALLOWED_HOSTS = {'ratemylecturerr.pythonanywhere.com', '127.0.0.1', 'localhost'}
 # django registration framework variable
 
 #if True, users can register
-REGISTRATION_OPEN = True
+
 # Page to redirect to after successfully log in
 LOGOUT_URL = '/ratemylecturer/logout/'
 LOGIN_REDIRECT_URL = '/ratemylecturer/'
@@ -48,7 +48,6 @@ SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.11'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

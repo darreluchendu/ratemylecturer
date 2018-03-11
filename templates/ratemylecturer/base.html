@@ -33,7 +33,7 @@
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'profile' user.id%}">My Profile</a>
+                    <a class="dropdown-item" href="{% url 'profile' user.username%}">My Profile</a>
                     <a class="dropdown-item" href="{% url 'review' %}">Reviews</a>
                     {% if is_student %}
                          <a class="dropdown-item" href="{% url 'create_lecturer' user.id%}">Add Lecturer</a>

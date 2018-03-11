@@ -1,1 +1,16 @@
 {% extends 'ratemylecturer/base.html' %}
+{% block body_block %}
+
+    <p>{{profile.first_name}} {{profile.surname}}</p>
+    <p>{{profile.name}}</p>
+
+    <br>
+    {% for review in reviews %}
+        <p>{{ review.title }}
+            {{ review.body }}</p>
+    {% endfor %}
+
+    {% if student_profile == False and is_student == True %}
+     <a href="{% url 'add_review' profile_user %}">Add a Review</a>
+    {% endif %}
+{% endblock %}

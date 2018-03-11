@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('registration', '0004_supervisedregistrationprofile'),
+
         ('admin', '0002_logentry_remove_auto_add'),
         ('auth', '0009_alter_user_last_name_max_length'),
         ('ratemylecturer', '0006_usermethods'),

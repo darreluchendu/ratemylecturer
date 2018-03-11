@@ -1,8 +1,8 @@
 # forms
 from django import forms
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import User
 from ratemylecturer.models import LecturerProfile, StudentProfile, Review
-from registration.forms import RegistrationForm, RegistrationFormUniqueEmail
+
 
 class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
