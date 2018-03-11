@@ -30,7 +30,7 @@ SECRET_KEY = '!29gbs26gkds*#^0iuvm6be$j4igq#_fcel1757uz6l&)-g6r&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = {'ratemylecturer.pythonanywhere.com', '127.0.0.1', 'localhost'}
+ALLOWED_HOSTS = {'ratemylecturerr.pythonanywhere.com', '127.0.0.1', 'localhost'}
 
 # django registration framework variable
 
