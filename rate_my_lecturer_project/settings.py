@@ -45,7 +45,10 @@ SOCIAL_AUTH_FACEBOOK_KEY = '357586754649658'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '545762c7c3a9fe275795e6ca4e437895'  # App Secret
 SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.11'
 # Application definition
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='894678636509-aodb1fb473ccvh4k3ae4l2rl1veui4j4.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '9gJrBXlLqX_7GHfIBP_Zh8Z'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -96,9 +99,25 @@ TEMPLATES = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'ratemylecturer.views.save_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    'social_core.pipeline.social_auth.associate_by_email',
 )
 
 WSGI_APPLICATION = 'rate_my_lecturer_project.wsgi.application'

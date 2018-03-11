@@ -11,6 +11,7 @@ from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, Review
 from ratemylecturer.models import Review, StudentProfile, LecturerProfile,UserMethods
 
 def index(request):
+
     reviews_list = Review.objects.order_by('-date')[:3]
     context_dict = {'reviews': reviews_list}
     return render(request,'ratemylecturer/index.html', context_dict)
@@ -185,6 +186,23 @@ def add_review(request,username):
 
     return render(request, 'ratemylecturer/add_review.html', {})
 
+def save_profile(backend, user, response, details, **kwargs):
+    if backend.name == 'facebook':
+
+        profile = StudentProfile.objects.get_or_create(user_id=user.id)[0]
+
+        profile.first_name = details.get('first_name')
+        profile.surname = details.get('last_name')
+        profile.picture= "http://graph.facebook.com/%s/picture?type=large"%response['id']
+        profile.save()
+
+    # elif backend.name == 'google':
+    #     profile = StudentProfile.objects.get_or_create(user_id=user.id)[0]
+    #
+    #     profile.first_name = details.get('first_name')
+    #     profile.surname = details.get('last_name')
+    #     profile.picture = "http://graph.facebook.com/%s/picture?type=large" % response['id']
+    #     profile.save()
 @login_required()
 def user_logout(request):
     logout(request)
