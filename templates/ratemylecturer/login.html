@@ -7,10 +7,13 @@
 
 {% block body_block %}
 
-
     <div class="container-fluid">
     <h1 class="text-left" style="font-family:'Segoe UI' ">Login </h1>
         <br/>
+
+{% if invalid_login %}
+        <p>Invalid login details, please try again.</p>
+        {% endif %}
 <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
 
@@ -32,16 +35,14 @@
     </div>
     </div>
     <button type="submit" class="btn btn-primary" style="font-family: 'Segoe UI Light'">Log In</button>
+    <br>
     <h4>OR</h4>
     <hr>
       <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
-{# <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>#}
-    <!--
-    Username: <input type="text" name="username" value="" size="50"/> <br />
-    Password: <input type="password" name="password" value="" size="50"/> <br />
-    <input type="submit" value="Log in">
-    </div>
-<-->
+
+{#    <h6>Or</h6>#}
+{##}
+{#    <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>#}
     </form>
 
 <br/>
