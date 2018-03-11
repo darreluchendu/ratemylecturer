@@ -27,6 +27,7 @@ def lecturer_ajax_data(request):
     return HttpResponse("")
 
 def user_login(request):
+    invalid_login = False
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -37,10 +38,11 @@ def user_login(request):
                 return HttpResponseRedirect(reverse('index'))
             else:
                 return HttpResponse("Your account is disabled")
-        else:
-            return HttpResponse("Invalid login details supplied.")
+        else:# invalid login details
+            invalid_login = True
+            return render(request,'ratemylecturer/login.html',{'invalid_login': invalid_login})
     else:
-        return render(request,'ratemylecturer/login.html')
+        return render(request,'ratemylecturer/login.html',{'invalid_login': invalid_login})
 
 def register(request):
 
@@ -157,6 +159,7 @@ def profile(request,username):
         context_dict['reviews'] = lecturer_reviews
         context_dict["student_profile"] = False
     context_dict["profile_user"]=username
+
 
     return render(request, 'ratemylecturer/profile.html', context_dict)
 
