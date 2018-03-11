@@ -199,13 +199,13 @@ def save_profile(backend, user, response, details, **kwargs):
         profile.picture= "http://graph.facebook.com/%s/picture?type=large"%response['id']
         profile.save()
 
-    # elif backend.name == 'google':
-    #     profile = StudentProfile.objects.get_or_create(user_id=user.id)[0]
-    #
-    #     profile.first_name = details.get('first_name')
-    #     profile.surname = details.get('last_name')
-    #     profile.picture = "http://graph.facebook.com/%s/picture?type=large" % response['id']
-    #     profile.save()
+    elif backend.name == 'google-oauth2':
+        profile = StudentProfile.objects.get_or_create(user_id=user.id)[0]
+
+        profile.first_name = details.get('first_name')
+        profile.surname = details.get('last_name')
+        profile.picture = "http://graph.facebook.com/%s/picture?type=large" % response['id']
+        profile.save()
 @login_required()
 def user_logout(request):
     logout(request)
