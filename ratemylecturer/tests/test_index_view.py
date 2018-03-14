@@ -1,17 +1,23 @@
 from django.test import TestCase
 from django.urls import reverse
+from ratemylecturer.tests.test_utils import BaseLiveServerTestCase
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-from ratemylecturer.views import index
 
 # Create your tests here.
 
 class IndexViewTests(TestCase):
 
-    def test_home_contains_required_links(self):
+    def test_links(self):
         response = self.client.get((reverse("index"))) # returns the home page
         self.assertContains(response,"about".lower())
-        self.assertContains(response,"Sign In".lower())
+        self.assertContains(response,"Login".lower())
         self.assertContains(response,"Register".lower())
+
+    def test_recent_reviews_displayed(self):
+        response = self.client.get((reverse("index"))) # returns the home page
+
 
 
 
@@ -22,3 +28,10 @@ class IndexViewTests(TestCase):
         """
         response = self.client.get((reverse("index")))
         self.assertContains(response, 'profile_image')
+
+
+
+
+
+
+

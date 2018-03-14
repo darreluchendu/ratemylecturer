@@ -24,7 +24,7 @@
                 {% csrf_token %}
                 {{ user_form.as_p }}
                 {{ student_profile_form.as_p }}
-                <input type="submit" value="Register">
+                <input name="register" type="submit" value="Register">
             </form>
         </div>
         <div id="lec_id">
@@ -32,7 +32,7 @@
                 {% csrf_token %}
                 {{ user_form.as_p }}
                 {{ lecturer_profile_form.as_p }}
-                <input type="submit"  value="Register">
+                <input name="register" type="submit"  value="Register">
             </form>
         </div>
 

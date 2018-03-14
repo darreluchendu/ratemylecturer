@@ -1,8 +1,11 @@
 {% extends 'ratemylecturer/base.html' %}
+{% block title_block %}
+{{profile.first_name}} {{profile.surname}}
+{% endblock %}
 {% block body_block %}
 
-    <p>{{profile.first_name}} {{profile.surname}}</p>
-    <p>{{profile.name}}</p>
+    <p>{{profile.first_name}} {{profile.surname}}</p> <br>
+    <p>{{profile.name}}</p><br>
     <img src="{{ profile.picture }}">
 
     <br>
