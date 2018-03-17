@@ -1,10 +1,11 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
-from django.test import TestCase, LiveServerTestCase
-from django.contrib.auth.models    import User
+
 
 class BaseLiveServerTestCase(LiveServerTestCase):
+
     def setUp(self):
-        super(BaseLiveServerTestCase,self).setUp()
+        super(BaseLiveServerTestCase, self).setUp()
         self.driver = webdriver.Chrome()
         #
         #
@@ -13,10 +14,8 @@ class BaseLiveServerTestCase(LiveServerTestCase):
         # self.users_before = list(User.objects.values_list('id', flat=True).order_by('id'))
         # print(self.users_before)
 
-
-
     def TearDown(self):
-        super(BaseLiveServerTestCase,self).tearDown()
+        super(BaseLiveServerTestCase, self).tearDown()
         self.driver.quit()
 
         # # Get the list of all users after the tests.

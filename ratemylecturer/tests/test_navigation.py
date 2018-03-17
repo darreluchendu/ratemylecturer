@@ -8,13 +8,6 @@ from selenium.webdriver.support import expected_conditions as EC
 class SiteNavigationTest(BaseLiveServerTestCase):
 
 
-    def test_navigate_to_home(self):
-        # open the lick we want to test.
-        self.driver.get('http://127.0.0.1:8000/')
-        wait = WebDriverWait(self.driver, 10)
-        element = wait.until(EC.title_contains('Home'))
-        self.assertTrue(element)
-
     def test_navigate_from_home_to_about(self):
         # open the lick we want to test.
         self.driver.get('http://127.0.0.1:8000/')

@@ -1,13 +1,19 @@
 from django.test import TestCase
-from django.urls import reverse
+from django.urls import reverse, resolve
 from ratemylecturer.tests.test_utils import BaseLiveServerTestCase
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from ratemylecturer.views import index
 
 
 # Create your tests here.
 
 class IndexViewTests(TestCase):
+
+    def test_index_uses_index_template(self):
+        response = self.client.get('/')
+        self.assertTemplateUsed(response,'ratemylecturer/index.html')
+
 
     def test_links(self):
         response = self.client.get((reverse("index"))) # returns the home page
