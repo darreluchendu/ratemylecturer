@@ -46,6 +46,9 @@ SOCIAL_AUTH_FACEBOOK_SECRET = '545762c7c3a9fe275795e6ca4e437895'  # App Secret
 SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.11'
 # Application definition
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id,name,email',
+}
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='894678636509-aodb1fb473ccvh4k3ae4l2rl1veui4j4.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'i9gJrBXlLqX_7GHfIBP_Zh8Z'
@@ -112,12 +115,14 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_uid',
     'social_core.pipeline.social_auth.social_user',
     'social_core.pipeline.user.get_username',
+    'ratemylecturer.views.check_email_exists',
+    'social.pipeline.social_auth.associate_by_email',
     'social_core.pipeline.user.create_user',
     'ratemylecturer.views.save_profile',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
-    'social_core.pipeline.social_auth.associate_by_email',
+
 )
 
 WSGI_APPLICATION = 'rate_my_lecturer_project.wsgi.application'

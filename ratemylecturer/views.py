@@ -1,4 +1,5 @@
 import json
+import urllib
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -60,6 +61,8 @@ def register(request):
                 student_profile = student_profile_form.save(commit=False)
                 if 'picture' in request.FILES:
                     student_profile.picture = request.FILES['picture']
+                else:
+                    student_profile.picture = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
                 user.save()
                 student_profile.user=user
                 student_profile.save()
@@ -67,7 +70,6 @@ def register(request):
             if lecturer_profile_form.is_valid():
                 lecturer_profile = lecturer_profile_form.save(commit=False)
                 if request.session.get("is_ajax"):
-                    print("ajax")
                     # save user form data
                     # adding real user to an already created lecturer
                     proxy_user_id = request.session.get("user_id")
@@ -81,11 +83,12 @@ def register(request):
                     LecturerProfile.objects.filter(user=proxy_user).delete()
 
                 else:
-                    print("norm")
                     user.save()
                     lecturer_profile.user=user
-                    if 'picture' in request.FILES:
-                        lecturer_profile.picture = request.FILES['picture']
+                if 'picture' in request.FILES:
+                    lecturer_profile.picture = request.FILES['picture']
+                else:
+                    lecturer_profile.picture = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
                 lecturer_profile.save()
             registered = True
         else:  # invalid form, for whatever reason
@@ -134,6 +137,8 @@ def create_lecturer(request,user_id):
             lecturer_profile.user = user
             if 'picture' in request.FILES:
                 lecturer_profile.picture = request.FILES['picture']
+            else:
+                lecturer_profile.picture = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
             lecturer_profile.save()
             created = True
         else:  # invalid form, for whatever reason
@@ -188,7 +193,7 @@ def add_review(request,username):
         review_form  =ReviewForm()
 
     return render(request, 'ratemylecturer/add_review.html', {})
-
+# creates student profile for user who logs in using google or facebook
 def save_profile(backend, user, response, details, **kwargs):
     if backend.name == 'facebook':
 
@@ -196,16 +201,31 @@ def save_profile(backend, user, response, details, **kwargs):
 
         profile.first_name = details.get('first_name')
         profile.surname = details.get('last_name')
+
         profile.picture= "http://graph.facebook.com/%s/picture?type=large"%response['id']
         profile.save()
 
     elif backend.name == 'google-oauth2':
         profile = StudentProfile.objects.get_or_create(user_id=user.id)[0]
 
-        profile.first_name = details.get('first_name')
-        profile.surname = details.get('last_name')
-        profile.picture = "http://graph.facebook.com/%s/picture?type=large" % response['id']
+        profile.first_name = details.get('first_name').captialize()
+        profile.surname = details.get('last_name').capitalize()
+        if response['image'].get('isDefault')==False:
+            profile.picture = response['image'].get('url')
+        else:
+            profile.picture = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
         profile.save()
+
+def check_email_exists(request,details, *args, **kwargs):
+    email = details.get('email', '')
+    # check if given email is in use
+    count = User.objects.filter(email=email).count()
+    if count>0:
+        user=User.objects.get(email=email)
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        login(request, user)
+        return HttpResponseRedirect(reverse('index'))
+
 @login_required()
 def user_logout(request):
     logout(request)

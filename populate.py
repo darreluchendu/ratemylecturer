@@ -15,8 +15,8 @@ def populate():
         {"module":"ADS","rating":2,"likes":14,"dislikes":5,"body":"Poor","title":"Poor"}
     ]
     students=[
-        {"username":"bob","password":12345678,"email":"ad@gmail.com","first":"Bob","sur":"Ryu","bio":"I like trains","reviews":[reviews[0]],"img":"profile_images/kid1.jpg"},
-        {"username":"sam","password":12345678,"email":"sf2@gmail.com","first":"Sam","sur":"Nut","bio":"I see dead people","reviews":[reviews[1],reviews[2]],"img":"profile_images/kid2.jpg"}
+        {"username":"bob","password":12345678,"email":"ad@gmail.com","first":"Bob","sur":"Ryu","bio":"I like trains","reviews":[reviews[0]],"img":"ratemylecturer/media/profile_images/kid1.jpg"},
+        {"username":"sam","password":12345678,"email":"sf2@gmail.com","first":"Sam","sur":"Nut","bio":"I see dead people","reviews":[reviews[1],reviews[2]],"img":"ratemylecturer/media/profile_images/kid2.jpg"}
     ]  
     lecturers=[
         {"username":"julia","password":12345678,"email":"asv@gmail.com","name":"Julia Ass","bio":"Easy-going Lecturer","uni":"University of North Korea","depart":"Computer Science","reviews":[reviews[0],reviews[2]],"img":"profile_images/adult2.jpg"},

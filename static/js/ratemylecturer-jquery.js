@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
         $('#lec_id').hide();
 
         $('.user_radio').click(function () {

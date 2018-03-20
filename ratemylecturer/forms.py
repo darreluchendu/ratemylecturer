@@ -33,9 +33,25 @@ class LecturerProfileForm(forms.ModelForm):
     bio = forms.CharField(widget=forms.Textarea(), required=False)
     picture = forms.ImageField(required=False)
 
+
     class Meta:
         model=LecturerProfile
         exclude=("",)
+
+    # def save(self, *args, **kwargs):
+    #     for field in ['department', 'university']:
+    #         new_val=''
+    #         val = getattr(self, field, False)
+    #         if val:
+    #             if val.split()>1:
+    #                 for word in val.split():
+    #                     if word.length()>3:
+    #                         new_val+=val.capitalize+' '
+    #             setattr(self, field, new_val)
+    #     name = getattr(self, 'name', False)
+    #     setattr(self, 'name', name.title())
+    #     super(LecturerProfileForm, self).save(*args, **kwargs)
+
 # StudentProfile model's form
 class StudentProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -48,9 +64,27 @@ class StudentProfileForm(forms.ModelForm):
     bio = forms.CharField(widget=forms.Textarea(), required=False)
     picture = forms.ImageField(required=False)
 
+
+
     class Meta:
         model=StudentProfile
         exclude=("",)
+
+    # def save(self, *args, **kwargs):
+    #     for field in ['course', 'university']:
+    #         new_val=''
+    #         val = getattr(self, field, False)
+    #         if val:
+    #             if val.split()>1:
+    #                 for word in val.split():
+    #                     if word.length()>3:
+    #                         new_val+=val.capitalize+' '
+    #             setattr(self, field, new_val)
+    #     for field_name in ['first_name', 'surname']:
+    #         val = getattr(self, field_name, False)
+    #         if val:
+    #             setattr(self, field_name, val.capitalize())
+    #     super(StudentProfileForm, self).save(*args, **kwargs)
 
 # Review model's form
 class ReviewForm(forms.ModelForm):
