@@ -15,6 +15,29 @@ class StudentProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+    def save(self, *args, **kwargs):
+        for field in ['course', 'university']:
+            new_val = []
+            val = getattr(self, field, False)
+            if val:
+                val_list = val.split(' ')
+                if len(val_list) > 1:
+                    for word in val_list:
+                        if len(word) > 3 or val_list.index(word) == 0 or val_list.index(word) == len(val_list) - 1:
+                            new_val.append(word.capitalize())
+                        else:
+                            new_val.append(word)
+                    setattr(self, field, ' '.join(new_val))
+                else:
+                    setattr(self, field, val.capitalize())
+
+        for field_name in ['first_name', 'surname']:
+            val = getattr(self, field_name, False)
+            if val:
+                setattr(self, field_name, val.capitalize())
+        super(StudentProfile, self).save(*args, **kwargs)
+
+
 class LecturerProfile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     name= models.CharField(max_length=30)
@@ -26,7 +49,24 @@ class LecturerProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
+    def save(self, *args, **kwargs):
+        for field in ['department', 'university']:
+            new_val = []
+            val = getattr(self, field, False)
+            if val:
+                val_list = val.split(' ')
+                if len(val_list) > 1:
+                    for word in val_list:
+                        if len(word) > 3 or val_list.index(word) == 0 or val_list.index(word) == len(val_list) - 1:
+                            new_val.append(word.capitalize())
+                        else:
+                            new_val.append(word)
+                    setattr(self, field, ' '.join(new_val))
+                else:
+                    setattr(self, field, val.capitalize())
+        name = getattr(self, 'name', False)
+        setattr(self, 'name', name.title())
+        super(LecturerProfile, self).save(*args, **kwargs)
 
 class Review(models.Model):
 

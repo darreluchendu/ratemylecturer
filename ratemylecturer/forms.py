@@ -19,6 +19,8 @@ class UserForm(forms.ModelForm):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("This email is already in use")
+        if email.endswith(".ac.uk")==False:
+            raise forms.ValidationError("Must use university email address. i.e ends with 'ac.uk'")
         return email
 
 # LecturerProfile model's form
@@ -38,19 +40,6 @@ class LecturerProfileForm(forms.ModelForm):
         model=LecturerProfile
         exclude=("",)
 
-    # def save(self, *args, **kwargs):
-    #     for field in ['department', 'university']:
-    #         new_val=''
-    #         val = getattr(self, field, False)
-    #         if val:
-    #             if val.split()>1:
-    #                 for word in val.split():
-    #                     if word.length()>3:
-    #                         new_val+=val.capitalize+' '
-    #             setattr(self, field, new_val)
-    #     name = getattr(self, 'name', False)
-    #     setattr(self, 'name', name.title())
-    #     super(LecturerProfileForm, self).save(*args, **kwargs)
 
 # StudentProfile model's form
 class StudentProfileForm(forms.ModelForm):
@@ -70,21 +59,6 @@ class StudentProfileForm(forms.ModelForm):
         model=StudentProfile
         exclude=("",)
 
-    # def save(self, *args, **kwargs):
-    #     for field in ['course', 'university']:
-    #         new_val=''
-    #         val = getattr(self, field, False)
-    #         if val:
-    #             if val.split()>1:
-    #                 for word in val.split():
-    #                     if word.length()>3:
-    #                         new_val+=val.capitalize+' '
-    #             setattr(self, field, new_val)
-    #     for field_name in ['first_name', 'surname']:
-    #         val = getattr(self, field_name, False)
-    #         if val:
-    #             setattr(self, field_name, val.capitalize())
-    #     super(StudentProfileForm, self).save(*args, **kwargs)
 
 # Review model's form
 class ReviewForm(forms.ModelForm):
