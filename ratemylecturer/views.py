@@ -196,10 +196,14 @@ def add_review(request,username):
     return render(request, 'ratemylecturer/add_review.html', {})
 # creates student profile for user who logs in using google or facebook
 def save_profile(backend, user, response, details, **kwargs):
+    num_users=str(User.objects.all().count()+1)
+    username=details.get('first_name').lower() + '_' + details.get('last_name').lower()
+    if User.objects.filter(username=username).exists():
+        user.username = details.get('first_name').lower() + '_' + details.get('last_name').lower() + num_users
+    else:
+        user.username = details.get('first_name').lower() + '_' + details.get('last_name').lower()
     if backend.name == 'facebook':
-
         profile = StudentProfile.objects.get_or_create(user_id=user.id)[0]
-
         profile.first_name = details.get('first_name')
         profile.surname = details.get('last_name')
 
@@ -209,7 +213,7 @@ def save_profile(backend, user, response, details, **kwargs):
     elif backend.name == 'google-oauth2':
         profile = StudentProfile.objects.get_or_create(user_id=user.id)[0]
 
-        profile.first_name = details.get('first_name').captialize()
+        profile.first_name = details.get('first_name').capitalize()
         profile.surname = details.get('last_name').capitalize()
         if response['image'].get('isDefault')==False:
             profile.picture = response['image'].get('url')
