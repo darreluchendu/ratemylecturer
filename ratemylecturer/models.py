@@ -41,7 +41,7 @@ class StudentProfile(models.Model):
 class LecturerProfile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     name= models.CharField(max_length=30)
-
+    rating_avr=models.FloatField(default=0)
     university=models.CharField(max_length=30)
     department=models.CharField(max_length=30)
     bio = models.CharField(max_length=200, blank=True)
@@ -73,7 +73,7 @@ class Review(models.Model):
     lecturer=models.ForeignKey(LecturerProfile, on_delete=models.CASCADE)
     student=models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     module= models.CharField(max_length=30)
-    rating=models.IntegerField()
+    rating=models.IntegerField(default=-1)
     date= models.DateField(auto_now_add=True)
     likes=models.IntegerField(default=0)
     dislikes=models.IntegerField(default=0)

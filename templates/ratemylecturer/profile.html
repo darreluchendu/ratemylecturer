@@ -1,17 +1,23 @@
 {% extends 'ratemylecturer/base.html' %}
 {% block title_block %}
-{{profile.first_name}} {{profile.surname}}
+{{profile.first_name}} {{profile.surname}}{{profile.name}}
 {% endblock %}
 {% block body_block %}
 
-    <p>{{profile.first_name}} {{profile.surname}}</p> <br>
-    <p>{{profile.name}}</p><br>
+  <h1>{{profile.first_name}} {{profile.surname}}</h1>
+   <h1>{{profile.name}}</h1>
+
     <img src="{{ profile.picture }}">
 
     <br>
+<h1>Reviews</h1>
     {% for review in reviews %}
-        <p>{{ review.title }}
-            {{ review.body }}</p>
+        <div class="review">
+            <div>{{ review.title }}</div>
+            <div>{{ review.review_body }}</div>
+        <br>
+        </div>
+
     {% endfor %}
 
     {% if student_profile == False and is_student == True %}

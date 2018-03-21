@@ -100,12 +100,13 @@ def register(request):
         student_profile_form = StudentProfileForm()
     name_list_raw=[]
     request.session["is_ajax"] = False
-    for user in User.objects.filter(username__startswith="proxy_user"):
-        name_list_raw = LecturerProfile.objects.filter(user=user).values_list("name", 'university', "user_id","department")
     name_list = []
-    for name, uni, user,depart in name_list_raw:
-        data = {"name": name, "uni": uni, "value": name + " - " + uni, "user": user,"depart":depart }
-        name_list.append(data)
+    for user in User.objects.filter(email__startswith="proxy_user"):
+
+        name_list_raw=LecturerProfile.objects.filter(user=user).values_list("name", 'university', "user_id","department")
+        for name, uni, user,depart in name_list_raw:
+            data = {"name": name, "uni": uni, "value": name + " - " + uni, "user": user,"depart":depart }
+            name_list.append(data)
     js_data = json.dumps(name_list)
 
     return render(request, 'ratemylecturer/register.html',
@@ -147,7 +148,7 @@ def create_lecturer(request,user_id):
         lecturer_profile_form  =LecturerProfileForm()
     return render( request,'ratemylecturer/create_lecturer.html',{'created': created, 'lecturer_profile_form':lecturer_profile_form,"user_id":user_id,})
 
-@login_required
+
 # Profile
 def profile(request,username):
     profile_user=User.objects.get(username=username)

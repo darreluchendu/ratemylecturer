@@ -3,9 +3,12 @@
 
 <html lang="en">
 {% load staticfiles %}
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" >
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rate My Lecturer -
@@ -33,7 +36,7 @@
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'profile' user.username%}">My Profile</a>
+                    <a class="dropdown-item" href="{% url 'profile' user.username %}">My Profile</a>
                     <a class="dropdown-item" href="{% url 'review' %}">Reviews</a>
                     {% if is_student %}
                          <a class="dropdown-item" href="{% url 'create_lecturer' user.id%}">Add Lecturer</a>

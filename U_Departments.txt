@@ -1,0 +1,14 @@
+Department of Maths
+Department of Chemistry
+Department of Computing Science
+Department of Earth Sciences
+Department of Engineering
+Department of Physics
+Department of Philosophy
+Department of English Literature
+Department of Music
+Department of Biochemistry
+Department of Medicine
+Department of Psychiatry
+Department of Law
+Department of Economics
