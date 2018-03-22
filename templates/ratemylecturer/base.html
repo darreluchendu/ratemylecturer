@@ -6,14 +6,14 @@
 {% load staticfiles %}
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<<<<<<< Updated upstream
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet'
+      type='text/css'>
 
-=======
-<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
->>>>>>> Stashed changes
+
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" >
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rate My Lecturer -
@@ -23,10 +23,14 @@
 </head>
 <body>
 
-<header class="py-5 bg-image-full" style="background-image: url('https://www.timeshighereducation.com/sites/default/files/institution/header_image/uofg_header.jpg')">
+<header class="py-5 bg-image-full"
+        style="background-image: url('https://www.timeshighereducation.com/sites/default/files/institution/header_image/uofg_header.jpg')">
     <div class="masthead-container" style="align-content: left">
+
+
         <h1 style="font-family: 'Segoe UI'">Rate My Lecturer</h1>
-            <p1 style="font-family: 'Segoe UI Light'"> Where you get to see all the lecturers that you just love. Or hate.</p1>
+        <p1 style="font-family: 'Segoe UI Light'"> Where you get to see all the lecturers that you just love. Or hate.
+        </p1>
 
     </div>
 </header>
@@ -35,26 +39,28 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
     <a class="navbar-brand" href="{% url 'index' %}">Home</a>
     <div class="collapse navbar-collapse">
-        <ul class ="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
             {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'profile' user.username %}">My Profile</a>
-                    <a class="dropdown-item" href="{% url 'review' %}">Reviews</a>
-                    {% if is_student %}
-                         <a class="dropdown-item" href="{% url 'create_lecturer' user.id%}">Add Lecturer</a>
-                    {% endif %}
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a>
-                </div>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'profile' user.username %}">My Profile</a>
+                        <a class="dropdown-item" href="{% url 'review' %}">Reviews</a>
+                        {% if is_student %}
+                            <a class="dropdown-item" href="{% url 'create_lecturer' user.id %}">Add Lecturer</a>
+                        {% endif %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a>
+                    </div>
                 </li>
             {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
             {% endif %}
         </ul>
+
     </div>
 </nav>
 {% block body_block %}
@@ -67,10 +73,16 @@
 
 </content>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 <script language="JavaScript" type="text/javascript" src='{% static "js/ratemylecturer-jquery.js" %}'></script>
 {% block script_block %}

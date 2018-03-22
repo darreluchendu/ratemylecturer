@@ -1,8 +1,19 @@
 .review > div {
-	background-color: cadetblue;
-	padding: 10px;
-    }
-.review > div:nth-child(even){
-	background-color: lightgray;
-	padding: 10px;
-    }
+    background-color: cadetblue;
+    padding: 10px;
+}
+
+.review > div:nth-child(even) {
+    background-color: lightgray;
+    padding: 10px;
+}
+
+/* Style the search box inside the navigation bar */
+.nav-item input[type=text] {
+    float: right;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+}
