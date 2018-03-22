@@ -6,22 +6,27 @@
 {% endblock %}
 
 {% block body_block %}
+    <div class="container-fluid login text-center">
 
-    <div class="container-fluid">
-        <h1 class="text-left" style="font-family:'Segoe UI' ">Login </h1>
-        <br/>
 
-        {% if invalid_login %}
-            <p>Invalid login details, please try again.</p>
-        {% endif %}
-        <form method="post" action="{% url 'login' %}">
+        <form class="form-signin" method="post" action="{% url 'login' %}">
+            <img class="mb-4" src="{% static 'images/logo.png' %}" alt="">
+
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            {% if invalid_login %}
+            <p class="text-danger">Invalid login details, please try again.</p>
+            {% endif %}
             {% csrf_token %}
+            <label class="sr-only" for="username">Username</label>
+            <input id=username type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+            <label class="sr-only" for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
 
-            <div class="form-row">
+           {% comment %} <div class="form-row">
                 <div class="col-5">
                     <div class="form-group">
-                        <label style="font-family: 'Segoe UI Light'" for="username">Username</label>
-                        <input type="text" class="form-control" name="username" placeholder="Username">
+                        <label class="sr-only" for="username">Username</label>
+                        <input id=username type="text" class="form-control" name="username" placeholder="Username" required autofocus>
                     </div>
                 </div>
             </div>
@@ -29,31 +34,32 @@
             <div class="form-row">
                 <div class="col-5">
                     <div class="form-group">
-                        <label style="font-family: 'Segoe UI Light'" for="password">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <label class="sr-only" for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" required>
                     </div>
                 </div>
-            </div>
-            <button type="submit" class="btn btn-primary" style="font-family: 'Segoe UI Light'">Log In</button>
+            </div>{% endcomment %}
+            <button type="submit" class="btn btn-lg btn-primary btn-block" >Log In</button>
             <br>
-        </form>
         <div>
-            <hr>
-            <br>
-            <h4>If you are a Student</h4>
+            <hr/>
+            <h4>... Or, if you are a Student</h4>
 
-            <div>
-                <strong><a class="btn btn-primary" style="font-family: 'Segoe UI Light'" href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a></strong>
-                <h6>Or</h6>
-                <strong><a class="btn btn-primary" style="font-family: 'Segoe UI Light'" href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a></strong>
-            </div>
+
+            <a class="btn btn-primary btn-md btn-block social" href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+            <h4 class="social">Or</h4>
+            <a class="btn btn-primary btn-md btn-block social" href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
+
         </div>
-
         <br/>
         <p style="font-family: 'Segoe UI Light'">
             Don't have an account?
             <a href="{% url 'register' %}">Register Here</a>
         </p>
+        </form>
+
+
+
     </div>
 {% endblock %}
 {% block script_block %}

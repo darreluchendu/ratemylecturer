@@ -8,6 +8,32 @@ import django
 django.setup()
 from django.contrib.auth.models import User
 from ratemylecturer.models import StudentProfile, LecturerProfile, Review
+from defusedxml.lxml import fromstring
+# The requests library
+import requests
+def UniversityScraper():
+    API_url = 'https://www.topuniversities.com/sites/default/files/qs-rankings-data/357051.txt?_=1521685252703'
+    scraped_unis=[]
+    uni_names=[]
+    response=requests.get(API_url)
+    count=1
+
+    uni_list=response.json().get('data')
+    for uni in uni_list:
+        uni_dict={}
+
+        if uni['cc']=='GB':
+            uni_dict['url']='https://www.topuniversities.com'+uni['url']
+            uni_dict['name']=uni['title']
+            uni_dict['rank']=count
+            scraped_unis.append(uni_dict)
+
+            uni_names.append(uni['title'])
+            count+=1
+
+    with open('uni_ranking.json', 'w') as json_file:
+        json.dump(scraped_unis, json_file, indent=4)
+    return uni_names[:20]
 
 
 names=[]
@@ -48,8 +74,8 @@ with open('Lecturers.txt', encoding='utf-8') as names_file, open('courses.txt') 
     for line in courses_file:
         courses.append((line.strip()))
 with open('UniversityList.txt') as uniList, open('U_Departments.txt') as depart:
-    for line in uniList:
-        universities.append(line.strip())
+   # for line in uniList:
+     #   universities.append(line.strip())
     for line in depart:
         departments.append(line.strip())
 with open('bios.txt', encoding='utf-8') as bioList, open('pictures.txt', encoding='utf-8') as picList:
@@ -57,45 +83,57 @@ with open('bios.txt', encoding='utf-8') as bioList, open('pictures.txt', encodin
         bios.append(line.strip())
     for line in picList:
         pics.append(line.strip())
+for uni in UniversityScraper():
+    universities.append(uni)
 
 def populate():
-    for i in names[:25]:
-        s=add_student(i)
+    for name in names[:20]:
+        s=add_student(name)
         print("Creating Student " + s.first_name + " " + s.surname,'-',num_users)
     #adding lecturers with good reviews
-    for n in names[25:37]:
-        l=add_lecturer(n)
-        print("Creating Lecturer " + l.name,'-',num_users)
-        for stud in StudentProfile.objects.all()[:5]:
-            add_review(l,stud,True)
-        rating_list = []
-        for r in Review.objects.filter(lecturer=l):
-            rating_list.append(r.rating)
-        l.rating_avr = (sum(rating_list)) / len(rating_list)
-        l.save()
-    # adding lecturers with bad reviews
-    for b in names[37:]:
-        l = add_lecturer(b)
-        print("Creating Lecturer " + l.name, '-', num_users)
-        for stud in StudentProfile.objects.all()[5:10]:
-            add_review(l, stud, False)
-        rating_list=[]
-        for r in  Review.objects.filter(lecturer=l):
-            rating_list.append(r.rating)
-        l.rating_avr=(sum(rating_list))/len(rating_list)
-        l.save()
+    start = 20
+    end = 23
+    for n in universities:
+        for name in names[start:end]:
+            l=add_lecturer(name,n)
+            print("Creating Lecturer " + l.name,'-',num_users)
+            for stud in StudentProfile.objects.all()[:5]:
+                add_review(l,stud)
+            rating_list = []
+            for r in Review.objects.filter(lecturer=l):
+                rating_list.append(r.rating)
+            l.rating_avr = (sum(rating_list)) / len(rating_list)
+            l.save()
+        start+=3
+        end+=3
+
+            # for r in Review.objects.filter(lecturer=l):
+            #     rating_list.append(r.rating)
+            # l.rating_avr = (sum(rating_list)) / len(rating_list)
+            # l.save()
+        # adding lecturers with bad reviews
+        # for i in range(1):
+        #     l = add_lecturer(n)
+        #     print("Creating Lecturer " + l.name, '-', num_users)
+        #     for stud in StudentProfile.objects.all()[5:10]:
+        #         add_review(l, stud, False)
+        #     rating_list=[]
+        #     for r in  Review.objects.filter(lecturer=l):
+        #         rating_list.append(r.rating)
+        #     l.rating_avr=(sum(rating_list))/len(rating_list)
+        #     l.save()
 # creating test accounts username  can be either 'test_student or 'test_Lecturer'; password is below
     test_s=add_student('Test Student')
     test_s.user.set_password('testpassword')
     test_s.user.save()
     for lec in LecturerProfile.objects.all()[5:10]:
-        add_review(lec, test_s, False)
+        add_review(lec, test_s)
 
-    test_l = add_lecturer('Test Lecturer')
+    test_l = add_lecturer('Test Lecturer',random.choice(universities))
     test_l.user.set_password('testpassword')
     test_l.user.save()
     for stud in StudentProfile.objects.all()[5:10]:
-        add_review(test_l, stud, False)
+        add_review(test_l, stud)
     rating_list = []
     for r in Review.objects.filter(lecturer=test_l):
         rating_list.append(r.rating)
@@ -124,7 +162,8 @@ def add_student(name):
     s.save()
     return s
 
-def add_lecturer(name):
+def add_lecturer(name,university):
+
     rand_password = User.objects.make_random_password()
     global num_users
     num_users += 1
@@ -137,19 +176,19 @@ def add_lecturer(name):
     l = LecturerProfile.objects.get_or_create(user=user)[0]
     l.name = name
     l.bio = random.choice(bios)
-    l.university = random.choice(universities)
-    l.department=random.choice(departments)
+    l.university = university
     l.picture=random.choice(pics)
     l.rating_avr=0
     l.save()
     return l
 
-def add_review(lecturer,student,good):
+def add_review(lecturer,student):
     r=Review.objects.get_or_create(lecturer=lecturer, student=student)[0]
     r.module=random.choice(modules)
 
     r.likes=random.randrange(1,15)
     r.dislikes=random.randrange(1,10)
+    good = random.choice([True, False])
     if good==True:
         r.review_body=random.choice(comments_g)
         r.rating = random.randint(4, 5)

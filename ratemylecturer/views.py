@@ -26,6 +26,7 @@ def lecturer_ajax_data(request):
     proxy_user = post_data["user"]
     request.session["user_id"]=proxy_user
     request.session["is_ajax"] =True
+
     return HttpResponse("")
 
 def user_login(request):
