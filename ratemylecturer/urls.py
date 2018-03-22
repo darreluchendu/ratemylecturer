@@ -3,7 +3,6 @@ from django.conf.urls import url
 from ratemylecturer import views
 
 urlpatterns = [
-
     url(r'^$', views.index, name='index'),
     url(r'^about/$', views.about, name='about'),
     url(r'^add_lecturer/(?P<user_id>[\w\-]+)/$', views.create_lecturer, name='create_lecturer'),

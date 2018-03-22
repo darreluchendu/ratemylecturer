@@ -16,15 +16,13 @@
     {% endif %}
 
     <br>
-<h1>Reviews</h1>
-
     {% if user.username == profile_user %}
         <a href="{% url 'edit_profile' user.username %}">Edit Profile</a>
     {% endif %}
     <h1>Reviews</h1>
     {% for review in reviews %}
         <div class="review">
-            <div><strong>{{ review.lecturer }}</strong>
+            <div><strong>{{ review.lecturer.name }}</strong>
                 <input id="input-2" name="input-2" class="rating rating-loading" value="{{ review.rating }}"
                        data-show-clear="false"
                        readonly></div>
@@ -32,12 +30,7 @@
             <div>{{ review.review_body }}</div>
             <br>
         </div>
-
     {% endfor %}
 
-
-    {% if student_profile == False and is_student == True %}
-        <a href="{% url 'add_review' profile_user %}">Add a Review</a>
-    {% endif %}
 
 {% endblock %}

@@ -10,13 +10,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm
 from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserMethods
-
+from ratemylecturer.models import Review, StudentProfile, LecturerProfile,UserMethods
 
 def index(request):
     reviews_list = Review.objects.order_by('-date')[:3]
     context_dict = {'reviews': reviews_list, 'user': request.user}
     return render(request, 'ratemylecturer/index.html', context_dict)
-
 
 def about(request):
     return render(request, 'ratemylecturer/about.html', {})
@@ -187,7 +186,6 @@ def add_review(request, username):
     added = False
     student = StudentProfile.objects.get(user__username=username)
     lec_list = LecturerProfile.objects.order_by('-user__date_joined')
-
     if request.method == 'POST':
         review_form = ReviewForm(data=request.POST)
         lecturer = request.POST.get('lecturer_id')
@@ -195,17 +193,16 @@ def add_review(request, username):
             review = review_form.save(commit=False)
             review.lecturer = LecturerProfile.objects.get(id=int(lecturer))
             review.student = student
-
+            review.lecturer=LecturerProfile.objects.get(id=int(lecturer))
+            review.student = request.user.id
             review.save()
             added = True
         else:  # invalid form, for whatever reason
             print(review_form.errors)
     else:  # not http POST
         review_form = ReviewForm()
-
     return render(request, 'ratemylecturer/add_review.html', {'review_form': review_form,
                                                               'username': username, 'lec_list': lec_list})
-
 
 # creates student profile for user who logs in using google or facebook
 def save_profile(backend, user, response, details, **kwargs):
