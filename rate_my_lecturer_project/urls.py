@@ -17,14 +17,14 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from ratemylecturer import views, regbackend
-from django.contrib.auth import views as auth_views
+
+from django.contrib.auth import views
 
 
 
 urlpatterns = [
    url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index, name='index'),
+    #url(r'^$', views.index, name='index'),
     url(r'^ratemylecturer/', include('ratemylecturer.urls')),
    # url(r'^$', views.index, name='home'),
    # url(r'^ratemylecturer/login/$', auth_views.login, name='login'),

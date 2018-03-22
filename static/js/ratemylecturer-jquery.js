@@ -1,5 +1,7 @@
 $(document).ready(function() {
-        $( ".user_radio" ).checkboxradio();
+        $(".user_radio" ).checkboxradio({
+            icon:false
+        })
 
         $('#lec_id').hide();
 
