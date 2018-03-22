@@ -11,14 +11,21 @@
         <a name="sign_in" href="{% url 'login' %}">Login</a>
 
     {% else %}
-        <div class="container-fluid">
-            <h2 style="font-family: 'Segoe UI'">Register</h2>
 
-        <input class=user_radio id="student_radio" type="radio" name="user" value="student" >
-        <label for="student">Student</label>
+        <h2 id="register_header">Register as a Student</h2>
+        <div class="widget">
+        <fieldset>
+             <legend>Select a User type: </legend>
+            <label for="student_radio">Student</label>
+            <input class="user_radio" id="student_radio" type="radio" name="user" value="student" >
+            <label for="lecturer_radio">Lecturer</label>
+            <input class="user_radio" id="lecturer_radio" type="radio" name="user" value="lecturer" >
+        </fieldset>
+        </div>
 
-        <input class=user_radio id="lecturer_radio" type="radio" name="user" value="lecturer" >
-        <label for="lecturer">Lecturer</label>
+
+
+
 
         <div id="stu_id">
             <form id="user_form_student" method="post" action="{% url 'register' %}" enctype="multipart/form-data">

@@ -1,28 +1,48 @@
 {% extends 'ratemylecturer/base.html' %}
 {% block title_block %}
-{{profile.first_name}} {{profile.surname}}{{profile.name}}
+    {{ profile.first_name }} {{ profile.surname }}{{ profile.name }}
 {% endblock %}
 {% block body_block %}
 
-  <h1>{{profile.first_name}} {{profile.surname}}</h1>
-   <h1>{{profile.name}}</h1>
+    <h1>{{ profile.first_name }} {{ profile.surname }}</h1>
+    <h1>{{ profile.name }}</h1>
 
-    <img src="{{ profile.picture }}">
 
+    <img src="{{ profile.picture }}"><br>
+    {% if not student_profile %}
+        <label for="input-2" class="control-label">Average Rating</label>
+        <input id="input-2" name="input-2" class="rating rating-loading" value="{{ profile.rating_avr }}" readonly>
+    {% endif %}
+
+>>>>>>> 497e77d20b81e541ada7fecf2964dd0a616ec0a3
     <br>
+<<<<<<< HEAD
 <h1>Reviews</h1>
+=======
+
+    {% if user.username == profile_user %}
+        <a href="{% url 'edit_profile' user.username %}">Edit Profile</a>
+    {% endif %}
+    <h1>Reviews</h1>
+
+>>>>>>> cc6a26c481505d384ad28672366fd0eb187a5879
 
     {% for review in reviews %}
         <div class="review">
             <div>{{ review.title }}</div>
             <div>{{ review.review_body }}</div>
-        <br>
+            <br>
         </div>
 
     {% endfor %}
 
+<<<<<<< HEAD
     {% if student_profile == True and is_student == True %}
      <a href="{% url 'add_review' profile_user %}">Add a Review</a>
+=======
+    {% if student_profile == False and is_student == True %}
+        <a href="{% url 'add_review' profile_user %}">Add a Review</a>
+>>>>>>> cc6a26c481505d384ad28672366fd0eb187a5879
     {% endif %}
-{% endblock %}
 
+{% endblock %}
