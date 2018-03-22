@@ -18,13 +18,13 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
-from django.contrib.auth import views
+from ratemylecturer import views
 
 
 
 urlpatterns = [
    url(r'^admin/', admin.site.urls),
-    #url(r'^$', views.index, name='index'),
+    url(r'^$', views.index, name='index'),
     url(r'^ratemylecturer/', include('ratemylecturer.urls')),
    # url(r'^$', views.index, name='home'),
    # url(r'^ratemylecturer/login/$', auth_views.login, name='login'),
