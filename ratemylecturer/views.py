@@ -9,22 +9,14 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm
-from ratemylecturer.models import Review, StudentProfile, LecturerProfile,UserMethods
-
-<<<<<<< HEAD
-def index(request):
-    reviews_list = Review.objects.order_by('-date')[:3]
-    context_dict = {'reviews': reviews_list,'user':request.user}
-    return render(request,'ratemylecturer/index.html', context_dict)
-=======
+from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserMethods
 
 
 def index(request):
     reviews_list = Review.objects.order_by('-date')[:3]
-    context_dict = {'reviews': reviews_list}
+    context_dict = {'reviews': reviews_list, 'user': request.user}
     return render(request, 'ratemylecturer/index.html', context_dict)
 
->>>>>>> cc6a26c481505d384ad28672366fd0eb187a5879
 
 def about(request):
     return render(request, 'ratemylecturer/about.html', {})
@@ -191,29 +183,19 @@ def review(request):
 
 @user_passes_test(UserMethods.is_student)
 @login_required()
-<<<<<<< HEAD
-def add_review(request,username):
-    added=False
-    student=StudentProfile.objects.get(user__username=username)
-    lec_list=LecturerProfile.objects.order_by('-user__date_joined')
-=======
 def add_review(request, username):
     added = False
-    lecturer = User.objects.get(username=username)
-    lecturer_id = lecturer.id
->>>>>>> cc6a26c481505d384ad28672366fd0eb187a5879
+    student = StudentProfile.objects.get(user__username=username)
+    lec_list = LecturerProfile.objects.order_by('-user__date_joined')
+
     if request.method == 'POST':
         review_form = ReviewForm(data=request.POST)
         lecturer = request.POST.get('lecturer_id')
         if review_form.is_valid():
             review = review_form.save(commit=False)
-<<<<<<< HEAD
-            review.lecturer=LecturerProfile.objects.get(id=int(lecturer))
-            review.student=student
-=======
-            review.lecturer = lecturer_id
-            review.student = request.user.id
->>>>>>> cc6a26c481505d384ad28672366fd0eb187a5879
+            review.lecturer = LecturerProfile.objects.get(id=int(lecturer))
+            review.student = student
+
             review.save()
             added = True
         else:  # invalid form, for whatever reason
@@ -221,14 +203,10 @@ def add_review(request, username):
     else:  # not http POST
         review_form = ReviewForm()
 
-<<<<<<< HEAD
     return render(request, 'ratemylecturer/add_review.html', {'review_form': review_form,
-                                                              'username': username,'lec_list':lec_list})
-=======
-    return render(request, 'ratemylecturer/add_review.html', {})
+                                                              'username': username, 'lec_list': lec_list})
 
 
->>>>>>> cc6a26c481505d384ad28672366fd0eb187a5879
 # creates student profile for user who logs in using google or facebook
 def save_profile(backend, user, response, details, **kwargs):
     num_users = str(User.objects.all().count() + 1)
