@@ -13,6 +13,9 @@ url(r'^review/$', views.review, name = 'review'),
 url(r'^register/$',views.register,name='register'),
 url(r'^login/$', views.user_login, name='login'),
 url(r'^logout/$', views.user_logout, name='logout'),
+<<<<<<< HEAD
+=======
 url(r'^edit_profile/(?P<username>[\w\-]+)/$', views.edit_profile, name='edit_profile'),
 
+>>>>>>> cc6a26c481505d384ad28672366fd0eb187a5879
 ]

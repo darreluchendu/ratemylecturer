@@ -9,6 +9,37 @@
 {% endblock %}
 
 {% block body_block %}
+<<<<<<< HEAD
+<div class="container-fluid">
+    <h2 class="text-left" style="font-family:'Segoe UI' ">Login </h2>
+        <br/>
+<div class="container" style="border-spacing: 12px; border:1px #adb5bd solid; border-radius: 10px; padding-top: 5px">
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+        <div class="form-group">
+            <label style="font-family: 'Segoe UI Light'" for="username">Username</label>
+            <input type="text" class="form-control" name="username" placeholder="Username">
+        </div>
+    <br/>
+        <div class="form-group">
+            <label style="font-family: 'Segoe UI Light'" for="password">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+    <button type="submit" class="btn btn-primary" style="font-family: 'Segoe UI Light'">Log In</button>
+    </form>
+        </span>
+<br/>
+<p style="font-family: 'Segoe UI Light'">
+    Don't have an account?
+    <a href="{% url 'register' %}">Register Here</a>
+</p>
+    </div>
+      <div class="container-fluid-" style="justify-items: center">
+            <hr>
+            <h4 class="text-center">OR</h4>
+                <br/>
+=======
+>>>>>>> cc6a26c481505d384ad28672366fd0eb187a5879
 
     <div class="container-fluid login text-center">
 

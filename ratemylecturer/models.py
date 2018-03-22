@@ -78,6 +78,18 @@ class LecturerProfile(models.Model):
         super(LecturerProfile, self).save(*args, **kwargs)
 
 class Review(models.Model):
+<<<<<<< HEAD
+
+    lecturer=models.ForeignKey(LecturerProfile, on_delete=models.CASCADE)
+    student=models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    module= models.CharField(max_length=30)
+    rating=models.IntegerField(default=0)
+    date= models.DateField(auto_now_add=True)
+    likes=models.IntegerField(default=0)
+    dislikes=models.IntegerField(default=0)
+    title=models.CharField(max_length=30)
+    review_body=models.CharField(max_length=200, blank=True)
+=======
     lecturer = models.ForeignKey(LecturerProfile, on_delete=models.CASCADE)
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     module = models.CharField(max_length=30)
@@ -87,6 +99,7 @@ class Review(models.Model):
     dislikes = models.IntegerField(default=0)
     title = models.CharField(max_length=30)
     review_body = models.CharField(max_length=200, blank=True)
+>>>>>>> cc6a26c481505d384ad28672366fd0eb187a5879
 
     def __str__(self):
         return self.title

@@ -16,6 +16,7 @@
     {% endif %}
 
     <br>
+<h1>Reviews</h1>
 
     {% if user.username == profile_user %}
         <a href="{% url 'edit_profile' user.username %}">Edit Profile</a>
@@ -33,6 +34,7 @@
         </div>
 
     {% endfor %}
+
 
     {% if student_profile == False and is_student == True %}
         <a href="{% url 'add_review' profile_user %}">Add a Review</a>

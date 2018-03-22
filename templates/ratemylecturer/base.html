@@ -5,6 +5,13 @@
 <html lang="en">
 {% load staticfiles %}
 
+<<<<<<< HEAD
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+=======
+>>>>>>> cc6a26c481505d384ad28672366fd0eb187a5879
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
@@ -83,10 +90,26 @@
             <a class="nav-item nav-link active" href="{% url 'index' %}">Home<span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
             {% if user.is_authenticated %}
+<<<<<<< HEAD
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'profile' user.username %}">My Profile</a>
+                    <a class="dropdown-item" href="{% url 'review' %}">Reviews</a>
+                    {% if is_student %}
+                        <a class="dropdown-item" href="{% url 'create_lecturer' user.id %}">Add Lecturer</a>
+                        <a class="dropdown-item" href="{% url 'add_review' user.username %}">Add Review</a>
+                    {% endif %}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a>
+                </div>
+                </li>
+=======
 
                 <a class="nav-item nav-link" href="{% url 'profile' user.username %}">My Profile</a>
                 <a class="nav-item nav-link" href="{% url 'logout' %}">Sign Out</a>
 
+>>>>>>> cc6a26c481505d384ad28672366fd0eb187a5879
             {% else %}
                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                 <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
