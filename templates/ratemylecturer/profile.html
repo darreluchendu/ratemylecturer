@@ -11,20 +11,22 @@
     <img src="{{ profile.picture }}"><br>
     {% if not student_profile %}
         <label for="input-2" class="control-label">Average Rating</label>
-        <input id="input-2" name="input-2" class="rating rating-loading" value="{{ profile.rating_avr }}" readonly>
+        <input id="input-2" name="input-2" class="rating rating-loading" value="{{ profile.rating_avr }}" readonly
+               data-show-clear="false">
     {% endif %}
 
->>>>>>> 497e77d20b81e541ada7fecf2964dd0a616ec0a3
     <br>
 
     {% if user.username == profile_user %}
         <a href="{% url 'edit_profile' user.username %}">Edit Profile</a>
     {% endif %}
     <h1>Reviews</h1>
-
-
     {% for review in reviews %}
         <div class="review">
+            <div><strong>{{ review.lecturer }}</strong>
+                <input id="input-2" name="input-2" class="rating rating-loading" value="{{ review.rating }}"
+                       data-show-clear="false"
+                       readonly></div>
             <div>{{ review.title }}</div>
             <div>{{ review.review_body }}</div>
             <br>
