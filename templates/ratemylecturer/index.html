@@ -8,15 +8,19 @@
 {% block body_block %}
     <div class="row">
     <div class="col-sm-9">
-        <div class = "container-fluid" style="justify-content: center">
-            <h1 class="text-left" style="font-family: 'Segoe UI'">Welcome to Rate My Lecturer</h1>
+        <div class = "container" style="justify-content: center; border-spacing: 12px">
+            <h2 class="text-left" style="font-family: 'Segoe UI'">Welcome to Rate My Lecturer</h2>
             {% if user.is_authenticated %}
             <p1 style="font-family: 'Segoe UI Light'">   Hey there, {{ user.username }}! </p1>
             {% else %}
             <br/>
-
-            <p1 style="font-family: 'Segoe UI Light'"> Where you get to see all the lecturers that you just love. Or hate.</p1>
+            <p1 style="font-family: 'Segoe UI Light'">This is where the top lecturer of the week would be.</p1>
             {% endif %}
+        </div>
+        <br/>
+        <div class="container-fluid" style="border-spacing: 12px">
+            <h2 style="font-family: 'Segoe UI'">Top Lecturers</h2>
+            <p2 style="font-family: 'Segoe UI Light'">This is where you can see the top lecturers. </p2>
         </div>
     </div>
     <div class="col-sm-3">

@@ -1,17 +1,18 @@
 {% extends 'ratemylecturer/base.html' %}
 {% load staticfiles %}
-
 {% block title_block %}
-    Register
+    Registration
 {% endblock %}
 
 {% block body_block %}
+    <div class="container-fluid">
     {% if registered %}
-        <p>Thank you for registering</p>
+        <p1 style="font-family: 'Segoe UI Light'">Thank you for registering</p1>
         <a name="sign_in" href="{% url 'login' %}">Login</a>
 
     {% else %}
-        <h2 id="register_header">Register as a Student</h2>
+        <div class="container-fluid">
+            <h2 style="font-family: 'Segoe UI'">Register</h2>
 
         <input class=user_radio id="student_radio" type="radio" name="user" value="student" >
         <label for="student">Student</label>
@@ -37,6 +38,7 @@
         </div>
 
     {% endif %}
+    </div>
 {% endblock %}
 {% block script_block %}
     <script type="text/javascript">
