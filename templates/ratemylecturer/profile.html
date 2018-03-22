@@ -7,14 +7,15 @@
     <h1>{{ profile.first_name }} {{ profile.surname }}</h1>
     <h1>{{ profile.name }}</h1>
 
-    <img src="{{ profile.picture }}">
+    <img src="{{ profile.picture }}"><br>
+    {% if not student_profile %}
+        <label for="input-2" class="control-label">Average Rating</label>
+        <input id="input-2" name="input-2" class="rating rating-loading" value="{{ profile.rating_avr }}" readonly>
+    {% endif %}
 
     <br>
     <h1>Reviews</h1>
-    <!-- Yusuf - Lecturer Average rating -->
-    {% if not student_profile %}
 
-    {% endif %}
 
     {% for review in reviews %}
         <div class="review">
@@ -29,4 +30,3 @@
         <a href="{% url 'add_review' profile_user %}">Add a Review</a>
     {% endif %}
 {% endblock %}
-
