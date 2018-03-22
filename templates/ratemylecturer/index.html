@@ -20,7 +20,15 @@
         <br/>
         <div class="container-fluid" style="border-spacing: 12px">
             <h2 style="font-family: 'Segoe UI'">Top Lecturers</h2>
+            {% if top %}
+                <ul>
+                {% for t in top %}
+                    <li style="font-family: 'Segoe UI Light'">{{ t.name }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
             <p2 style="font-family: 'Segoe UI Light'">This is where you can see the top lecturers. </p2>
+            {% endif %}
         </div>
     </div>
     <div class="col-sm-3">
@@ -30,7 +38,7 @@
 	        {% if reviews %}
 	            <ul>
 		        {% for review in reviews %}
-                    <li><a style="font-family: 'Segoe UI Light'" href="{{ review.url }}">{{ review.lecturer }}</a></li>
+                    <li><a style="font-family: 'Segoe UI Light'" href="{{ review.url }}">{{ review.lecturer.name }}</a></li>
                 {% endfor %}
 	            </ul>
 	        {% else %}
