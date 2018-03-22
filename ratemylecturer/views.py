@@ -28,8 +28,8 @@ def lecturer_ajax_data(request):
     post_data = json.loads(request.body.decode('utf-8'))
     proxy_user = post_data["user"]
 
-    request.session["user_id"]=proxy_user
-    request.session["is_ajax"] =True
+    request.session["user_id"] = proxy_user
+    request.session["is_ajax"] = True
 
     return HttpResponse("")
 
@@ -127,7 +127,6 @@ def create_lecturer(request, user_id):
     created = False
     # flag to tell if registration is successful
     if request.method == 'POST':
-
         lecturer_profile_form = LecturerProfileForm(data=request.POST)
         if lecturer_profile_form.is_valid():
             # save user form data
@@ -209,10 +208,10 @@ def add_review(request, username):
 def save_profile(backend, user, response, details, **kwargs):
     num_users = str(User.objects.all().count() + 1)
     fname = details.get('first_name').lower()
-    sname=details.get('last_name').lower()
-    fname.replace(" ","_")
-    sname.replace(" ","_")
-    username=fname+sname
+    sname = details.get('last_name').lower()
+    fname.replace(" ", "_")
+    sname.replace(" ", "_")
+    username = fname + sname
     if User.objects.filter(username=username).exists():
         user.username = details.get('first_name').lower() + '_' + details.get('last_name').lower() + num_users
     else:
