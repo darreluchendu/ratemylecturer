@@ -1,27 +1,36 @@
 {% extends 'ratemylecturer/base.html' %}
 {% block title_block %}
-{{profile.first_name}} {{profile.surname}}{{profile.name}}
+    {{ profile.first_name }} {{ profile.surname }}{{ profile.name }}
 {% endblock %}
 {% block body_block %}
 
-  <h1>{{profile.first_name}} {{profile.surname}}</h1>
-   <h1>{{profile.name}}</h1>
+    <h1>{{ profile.first_name }} {{ profile.surname }}</h1>
+    <h1>{{ profile.name }}</h1>
 
-    <img src="{{ profile.picture }}">
-
+    <img src="{{ profile.picture }}"/>
     <br>
-<h1>Reviews</h1>
+
+    {% if user.username == profile_user %}
+        <a href="{% url 'edit_profile' user.username %}">Edit Profile</a>
+    {% endif %}
+    <h1>Reviews</h1>
+    <!-- Yusuf - Lecturer Average rating -->
+    {% if not student_profile %}
+
+    {% endif %}
+
     {% for review in reviews %}
         <div class="review">
             <div>{{ review.title }}</div>
             <div>{{ review.review_body }}</div>
-        <br>
+            <br>
         </div>
 
     {% endfor %}
 
     {% if student_profile == False and is_student == True %}
-     <a href="{% url 'add_review' profile_user %}">Add a Review</a>
+        <a href="{% url 'add_review' profile_user %}">Add a Review</a>
     {% endif %}
+
 {% endblock %}
 

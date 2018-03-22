@@ -68,16 +68,3 @@ class ReviewForm(forms.ModelForm):
 	class Meta:
 		model = Review
 		fields = ('module', 'rating', 'likes', 'dislikes', 'title', 'review_body')
-
-
-# Edit StudentProfile form
-class EditStudentProfileForm(forms.ModelForm):
-	class Meta:
-		model = StudentProfile
-		fields = ('first_name', 'surname', 'university', 'course', 'bio', 'picture',)
-
-# Edit LecturerProfile form
-class EditLecturerProfileForm(forms.ModelForm):
-	class Meta:
-		model = LecturerProfile
-		fields = ('name', 'department', 'university', 'bio', 'picture',)
