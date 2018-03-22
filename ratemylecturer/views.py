@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm
+from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm, EditStudentProfileForm, EditLecturerProfileForm
 from ratemylecturer.models import Review, StudentProfile, LecturerProfile,UserMethods
 
 def index(request):
@@ -235,3 +235,26 @@ def check_email_exists(request,details, *args, **kwargs):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
+@login_required
+def edit_profile(request, username):
+    profile_user = User.objects.get(username=username)
+    if UserMethods.is_student(profile_user):
+        if request.method == 'POST':
+            form = EditStudentProfileForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse('ratemylecturer/profile.html'))
+        else:
+            form = EditStudentProfileForm(instance=request.user)
+        return render(request, 'ratemylecturer/edit_profile.html', {'edit_stud_profile_form': form})
+    else:
+        if request.method == 'POST':
+            form = EditLecturerProfileForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse('ratemylecturer/profile.html'))
+        else:
+            form = EditLecturerProfileForm(instance=request.user)
+        return render(request, 'ratemylecturer/edit_profile.html', {'edit_lec_profile_form': form})
