@@ -9,9 +9,9 @@ Add a Review
     <h2 class="text-left" style="font-family: 'Segoe UI'">Add a Review</h2>
         <br/>
     <form id="review_form" method="post" action="{% url 'add_review' username %}" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="form-group">
-            {% csrf_token %}
-      <label for="lecturer_list">Select a Lecturer</label>
+      <label for="lecturer_list" style="font-family: 'Segoe UI Light'">Select a Lecturer</label>
       <select class="form-control" id="lecturer_list" name="lecturer_id">
         {% for lec in lec_list %}
                 <option value="{{ lec.id }}">{{ lec.name }}</option>
