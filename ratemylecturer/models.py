@@ -73,7 +73,7 @@ class Review(models.Model):
     lecturer=models.ForeignKey(LecturerProfile, on_delete=models.CASCADE)
     student=models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     module= models.CharField(max_length=30)
-    rating=models.IntegerField(default=-1)
+    rating=models.IntegerField(default=0)
     date= models.DateField(auto_now_add=True)
     likes=models.IntegerField(default=0)
     dislikes=models.IntegerField(default=0)

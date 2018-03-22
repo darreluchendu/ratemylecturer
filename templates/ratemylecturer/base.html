@@ -7,11 +7,8 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<<<<<<< Updated upstream
-
-=======
 <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
->>>>>>> Stashed changes
+
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" >
     <meta charset="UTF-8">
@@ -44,7 +41,8 @@
                     <a class="dropdown-item" href="{% url 'profile' user.username %}">My Profile</a>
                     <a class="dropdown-item" href="{% url 'review' %}">Reviews</a>
                     {% if is_student %}
-                         <a class="dropdown-item" href="{% url 'create_lecturer' user.id%}">Add Lecturer</a>
+                        <a class="dropdown-item" href="{% url 'create_lecturer' user.id%}">Add Lecturer</a>
+                        <a class="dropdown-item" href="{% url 'add_review' username %}">Add Review</a>
                     {% endif %}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a>

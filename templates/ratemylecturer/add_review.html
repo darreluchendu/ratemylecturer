@@ -4,8 +4,25 @@ Add a Review
 {% endblock %}
 
 {% block body_block %}
+    {% if is_student == True %}
 <div class="container-fluid">
     <h2 class="text-left" style="font-family: 'Segoe UI'">Add a Review</h2>
-    <br/>
-    <form method="p"
+        <br/>
+    <form id="review_form" method="post" action="{% url 'add_review' username %}" enctype="multipart/form-data">
+        <div class="form-group">
+            {% csrf_token %}
+      <label for="lecturer_list">Select a Lecturer</label>
+      <select class="form-control" id="lecturer_list" name="lecturer_id">
+        {% for lec in lec_list %}
+                <option value="{{ lec.id }}">{{ lec.name }}</option>
+                    {% endfor %}
+      </select>
+        {{ review_form.as_p }}
+        <button type="submit" class="btn btn-primary" style="font-family: 'Segoe UI Light'">Submit</button>
+        </div>
+    </form>
 </div>
+    {% else %}
+        <h2 class="text-md-center" style="font-family: 'Segoe UI';">Sorry, you're not a student</h2>
+    {% endif %}
+{% endblock %}

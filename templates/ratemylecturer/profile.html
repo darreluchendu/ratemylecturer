@@ -11,6 +11,7 @@
 
     <br>
 <h1>Reviews</h1>
+
     {% for review in reviews %}
         <div class="review">
             <div>{{ review.title }}</div>
@@ -20,7 +21,7 @@
 
     {% endfor %}
 
-    {% if student_profile == False and is_student == True %}
+    {% if student_profile == True and is_student == True %}
      <a href="{% url 'add_review' profile_user %}">Add a Review</a>
     {% endif %}
 {% endblock %}

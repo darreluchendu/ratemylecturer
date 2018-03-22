@@ -178,14 +178,15 @@ def review(request):
 @login_required()
 def add_review(request,username):
     added=False
-    lecturer=User.objects.get(username=username)
-    lecturer_id=lecturer.id
+    student=StudentProfile.objects.get(user__username=username)
+    lec_list=LecturerProfile.objects.order_by('-user__date_joined')
     if request.method == 'POST':
         review_form = ReviewForm(data=request.POST)
+        lecturer = request.POST.get('lecturer_id')
         if review_form.is_valid():
             review = review_form.save(commit=False)
-            review.lecturer=lecturer_id
-            review.student=request.user.id
+            review.lecturer=LecturerProfile.objects.get(id=int(lecturer))
+            review.student=student
             review.save()
             added = True
         else:  # invalid form, for whatever reason
@@ -193,7 +194,8 @@ def add_review(request,username):
     else:# not http POST
         review_form  =ReviewForm()
 
-    return render(request, 'ratemylecturer/add_review.html', {})
+    return render(request, 'ratemylecturer/add_review.html', {'review_form': review_form,
+                                                              'username': username,'lec_list':lec_list})
 # creates student profile for user who logs in using google or facebook
 def save_profile(backend, user, response, details, **kwargs):
     num_users=str(User.objects.all().count()+1)
