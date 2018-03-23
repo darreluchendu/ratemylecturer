@@ -49,11 +49,12 @@ class LecturerProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
     def updateRating(self):
-        rating_list=[]
-        for r in  Review.objects.filter(lecturer=self):
+        rating_list = []
+        for r in Review.objects.filter(lecturer=self):
             rating_list.append(r.rating)
-        self.rating_avr=(sum(rating_list))/len(rating_list)
+        self.rating_avr = (sum(rating_list)) / len(rating_list)
 
     def save(self, *args, **kwargs):
         for field in ['department', 'university']:
@@ -72,16 +73,17 @@ class LecturerProfile(models.Model):
                     setattr(self, field, val.capitalize())
         name = getattr(self, 'name', False)
         setattr(self, 'name', name.title())
-        if Review.objects.filter(lecturer=self).count()>0:
+        if Review.objects.filter(lecturer=self).count() > 0:
             self.updateRating()
 
         super(LecturerProfile, self).save(*args, **kwargs)
+
 
 class Review(models.Model):
     lecturer = models.ForeignKey(LecturerProfile, on_delete=models.CASCADE)
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     module = models.CharField(max_length=30)
-    rating = models.IntegerField(default=-1)
+    rating = models.IntegerField(default=0)
     date = models.DateField(auto_now_add=True)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
@@ -92,10 +94,10 @@ class Review(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if Review.objects.filter(lecturer=self.lecturer).count()>0:
-
+        if Review.objects.filter(lecturer=self.lecturer).count() > 0:
             self.lecturer.updateRating()
         super(Review, self).save(*args, **kwargs)
+
 
 # for defining custom user methods
 

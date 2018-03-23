@@ -10,13 +10,15 @@ from django.views.decorators.csrf import csrf_exempt
 
 from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm
 from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserMethods
-
+from ratemylecturer.models import Review, StudentProfile, LecturerProfile,UserMethods
 
 def index(request):
     reviews_list = Review.objects.order_by('-date')[:3]
-    context_dict = {'reviews': reviews_list,'nbar':"home"}
-    return render(request, 'ratemylecturer/index.html', context_dict)
 
+
+    top_lect=LecturerProfile.objects.order_by('-rating_avr')[:5]
+    context_dict = {'reviews': reviews_list, 'user': request.user,'top':top_lect,'nbar':"home"}
+    return render(request, 'ratemylecturer/index.html', context_dict)
 
 def about(request):
     return render(request, 'ratemylecturer/about.html', {'nbar':'about'})
@@ -27,8 +29,8 @@ def lecturer_ajax_data(request):
     post_data = json.loads(request.body.decode('utf-8'))
     proxy_user = post_data["user"]
 
-    request.session["user_id"]=proxy_user
-    request.session["is_ajax"] =True
+    request.session["user_id"] = proxy_user
+    request.session["is_ajax"] = True
 
     return HttpResponse("")
 
@@ -126,7 +128,6 @@ def create_lecturer(request, user_id):
     created = False
     # flag to tell if registration is successful
     if request.method == 'POST':
-
         lecturer_profile_form = LecturerProfileForm(data=request.POST)
         if lecturer_profile_form.is_valid():
             # save user form data
@@ -187,32 +188,32 @@ def review(request):
 @login_required()
 def add_review(request, username):
     added = False
-    lecturer = User.objects.get(username=username)
-    lecturer_id = lecturer.id
+    student = StudentProfile.objects.get(user__username=username)
+    lec_list = LecturerProfile.objects.order_by('-user__date_joined')
     if request.method == 'POST':
         review_form = ReviewForm(data=request.POST)
+        lecturer = request.POST.get('lecturer_id')
         if review_form.is_valid():
             review = review_form.save(commit=False)
-            review.lecturer = lecturer_id
-            review.student = request.user.id
+            review.lecturer = LecturerProfile.objects.get(id=int(lecturer))
+            review.student = student
             review.save()
             added = True
         else:  # invalid form, for whatever reason
             print(review_form.errors)
     else:  # not http POST
         review_form = ReviewForm()
-
-    return render(request, 'ratemylecturer/add_review.html', {})
-
+    return render(request, 'ratemylecturer/add_review.html', {'review_form': review_form,
+                                                              'username': username, 'lec_list': lec_list})
 
 # creates student profile for user who logs in using google or facebook
 def save_profile(backend, user, response, details, **kwargs):
     num_users = str(User.objects.all().count() + 1)
     fname = details.get('first_name').lower()
-    sname=details.get('last_name').lower()
-    fname.replace(" ","_")
-    sname.replace(" ","_")
-    username=fname+sname
+    sname = details.get('last_name').lower()
+    fname.replace(" ", "_")
+    sname.replace(" ", "_")
+    username = fname + sname
     if User.objects.filter(username=username).exists():
         user.username = details.get('first_name').lower() + '_' + details.get('last_name').lower() + num_users
     else:
@@ -252,3 +253,26 @@ def check_email_exists(request, details, *args, **kwargs):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
+@login_required
+def edit_profile(request, username):
+    profile_user = User.objects.get(username=username)
+    if UserMethods.is_student(profile_user):
+        if request.method == 'POST':
+            form = StudentProfileForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse('ratemylecturer/profile.html'))
+        else:
+            form = StudentProfileForm(instance=request.user)
+        return render(request, 'ratemylecturer/edit_profile.html', {'edit_stud_profile_form': form})
+    else:
+        if request.method == 'POST':
+            form = LecturerProfileForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse('ratemylecturer/profile.html'))
+        else:
+            form = LecturerProfileForm(instance=request.user)
+        return render(request, 'ratemylecturer/edit_profile.html', {'edit_lec_profile_form': form})

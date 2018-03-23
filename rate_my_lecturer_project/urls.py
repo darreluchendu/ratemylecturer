@@ -13,26 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url,include
-from django.contrib import admin
 from django.conf import settings
+from django.conf.urls import url, include
 from django.conf.urls.static import static
+from django.contrib import admin
 
 from ratemylecturer import views
 
-
-
 urlpatterns = [
-   url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index, name='index'),
-    url(r'^ratemylecturer/', include('ratemylecturer.urls')),
-   # url(r'^$', views.index, name='home'),
-   # url(r'^ratemylecturer/login/$', auth_views.login, name='login'),
-   # url(r'^ratemylecturer/logout/$', auth_views.logout, name='logout'),
-    url(r'^oauth/', include('social_django.urls', namespace='social')),
-    #url(r'^accounts/register/$', views.register, name='registration_register'),
-    #url(r'^accounts/', include('registration.backends.default.urls')),
-
-] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
+                  url(r'^admin/', admin.site.urls),
+                  url(r'^$', views.index, name='index'),
+                  url(r'^ratemylecturer/', include('ratemylecturer.urls')),
+                  url(r'^oauth/', include('social_django.urls', namespace='social')),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

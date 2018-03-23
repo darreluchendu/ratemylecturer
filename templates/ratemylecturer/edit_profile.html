@@ -1,0 +1,32 @@
+{% extends 'ratemylecturer/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Edit Profile
+{% endblock %}
+
+{% block body_block %}
+    <div id="stu_id">
+        <form id="edit_stud_profile_form" method="post" action="{% url 'edit_profile' user.username %}"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ edit_studprofile_form.as_p }}
+            <input name="save" type="submit" value="Save">
+        </form>
+    </div>
+    <div id="lec_id">
+        <form id="edit_lec_profile_form" method="post" action="{% url 'edit_profile' user.username %}"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ edit_lecprofile_form.as_p }}
+            <input name="save" type="submit" value="Save">
+        </form>
+    </div>
+
+{% endblock %}
+{% block script_block %}
+    <script type="text/javascript">
+        var name_list =
+        {{ name_list|safe }}
+
+    </script>
+{% endblock %}
