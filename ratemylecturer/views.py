@@ -262,8 +262,10 @@ def user_logout(request):
 
 @login_required
 def edit_profile(request, username):
-    profile_user = User.objects.get(username=username)
+    profile_user = User.objects.get(username=request.user)
+    print(profile_user)
     if UserMethods.is_student(profile_user):
+        print(str(profile_user) + ' is a student')
         if request.method == 'POST':
             edit_stud_profile_form = StudentProfileForm(request.POST, instance=request.user)
             if edit_stud_profile_form.is_valid():
