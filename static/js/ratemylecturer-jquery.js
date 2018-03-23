@@ -19,36 +19,82 @@ $(document).ready(function() {
                 $("#register_header").html("Register as a Student");
             }
         });
-
-
-        $.getJSON('http://127.0.0.1:8000/static/js/uni_ranking.json', function(data) {
-            console.log(typeof(data));
-        })
-        var data = $.map(yourArrayData, function (obj) {
-        obj.id = obj.id || obj.pk; // replace pk with your          identifier
-
-        return obj;
-        });
-        $("#lecturer_name").autocomplete({
-            source: name_list,
-            select: function (event, ui) {
-                event.preventDefault();
-                $("#lecturer_name").val(ui.item.name);
-                $("#lecturer_uni").val(ui.item.uni);
-                $("#lecturer_depart").val(ui.item.depart);
-                var changed = JSON.stringify({"name": ui.item.name, "user": ui.item.user});
-                $.ajax({
-                    method: 'POST',
-                    url: "/ratemylecturer/register/lecturer_ajax_data/",
-                    dataType: 'text',
-                    data: changed,
-                    contentType: 'application/json'
-                })
-            }
-        });
-
-
-
-
+  $.getJSON('/static/js/uni_ranking.json', function(data) {
+      var data_list = []
+      data.forEach(function (dict) {
+          data_list.push({"label": dict["name"], "category": "University"})
+      });
+      lecturers.forEach(function (dict) {
+        data_list.push(dict)
     });
+
+      $.widget("custom.catcomplete", $.ui.autocomplete, {
+          _create: function () {
+              this._super();
+              this.widget().menu("option", "items", "> :not(.ui-autocomplete-category)");
+          },
+          _renderMenu: function (ul, items) {
+              var that = this,
+                  currentCategory = "";
+              $.each(items, function (index, item) {
+                  var li;
+                  ul.addClass('autocpm')
+                  if (item.category != currentCategory) {
+                      ul.append("<li class='ui-autocomplete-category'>" + item.category + "</li>");
+                      currentCategory = item.category;
+                  }
+                  li = that._renderItemData(ul, item);
+                  if (item.category) {
+                      li.attr("aria-label", item.category + " : " + item.label);
+                  }
+              });
+          }
+      });
+
+      $(".main-search").catcomplete({
+          delay: 0,
+          minLength: 2,
+          source: data_list,
+          select: function (event, ui) {
+              event.preventDefault();
+             window.location.href = '/ratemylecturer/profile/'+ui.item.username
+          }
+      });
+    $(".b1").hover(function() {
+        $("#var").html('the school')
+    },function(){
+        $("#var").html('what')
+    })
+      $(".b2").hover(function() {
+        $("#var").html('the outlet')
+    },function(){
+        $("#var").html('what')
+    })
+      $(".b3").hover(function() {
+        $("#var").html('the professor')
+    },function(){
+        $("#var").html('what')
+    })
+      $("#lecturer_name").autocomplete({
+          source: name_list,
+          select: function (event, ui) {
+              event.preventDefault();
+              $("#lecturer_name").val(ui.item.name);
+              $("#lecturer_uni").val(ui.item.uni);
+              $("#lecturer_depart").val(ui.item.depart);
+              var changed = JSON.stringify({"name": ui.item.name, "user": ui.item.user});
+              $.ajax({
+                  method: 'POST',
+                  url: "/ratemylecturer/register/lecturer_ajax_data/",
+                  dataType: 'text',
+                  data: changed,
+                  contentType: 'application/json'
+              })
+          }
+      });
+
+
+  });
+
+});
 

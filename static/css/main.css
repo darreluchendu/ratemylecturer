@@ -67,28 +67,116 @@ body {
 .nav-item{
 
     -webkit-transition: all .3s ease;
-    color: #428bca;
+     color:#0276FD	;
     font-weight: bold;
     font-size: 16px;
-    padding:20px 10px 20px 10px;
+    padding:50px
+
 }
 .nav-item:hover{
     /*background: rgba(255,255,255,.9);*/
-    color:#428bca;
+   color:#428bca;
     background: #3F3F3F;
 
 }
+.main-search {
+    margin-left: 100px;
+    padding: 20px 0px 20px 0px;
+    height: 100%;
 
+
+}
 /*@media(min-width:1000px){*/
     /*.nav-item {*/
 
-         /*padding:20px 10px 20px 10px;*/
+         /*padding:30px 10px 30px 10px;*/
     /*}*/
 /*}*/
 
 
-/*@media(min-width:1300px) {*/
-    /*.main-search {*/
-        /*margin-left: 300px*/
-    /*}*/
-/*}*/
+@media(min-width:1300px) {
+    .main-search {
+        margin-left: 100px
+    }
+}
+.autocpm{
+    padding: 20px;
+}
+.ui-autocomplete {
+    z-index: 2000 !important;
+    max-height: 300px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+}
+.ui-autocomplete-category{
+    background:#3F3F3F ;
+    color: white;
+    padding:10px 0px 10px 0px;
+    font-size: 17px;
+}
+
+ #flex-container {
+     position: relative;
+     bottom: 20px;
+     height: 240px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    border: 1px black solid;
+    margin: 0 auto;
+     background-image:url('http://dice-academy.com/wp-content/uploads/2016/05/education-banner.jpg')
+}
+
+.flex-item {
+   position: absolute;
+    margin-top: 120px;
+    width: 200px;
+    height: 100px;
+    border: 1px black solid;
+    background: black;
+    color:white;
+    text-align: center;
+}
+.b1{
+    left: 783px;
+
+    font-size: 18px;
+}
+
+.b2{
+
+    right:583px;
+
+}
+.b3{
+    right:800px
+
+}
+.flex-item a{
+    position: relative;
+    top:20px;
+    font-size: 18px;
+}
+.flex-item span{
+    display: block;
+    font-size: 25px;
+    font-weight: bolder;
+}
+.flex-item:hover{
+    background:#428bca;
+
+}
+.result{
+    position: absolute;
+    left:360px;
+    top:35px;
+    height:50px;
+    font-weight: bolder;
+    font-size: 40px;
+    color: black;
+}
+.result span{
+    color: #eee;
+}

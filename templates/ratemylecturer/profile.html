@@ -60,6 +60,7 @@
     {% endif %}
     {% for review in reviews %}
         <div class="review">
+         {% if student_profile %}
             <div><strong>{{ review.lecturer.name }}</strong>
                 <input id="input-2" name="input-2" class="rating rating-loading" value="{{ review.rating }}"
                        data-show-clear="false"
@@ -67,6 +68,7 @@
             <div>{{ review.title }}</div>
             <div>{{ review.review_body }}</div>
             <br>
+        {% endif %}
         </div>
     {% endfor %}
 

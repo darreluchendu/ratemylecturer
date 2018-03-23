@@ -1,5 +1,5 @@
 import json
-
+import operator
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm
-from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserMethods
+
 from ratemylecturer.models import Review, StudentProfile, LecturerProfile,UserMethods
 
 def index(request):
@@ -188,7 +188,7 @@ def review(request):
 @login_required()
 def add_review(request, username):
     added = False
-    student = StudentProfile.objects.get(user__username=username)
+    student = StudentProfile.objects.get(user=request.user)
     lec_list = LecturerProfile.objects.order_by('-user__date_joined')
     if request.method == 'POST':
         review_form = ReviewForm(data=request.POST)
@@ -276,3 +276,8 @@ def edit_profile(request, username):
         else:
             form = LecturerProfileForm(instance=request.user)
         return render(request, 'ratemylecturer/edit_profile.html', {'edit_lec_profile_form': form})
+
+def SearchView(request):
+    query=request.POST
+
+

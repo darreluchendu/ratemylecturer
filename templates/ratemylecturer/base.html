@@ -96,7 +96,8 @@
 
        <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2 main-search" type="text" placeholder="Search for Lecturers/Universities"style="width:300px;" aria-label="Search">
-          <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+
+          <button class="search-button btn btn-primary my-2 my-sm-0" type="submit">Search</button>
         </form>
         </ul>
       </div>
@@ -126,9 +127,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="/static/kartik_v_bootstrap_star_rating/js/star-rating.js" type="text/javascript"></script>
 
-<script language="JavaScript" type="text/javascript" src='{% static "js/ratemylecturer-jquery.js" %}'></script>
-{% block script_block %}
 
+{% block script_block %}
 {% endblock %}
+<script>
+    var lecturers={{ lecturers|safe }}
+</script>
+<script language="JavaScript" type="text/javascript" src='{% static "js/ratemylecturer-jquery.js" %}'></script>
 </body>
 </html>
