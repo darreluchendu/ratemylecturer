@@ -14,7 +14,7 @@
                     <input id="input-2" name="input-2" class="rating rating-loading" value="{{ profile.rating_avr }}"
                            readonly
                            data-show-clear="false">
-                    <a href=""> <strong>Add Review</strong></a>
+                    <a href="{% url 'add_review' profile.user %}"> <strong>Add Review</strong></a>
                 {% endif %}
             </div>
             <div class="col">
