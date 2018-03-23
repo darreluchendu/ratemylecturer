@@ -194,8 +194,6 @@ def add_review(request, username):
             review = review_form.save(commit=False)
             review.lecturer = LecturerProfile.objects.get(id=int(lecturer))
             review.student = student
-            review.lecturer=LecturerProfile.objects.get(id=int(lecturer))
-            review.student = request.user.id
             review.save()
             added = True
         else:  # invalid form, for whatever reason
