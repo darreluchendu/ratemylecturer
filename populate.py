@@ -8,32 +8,9 @@ import django
 django.setup()
 from django.contrib.auth.models import User
 from ratemylecturer.models import StudentProfile, LecturerProfile, Review
-from defusedxml.lxml import fromstring
+
 # The requests library
 import requests
-def UniversityScraper():
-    API_url = 'https://www.topuniversities.com/sites/default/files/qs-rankings-data/357051.txt?_=1521685252703'
-    scraped_unis=[]
-    uni_names=[]
-    response=requests.get(API_url)
-    count=1
-
-    uni_list=response.json().get('data')
-    for uni in uni_list:
-        uni_dict={}
-
-        if uni['cc']=='GB':
-            uni_dict['url']='https://www.topuniversities.com'+uni['url']
-            uni_dict['name']=uni['title']
-            uni_dict['rank']=count
-            scraped_unis.append(uni_dict)
-
-            uni_names.append(uni['title'])
-            count+=1
-
-    with open('uni_ranking.json', 'w') as json_file:
-        json.dump(scraped_unis, json_file, indent=4)
-    return uni_names[:20]
 
 
 names=[]
@@ -50,21 +27,20 @@ pics=[]
 # titles_b=-[]
 # for elm in bad_titles.split(','):
 #     titles_b.append(elm.strip())
-comments_b=['Impossible to understand! Even if you can decipher his words, he talks so fast its impossible to write notes. Uses NO slides either',
-            'His expectations are undefined and his lectures are pointless. I definetly do not recommend this crazy man.',
-            'He speaks too fast to write his notes and often gets mad if you ask him to repeat, but do because you will need this info for the exams.',
+comments_b=['Impossible to understand! Even if you can decipher the language,talks so fast its impossible to write notes. Uses NO slides either',
+            'Expectations are undefined and lectures are pointless. I definetly do not recommend this crazy person.',
+            'Speaks too fast to write his notes and often gets mad if you ask to repeat, but do because you will need this info for the exams.',
             'Not a good experience. Marks too hard. Insane notes didnt narrow down content on exams. My worst uni grade ever',
             'Develope hardcore note taking skills before entering the class. The class killed my interest for this subject',
-            'He seems like a nice guy, but the info that was taught was not organized enough',
+            'Seems like a nice person, but the info that was taught was not organized enough',
             'Hard accent to understand some of the time, and tooooo many notes']
-comments_g=['Amazing. All you need to do is show up to class and listen to her. Her lectures are phenomenal and she is hilarious. '
-            'She should seriously consider stand-up comedy.',
-            'She is an easy grader. Easy A is guaranteed.',
+comments_g=['Amazing. All you need to do is show up to class and listen. Lectures are phenomenal and hilarious. Should seriously consider stand-up                  comedy.',
+            'Easy grader. Easy A is guaranteed.',
             'Fun and easy professor. Easiest A ever!!!!!!',
-            'Inspirational professor. Young and very smart, I would take Speech 101 with her again any day.',
-            'The best of the best. A true professional and wonderful professor. She gets an A+ from me.',
-            'Caring professor who will make sure you show up to class and learn. She helped me get rid of my fears of public speaking.',
-            'A highly intelligent professor, always available to answer any and all of my questions that I email even if at 1 AM. She knows her stuff and loves what she does. I couldnt have asked for more']
+            'Inspirational professor. Young and very smart, I would take Speech 101 with again any day.',
+            'The best of the best. A true professional and wonderful professor. Gets an A+ from me.',
+            'Caring professor who will make sure you show up to class and learn. Helped me get rid of my fears of public speaking.',
+            'A highly intelligent professor, always available to answer any and all of my questions that I email even if at 1 AM. Knows ALL you could ever ask and loves the job. I couldnt have asked for more']
 modules=['ECON1001''ECON1002','MGT1003','MGT1004','ACCFIN1003','ACCFIN1004','ACCFIN1018','COMPSCI1002','COMPSCI1018',
          'COMPSCI1005','MATHS1001','MATHS1002','MATHS1004','CHEM1004','CHEM1002','CHEM1003','ENG1022','LAW1021','LAW1022',]
 #getting data from files
@@ -73,7 +49,7 @@ with open('Lecturers.txt', encoding='utf-8') as names_file, open('courses.txt') 
         names.append(line.strip())
     for line in courses_file:
         courses.append((line.strip()))
-with open('UniversityList.txt') as uniList, open('U_Departments.txt') as depart:
+with open('U_Departments.txt') as depart:
    # for line in uniList:
      #   universities.append(line.strip())
     for line in depart:
@@ -83,8 +59,10 @@ with open('bios.txt', encoding='utf-8') as bioList, open('pictures.txt', encodin
         bios.append(line.strip())
     for line in picList:
         pics.append(line.strip())
-for uni in UniversityScraper():
-    universities.append(uni)
+data = json.load(open('static/js/uni_ranking.json'))
+for dict in data[:20]:
+    universities.append(dict['name'])
+
 
 def populate():
     for name in names[:20]:
@@ -177,6 +155,7 @@ def add_lecturer(name,university):
     l.name = name
     l.bio = random.choice(bios)
     l.university = university
+    l.department=random.choice(departments)
     l.picture=random.choice(pics)
     l.rating_avr=0
     l.save()

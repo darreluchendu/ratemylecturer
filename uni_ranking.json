@@ -1,0 +1,382 @@
+[
+    {
+        "url": "https://www.topuniversities.com/universities/university-cambridge",
+        "name": "University of Cambridge",
+        "rank": 1
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-oxford",
+        "name": "University of Oxford",
+        "rank": 2
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/ucl-university-college-london",
+        "name": "UCL (University College London)",
+        "rank": 3
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/imperial-college-london",
+        "name": "Imperial College London",
+        "rank": 4
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-edinburgh",
+        "name": "The University of Edinburgh",
+        "rank": 5
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/kings-college-london",
+        "name": "King's College London",
+        "rank": 6
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-manchester",
+        "name": "The University of Manchester",
+        "rank": 7
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/london-school-economics-political-science-lse",
+        "name": "London School of Economics and Political Science (LSE)",
+        "rank": 8
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-bristol",
+        "name": "University of Bristol",
+        "rank": 9
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-warwick",
+        "name": "The University of Warwick",
+        "rank": 10
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-glasgow",
+        "name": "University of Glasgow",
+        "rank": 11
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/durham-university",
+        "name": "Durham University",
+        "rank": 12
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-sheffield",
+        "name": "The University of Sheffield",
+        "rank": 13
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-nottingham",
+        "name": "University of Nottingham",
+        "rank": 14
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-birmingham",
+        "name": "University of Birmingham",
+        "rank": 15
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-st-andrews",
+        "name": "University of St Andrews",
+        "rank": 16
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-leeds",
+        "name": "University of Leeds",
+        "rank": 17
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-southampton",
+        "name": "University of Southampton",
+        "rank": 18
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/queen-mary-university-london",
+        "name": "Queen Mary University of London",
+        "rank": 19
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/lancaster-university",
+        "name": "Lancaster University",
+        "rank": 20
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-york",
+        "name": "University of York",
+        "rank": 21
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/cardiff-university",
+        "name": "Cardiff University",
+        "rank": 22
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-exeter",
+        "name": "The University of Exeter",
+        "rank": 23
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-aberdeen",
+        "name": "University of Aberdeen",
+        "rank": 24
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-bath",
+        "name": "University of Bath",
+        "rank": 25
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/newcastle-university",
+        "name": "Newcastle University",
+        "rank": 26
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-liverpool",
+        "name": "University of Liverpool",
+        "rank": 27
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-reading",
+        "name": "University of Reading",
+        "rank": 28
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/queens-university-belfast",
+        "name": "Queen's University Belfast",
+        "rank": 29
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-sussex",
+        "name": "University of Sussex",
+        "rank": 30
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/loughborough-university",
+        "name": "Loughborough University",
+        "rank": 31
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-leicester",
+        "name": "University of Leicester",
+        "rank": 32
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/royal-holloway-university-london",
+        "name": "Royal Holloway University of London",
+        "rank": 33
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-surrey",
+        "name": "University of Surrey",
+        "rank": 34
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-dundee",
+        "name": "University of Dundee",
+        "rank": 35
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-east-anglia-uea",
+        "name": "University of East Anglia (UEA)",
+        "rank": 36
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-strathclyde",
+        "name": "University of Strathclyde",
+        "rank": 37
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/soas-university-london",
+        "name": "SOAS University of London",
+        "rank": 38
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/birkbeck-university-london",
+        "name": "Birkbeck, University of London",
+        "rank": 39
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/heriot-watt-university",
+        "name": "Heriot-Watt University",
+        "rank": 40
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/city-university-london",
+        "name": "City, University of London",
+        "rank": 41
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/brunel-university-london",
+        "name": "Brunel University London",
+        "rank": 42
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-essex",
+        "name": "University of Essex",
+        "rank": 43
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/oxford-brookes-university",
+        "name": "Oxford Brookes University",
+        "rank": 44
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-kent",
+        "name": "University of Kent",
+        "rank": 45
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/aston-university",
+        "name": "Aston University",
+        "rank": 46
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/goldsmiths-university-london",
+        "name": "Goldsmiths, University of London",
+        "rank": 47
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-stirling",
+        "name": "University of Stirling",
+        "rank": 48
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/swansea-university",
+        "name": "Swansea University",
+        "rank": 49
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/bangor-university",
+        "name": "Bangor University",
+        "rank": 50
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/aberystwyth-university",
+        "name": "Aberystwyth University",
+        "rank": 51
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/kingston-university-london",
+        "name": "Kingston University, London",
+        "rank": 52
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/coventry-university",
+        "name": "Coventry University",
+        "rank": 53
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-westminster",
+        "name": "University of Westminster",
+        "rank": 54
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/keele-university",
+        "name": "Keele University",
+        "rank": 55
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-bradford",
+        "name": "University of Bradford",
+        "rank": 56
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-hull",
+        "name": "University of Hull",
+        "rank": 57
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-portsmouth",
+        "name": "University of Portsmouth",
+        "rank": 58
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/ulster-university",
+        "name": "Ulster University",
+        "rank": 59
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/bournemouth-university",
+        "name": "Bournemouth University",
+        "rank": 60
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/london-metropolitan-university",
+        "name": "London Metropolitan University",
+        "rank": 61
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/middlesex-university",
+        "name": "Middlesex University",
+        "rank": 62
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-brighton",
+        "name": "University of Brighton",
+        "rank": 63
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/plymouth-university",
+        "name": "Plymouth University",
+        "rank": 64
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/northumbria-university-newcastle",
+        "name": "Northumbria University at Newcastle",
+        "rank": 65
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-hertfordshire",
+        "name": "University of Hertfordshire",
+        "rank": 66
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-huddersfield",
+        "name": "University of Huddersfield",
+        "rank": 67
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-salford",
+        "name": "University of Salford",
+        "rank": 68
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/edinburgh-napier-university",
+        "name": "Edinburgh Napier University",
+        "rank": 69
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/london-south-bank-university",
+        "name": "London South Bank University",
+        "rank": 70
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/manchester-metropolitan-university",
+        "name": "Manchester Metropolitan University",
+        "rank": 71
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/nottingham-trent-university",
+        "name": "Nottingham Trent University",
+        "rank": 72
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/robert-gordon-university",
+        "name": "Robert Gordon University",
+        "rank": 73
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-central-lancashire",
+        "name": "University of Central Lancashire",
+        "rank": 74
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-east-london",
+        "name": "University of East London",
+        "rank": 75
+    },
+    {
+        "url": "https://www.topuniversities.com/universities/university-greenwich",
+        "name": "University of Greenwich",
+        "rank": 76
+    }
+]
