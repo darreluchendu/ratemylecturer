@@ -260,19 +260,19 @@ def edit_profile(request, username):
     profile_user = User.objects.get(username=username)
     if UserMethods.is_student(profile_user):
         if request.method == 'POST':
-            form = StudentProfileForm(request.POST, instance=request.user)
-            if form.is_valid():
-                form.save()
+            edit_stud_profile_form = StudentProfileForm(request.POST, instance=request.user)
+            if edit_stud_profile_form.is_valid():
+                edit_stud_profile_form.save()
                 return HttpResponseRedirect(reverse('ratemylecturer/profile.html'))
         else:
-            form = StudentProfileForm(instance=request.user)
-        return render(request, 'ratemylecturer/edit_profile.html', {'edit_stud_profile_form': form})
+            edit_stud_profile_form = StudentProfileForm(instance=request.user)
+        return render(request, 'ratemylecturer/edit_profile.html', {'edit_stud_profile_form': edit_stud_profile_form})
     else:
         if request.method == 'POST':
-            form = LecturerProfileForm(request.POST, instance=request.user)
-            if form.is_valid():
-                form.save()
+            edit_lec_profile_form = LecturerProfileForm(request.POST, instance=request.user)
+            if edit_lec_profile_form.is_valid():
+                edit_lec_profile_form.save()
                 return HttpResponseRedirect(reverse('ratemylecturer/profile.html'))
         else:
-            form = LecturerProfileForm(instance=request.user)
-        return render(request, 'ratemylecturer/edit_profile.html', {'edit_lec_profile_form': form})
+            edit_lec_profile_form = LecturerProfileForm(instance=request.user)
+        return render(request, 'ratemylecturer/edit_profile.html', {'edit_lec_profile_form': edit_lec_profile_form})
