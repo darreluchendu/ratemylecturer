@@ -21,6 +21,14 @@ $(document).ready(function() {
         });
 
 
+        $.getJSON('http://127.0.0.1:8000/static/js/uni_ranking.json', function(data) {
+            console.log(typeof(data));
+        })
+        var data = $.map(yourArrayData, function (obj) {
+        obj.id = obj.id || obj.pk; // replace pk with your          identifier
+
+        return obj;
+        });
         $("#lecturer_name").autocomplete({
             source: name_list,
             select: function (event, ui) {
@@ -38,6 +46,8 @@ $(document).ready(function() {
                 })
             }
         });
+
+
 
 
     });

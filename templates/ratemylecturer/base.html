@@ -8,7 +8,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" >
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -71,36 +71,34 @@
 
 
     <nav class="navbar navbar-expand-lg navbar-light fixed-top " style="background-color:#C0C0C0">
-      <a class="navbar-brand" href="{% url 'index' %}">
+      <a class="navbar-brand " href="{% url 'index' %}">
         <img src="{% static 'images/logopic.png' %}" alt=""></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <div class="navbar-nav">
-       <a class="nav-item nav-link active" href="{% url 'index' %}">Home<span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
+      <div  class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="nav navbar-nav">
+
+            <li class=""><a class="nav-item {% if nbar == 'home' %}active{% endif %}" href="{% url 'index' %}">Home</a></li>
+            <li class="" ><a class="nav-item {% if nbar == 'about' %}active{% endif %} " href="{% url 'about' %}">About</a></li>
             {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="{% url 'profile' user.username %}">My Profile</a>
-                <a class="nav-item nav-link" href="{% url 'logout' %}">Sign Out</a>
+                <li class=""><a class="nav-item {% if nbar == 'profile' %}active{% endif %}" href="{% url 'profile' user.username %}">My Profile</a></li>
+                <li><a class="nav-item " href="{% url 'logout' %}">Sign Out</a></li>
 
             {% else %}
-                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                <li><a class="{% if nbar == 'login' %}active{% endif %} nav-item " href="{% url 'login' %}">Login</a></li>
+                <li class=""><a class="{% if nbar == 'register' %}active{% endif %} nav-item " href="{% url 'register' %}">Register</a></li>
             {% endif %}
 
-
-        </div>
+        </ul>
 
        <form class="form-inline my-2 my-lg-0">
-          <input class="nav-item form-control mr-sm-2 main-search" type="text" placeholder="Search for Lecturers/Universities"style="width:300px; margin-left: 300px;" aria-label="Search">
+          <input class="form-control mr-sm-2 main-search" type="text" placeholder="Search for Lecturers/Universities"style="width:300px;" aria-label="Search">
           <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
     </nav>
-
-
 
 <br/><br/><br/>
 <div>
@@ -123,7 +121,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script language="JavaScript" type="text/javascript" src='{% static "js/ratemylecturer-jquery.js" %}'></script>
 {% block script_block %}
 {% endblock %}

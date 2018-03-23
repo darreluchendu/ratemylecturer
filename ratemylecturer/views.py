@@ -14,12 +14,12 @@ from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserM
 
 def index(request):
     reviews_list = Review.objects.order_by('-date')[:3]
-    context_dict = {'reviews': reviews_list}
+    context_dict = {'reviews': reviews_list,'nbar':"home"}
     return render(request, 'ratemylecturer/index.html', context_dict)
 
 
 def about(request):
-    return render(request, 'ratemylecturer/about.html', {})
+    return render(request, 'ratemylecturer/about.html', {'nbar':'about'})
 
 
 @csrf_exempt
@@ -47,9 +47,9 @@ def user_login(request):
                 return HttpResponse("Your account is disabled")
         else:  # invalid login details
             invalid_login = True
-            return render(request, 'ratemylecturer/login.html', {'invalid_login': invalid_login})
+            return render(request, 'ratemylecturer/login.html', {'invalid_login': invalid_login,'nbar':"login"})
     else:
-        return render(request, 'ratemylecturer/login.html', {'invalid_login': invalid_login})
+        return render(request, 'ratemylecturer/login.html', {'invalid_login': invalid_login,'nbar':"login"})
 
 
 def register(request):
@@ -117,7 +117,7 @@ def register(request):
 
     return render(request, 'ratemylecturer/register.html',
                   {"user_form": user_form, 'registered': registered, 'lecturer_profile_form': lecturer_profile_form,
-                   'student_profile_form': student_profile_form, "name_list": js_data})
+                   'student_profile_form': student_profile_form, "name_list": js_data,'nbar':"register"})
 
 
 @user_passes_test(UserMethods.is_student)
@@ -173,6 +173,7 @@ def profile(request, username):
 
         context_dict["student_profile"] = False
     context_dict["profile_user"] = username
+    context_dict['nbar']='profile'
 
     return render(request, 'ratemylecturer/profile.html', context_dict)
 
