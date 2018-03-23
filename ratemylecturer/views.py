@@ -10,18 +10,18 @@ from django.views.decorators.csrf import csrf_exempt
 
 from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm
 from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserMethods
-from ratemylecturer.models import Review, StudentProfile, LecturerProfile,UserMethods
+
 
 def index(request):
     reviews_list = Review.objects.order_by('-date')[:3]
 
-
-    top_lect=LecturerProfile.objects.order_by('-rating_avr')[:5]
-    context_dict = {'reviews': reviews_list, 'user': request.user,'top':top_lect,'nbar':"home"}
+    top_lect = LecturerProfile.objects.order_by('-rating_avr')[:5]
+    context_dict = {'reviews': reviews_list, 'user': request.user, 'top': top_lect, 'nbar': "home"}
     return render(request, 'ratemylecturer/index.html', context_dict)
 
+
 def about(request):
-    return render(request, 'ratemylecturer/about.html', {'nbar':'about'})
+    return render(request, 'ratemylecturer/about.html', {'nbar': 'about'})
 
 
 @csrf_exempt
@@ -49,9 +49,9 @@ def user_login(request):
                 return HttpResponse("Your account is disabled")
         else:  # invalid login details
             invalid_login = True
-            return render(request, 'ratemylecturer/login.html', {'invalid_login': invalid_login,'nbar':"login"})
+            return render(request, 'ratemylecturer/login.html', {'invalid_login': invalid_login, 'nbar': "login"})
     else:
-        return render(request, 'ratemylecturer/login.html', {'invalid_login': invalid_login,'nbar':"login"})
+        return render(request, 'ratemylecturer/login.html', {'invalid_login': invalid_login, 'nbar': "login"})
 
 
 def register(request):
@@ -119,7 +119,7 @@ def register(request):
 
     return render(request, 'ratemylecturer/register.html',
                   {"user_form": user_form, 'registered': registered, 'lecturer_profile_form': lecturer_profile_form,
-                   'student_profile_form': student_profile_form, "name_list": js_data,'nbar':"register"})
+                   'student_profile_form': student_profile_form, "name_list": js_data, 'nbar': "register"})
 
 
 @user_passes_test(UserMethods.is_student)
@@ -158,6 +158,7 @@ def create_lecturer(request, user_id):
 def profile(request, username):
     profile_user = User.objects.get(username=username)
     context_dict = {}
+
     if UserMethods.is_student(profile_user):
         student_profile = StudentProfile.objects.get(user=profile_user)
         student_reviews = Review.objects.filter(student=student_profile)
@@ -169,12 +170,15 @@ def profile(request, username):
         lecturer_reviews = Review.objects.filter(lecturer=lecturer_profile)
         context_dict['profile'] = lecturer_profile
         context_dict['reviews'] = lecturer_reviews
-        # Yusuf - average rating
-        # rating_sum =
+        context_dict['one_star_rating_count'] = lecturer_reviews.filter(rating=1).count()
+        context_dict['two_star_rating_count'] = lecturer_reviews.filter(rating=2).count()
+        context_dict['three_star_rating_count'] = lecturer_reviews.filter(rating=3).count()
+        context_dict['four_star_rating_count'] = lecturer_reviews.filter(rating=4).count()
+        context_dict['five_star_rating_count'] = lecturer_reviews.filter(rating=5).count()
 
         context_dict["student_profile"] = False
     context_dict["profile_user"] = username
-    context_dict['nbar']='profile'
+    context_dict['nbar'] = 'profile'
 
     return render(request, 'ratemylecturer/profile.html', context_dict)
 
@@ -205,6 +209,7 @@ def add_review(request, username):
         review_form = ReviewForm()
     return render(request, 'ratemylecturer/add_review.html', {'review_form': review_form,
                                                               'username': username, 'lec_list': lec_list})
+
 
 # creates student profile for user who logs in using google or facebook
 def save_profile(backend, user, response, details, **kwargs):
