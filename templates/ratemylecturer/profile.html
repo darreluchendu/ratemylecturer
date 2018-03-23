@@ -3,23 +3,61 @@
     {{ profile.first_name }} {{ profile.surname }}{{ profile.name }}
 {% endblock %}
 {% block body_block %}
-
-    <h1>{{ profile.first_name }} {{ profile.surname }}</h1>
-    <h1>{{ profile.name }}</h1>
-
-
-    <img src="{{ profile.picture }}"><br>
+    <div class="container-fluid">
+        <div class="row">
+        <div class="col" style="justify-content: center">
+            <h1 style="font-family: 'Segoe UI'">{{ profile.first_name }} {{ profile.surname }}</h1>
+            <h1 style="font-family: 'Segoe UI'">{{ profile.name }}</h1>
+            <img src="{{ profile.picture }}"><br>
+            {% if not student_profile %}
+                <label for="input-2" class="control-label">Average Rating</label>
+                <input id="input-2" name="input-2" class="rating rating-loading" value="{{ profile.rating_avr }}" readonly
+                data-show-clear="false">
+            {% endif %}
+        </div>
+    <div class="col">
+        <div class="row">
+            <div class="container-fluid">
+        <h2 style="font-family: 'Segoe UI'; text-align: left"> Biography</h2>
+        <p1 style="font-family: 'Segoe UI Light'; text-align: left">{{ profile.bio }}</p1>
+            </div>
+    </div>
+            <br/>
+        <div class="row">
+            <div class="container-fluid">
+            <h2 style="font-family: 'Segoe UI'; text-align: left"> University</h2>
+            <p1 style="font-family: 'Segoe UI Light'; text-align: left">{{ profile.university }}</p1>
+            </div>
+            </div>
+        <br/>
     {% if not student_profile %}
-        <label for="input-2" class="control-label">Average Rating</label>
-        <input id="input-2" name="input-2" class="rating rating-loading" value="{{ profile.rating_avr }}" readonly
-               data-show-clear="false">
-    {% endif %}
-
+        <div class="row">
+            <div class="container-fluid">
+            <h2 style="font-family: 'Segoe UI'; text-align: left"> Department</h2>
+            <p1 style="font-family: 'Segoe UI Light'; text-align: left">{{ profile.department }}</p1>
+            </div>
+            </div>
+        {% else %}
+        <div class="row">
+            <div class="container-fluid">
+            <h2 style="font-family: 'Segoe UI'; text-align: left"> Course</h2>
+            <p1 style="font-family: 'Segoe UI Light'; text-align: left">{{ profile.course }}</p1>
+            </div>
+            </div>
+        {% endif %}
+    <br/>
+    </div>
+    </div>
+    </div>
     <br>
     {% if user.username == profile_user %}
         <a href="{% url 'edit_profile' user.username %}">Edit Profile</a>
     {% endif %}
-    <h1>Reviews</h1>
+    {% if not student_profile %}
+    <h2 style="font-family: 'Segoe UI'">Reviews</h2>
+    {% else %}
+    <h2 style="font-family: 'Segoe UI'">Lecturers Reviewed</h2>
+    {% endif %}
     {% for review in reviews %}
         <div class="review">
             <div><strong>{{ review.lecturer.name }}</strong>
