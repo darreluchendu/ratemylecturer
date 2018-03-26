@@ -1,5 +1,6 @@
 import json
 import operator
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
@@ -9,15 +10,33 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm
-
 from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserMethods
 
 
 def index(request):
     reviews_list = Review.objects.order_by('-date')[:3]
 
+    # calculating uni average rating
+    universities = set()
+    lecturers = LecturerProfile.objects.all()
+    for lecturer in lecturers:
+        universities.add(lecturer.university)
+    # get all reviews attributed to lecturers in a university
+    uni_avg_rating = {}
+    for university in universities:
+        lecturer_s = LecturerProfile.objects.filter(university=university)
+        rating_avg_sum = 0.0
+        for lec in lecturer_s:
+            rating_avg_sum += lec.rating_avr
+        num_lecturer = lecturer_s.count()
+        uni_avg_rating[university] = rating_avg_sum / num_lecturer
+    sorted_avg_rating = sorted(uni_avg_rating.items(), key=operator.itemgetter(1))
+    sorted_avg_rating.reverse()
+    print(sorted_avg_rating)
     top_lect = LecturerProfile.objects.order_by('-rating_avr')[:5]
-    context_dict = {'reviews': reviews_list, 'user': request.user, 'top': top_lect, 'nbar': "home"}
+    # uni_ratings = Review.objects.filter(lecturer__university=university)
+    context_dict = {'reviews': reviews_list, 'user': request.user, 'top': top_lect, 'nbar': "home",
+                    'sorted_avg_rating': sorted_avg_rating}
     return render(request, 'ratemylecturer/index.html', context_dict)
 
 
@@ -159,13 +178,15 @@ def create_lecturer(request, user_id):
 def profile(request, username):
     profile_user = User.objects.get(username=username)
     context_dict = {}
-
+    if UserMethods.is_student(profile_user):
+        context_dict['is_student'] = True
     if UserMethods.is_student(profile_user):
         student_profile = StudentProfile.objects.get(user=profile_user)
         student_reviews = Review.objects.filter(student=student_profile)
         context_dict['profile'] = student_profile
         context_dict['reviews'] = student_reviews
         context_dict["student_profile"] = True
+
     else:
         lecturer_profile = LecturerProfile.objects.get(user=profile_user)
         lecturer_reviews = Review.objects.filter(lecturer=lecturer_profile)
@@ -285,4 +306,3 @@ def edit_profile(request, username):
 
             form = LecturerProfileForm(instance=request.user)
         return render(request, 'ratemylecturer/edit_profile.html', {'edit_lec_profile_form': form})
-

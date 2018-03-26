@@ -9,7 +9,7 @@
                 <h1 style="font-family: 'Segoe UI'">{{ profile.first_name }} {{ profile.surname }}</h1>
                 <h1 style="font-family: 'Segoe UI'">{{ profile.name }}</h1>
                 <img src="{{ profile.picture }}"><br>
-                {% if not student_profile %}
+                {% if not student_profile and is_student %}
                     <label for="input-2" class="control-label">Average Rating</label>
                     <input id="input-2" name="input-2" class="rating rating-loading" value="{{ profile.rating_avr }}"
                            readonly
