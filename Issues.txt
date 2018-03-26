@@ -15,10 +15,6 @@ Alright so here's what needs to be done:
 
 	Add date, module, likes, and dislikes to review (I'll handle the liking functionality),
 
-	Ensure the right links are displayed for the right user (e.g) Don't let a lecturer see the add review button
-
-	Make edit profile and add review links into nice looking buttons,
-
 	Make it so that user can change profile picture by clicking profile picture (this may or may not be possible)
 
 	If anyone can think of a better color scheme feel free to change the colors

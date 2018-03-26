@@ -14,7 +14,8 @@
                     <input id="input-2" name="input-2" class="rating rating-loading" value="{{ profile.rating_avr }}"
                            readonly
                            data-show-clear="false">
-                    <a href="{% url 'add_review' profile.user %}"> <strong>Add Review</strong></a>
+                    <a class="btn btn-primary" href="{% url 'add_review' profile.user %}"> <strong>Add
+                        Review</strong></a>
                 {% endif %}
             </div>
             <div class="col">
@@ -163,7 +164,7 @@
     </div>
     <br>
     {% if user.username == profile_user %}
-        <a href="{% url 'edit_profile' user.username %}">Edit Profile</a>
+        <a class="btn btn-primary" href="{% url 'edit_profile' user.username %}">Edit Profile</a>
     {% endif %}
     {% if not student_profile %}
         <h2 style="font-family: 'Segoe UI'">Reviews</h2>
