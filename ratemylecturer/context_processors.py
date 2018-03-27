@@ -9,6 +9,6 @@ def glb_var(request):
         user=User.objects.get(pk=user)
         data = {"label": name + " - " + uni,"category":"Lecturers", "username": user.username}
         lecturer_list.append(data)
-    js_data=json.dumps(lecturer_list)
+
     isStudent= UserMethods.is_student(request.user)
     return {"is_student": isStudent, 'lecturers':lecturer_list}

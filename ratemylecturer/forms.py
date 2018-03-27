@@ -68,3 +68,15 @@ class ReviewForm(forms.ModelForm):
 	class Meta:
 		model = Review
 		fields = ('module', 'rating', 'likes', 'dislikes', 'title', 'review_body')
+
+class StudPictureForm(forms.ModelForm):
+	edit_picture = forms.ImageField(required=False)
+	class Meta:
+		model=StudentProfile
+		fields=("edit_picture",)
+
+class LecPictureForm(forms.ModelForm):
+	edit_picture = forms.ImageField(required=False,)
+	class Meta:
+		model=LecturerProfile
+		fields=("edit_picture",)

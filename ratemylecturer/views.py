@@ -3,12 +3,14 @@ import operator
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.forms import model_to_dict
+from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm
+from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm, StudPictureForm,LecPictureForm
 
 from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserMethods
 
@@ -16,12 +18,14 @@ from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserM
 def index(request):
     reviews_list = Review.objects.order_by('-date')[:3]
 
+
     top_lect = LecturerProfile.objects.order_by('-rating_avr')[:5]
     context_dict = {'reviews': reviews_list, 'user': request.user, 'top': top_lect, 'nbar': "home"}
     return render(request, 'ratemylecturer/index.html', context_dict)
 
 
 def about(request):
+
     return render(request, 'ratemylecturer/about.html', {'nbar': 'about'})
 
 
@@ -158,7 +162,16 @@ def create_lecturer(request, user_id):
 # Profile
 def profile(request, username):
     profile_user = User.objects.get(username=username)
-    context_dict = {}
+    owner=UserMethods.is_owner(request.user,username)
+    context_dict = {'owner':owner}
+
+    if request.user==profile_user:
+        if UserMethods.is_student(request.user):
+            pic_form=StudPictureForm(instance=StudentProfile.objects.get(user=profile_user))
+        else:
+            pic_form = LecPictureForm(instance=LecturerProfile.objects.get(user=request.user))
+        context_dict['pic_form']=pic_form
+
 
     if UserMethods.is_student(profile_user):
         student_profile = StudentProfile.objects.get(user=profile_user)
@@ -176,7 +189,6 @@ def profile(request, username):
         context_dict['three_star_rating_count'] = lecturer_reviews.filter(rating=3).count()
         context_dict['four_star_rating_count'] = lecturer_reviews.filter(rating=4).count()
         context_dict['five_star_rating_count'] = lecturer_reviews.filter(rating=5).count()
-
         context_dict["student_profile"] = False
     context_dict["profile_user"] = username
     context_dict['nbar'] = 'profile'
@@ -219,17 +231,17 @@ def save_profile(backend, user, response, details, **kwargs):
     sname = details.get('last_name').lower()
     fname.replace(" ", "_")
     sname.replace(" ", "_")
-    username = fname + sname
+    username = fname +'_'+ sname
     if User.objects.filter(username=username).exists():
-        user.username = details.get('first_name').lower() + '_' + details.get('last_name').lower() + num_users
+        user.username = username + num_users
     else:
-        user.username = details.get('first_name').lower() + '_' + details.get('last_name').lower()
+        user.username = username
     if backend.name == 'facebook':
         profile = StudentProfile.objects.get_or_create(user_id=user.id)[0]
         profile.first_name = details.get('first_name')
         profile.surname = details.get('last_name')
 
-        profile.picture = "http://graph.facebook.com/%s/picture?type=large" % response['id']
+        profile.picture_url = "http://graph.facebook.com/%s/picture?type=large" % response['id']
         profile.save()
 
     elif backend.name == 'google-oauth2':
@@ -237,10 +249,6 @@ def save_profile(backend, user, response, details, **kwargs):
 
         profile.first_name = details.get('first_name').capitalize()
         profile.surname = details.get('last_name').capitalize()
-        if response['image'].get('isDefault') == False:
-            profile.picture = response['image'].get('url')
-        else:
-            profile.picture = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
         profile.save()
 
 
@@ -263,26 +271,53 @@ def user_logout(request):
 
 @login_required
 def edit_profile(request, username):
-    profile_user = User.objects.get(username=request.user)
-    print(profile_user)
-    if UserMethods.is_student(profile_user):
-        print(str(profile_user) + ' is a student')
-        if request.method == 'POST':
-            edit_stud_profile_form = StudentProfileForm(request.POST, instance=request.user)
-            if edit_stud_profile_form.is_valid():
-                edit_stud_profile_form.save()
-                return HttpResponseRedirect(reverse('ratemylecturer/profile.html'))
-        else:
-            edit_stud_profile_form = StudentProfileForm(instance=request.user)
-        return render(request, 'ratemylecturer/edit_profile.html', {'edit_stud_profile_form': edit_stud_profile_form})
-    else:
-        if request.method == 'POST':
-            edit_lec_profile_form = LecturerProfileForm(request.POST, instance=request.user)
-            if edit_lec_profile_form.is_valid():
-                edit_lec_profile_form.save()
-                return HttpResponseRedirect(reverse('ratemylecturer/profile.html'))
-        else:
 
-            form = LecturerProfileForm(instance=request.user)
-        return render(request, 'ratemylecturer/edit_profile.html', {'edit_lec_profile_form': form})
+    profile_user = User.objects.get(username=request.user)
+
+    if request.method == 'POST':
+        if UserMethods.is_student(profile_user):
+           profile_form = StudentProfileForm(request.POST,instance=StudentProfile.objects.get(user=request.user))
+        else:
+            profile_form = LecturerProfileForm(request.POST, instance=LecturerProfile.objects.get(user=request.user))
+        if profile_form.is_valid():
+            profile = profile_form.save(commit=False)
+            # profile.user = request.user
+            # if UserMethods.is_student(profile_user):
+            #     StudentProfile.objects.filter(user=request.user).delete()
+            # else:
+            #     LecturerProfile.objects.filter(user=request.user).delete()
+            # if 'picture' in request.FILES:
+            #     profile.picture = request.FILES['picture']
+            profile.save()
+            return HttpResponseRedirect(reverse('profile', kwargs={'username': request.user.username}))
+    else:
+
+        if UserMethods.is_student(profile_user):
+            stud_dict = model_to_dict(StudentProfile.objects.filter(user=request.user)[0])
+            profile_form = StudentProfileForm(initial=stud_dict,instance=StudentProfile())
+
+        else:
+            lec_dict = model_to_dict(LecturerProfile.objects.filter(user=request.user)[0])
+            profile_form = LecturerProfileForm(initial=lec_dict,instance=LecturerProfile())
+        profile_form.fields['picture'].widget = forms.HiddenInput()
+    return render(request, 'ratemylecturer/edit_profile.html', {'profile_form': profile_form})
+
+def editPicture(request,username):
+
+    if UserMethods.is_student(request.user):
+        prof_obj=StudentProfile.objects.get(user=request.user)
+        pic_form=StudPictureForm(request.POST,instance=prof_obj)
+    else:
+        prof_obj = LecturerProfile.objects.get(user=request.user)
+        pic_form = LecPictureForm(request.POST,instance=prof_obj)
+
+    pic=pic_form.save(commit=False)
+    print (request.FILES)
+
+    if 'edit_picture' in request.FILES:
+        pic.picture = request.FILES['edit_picture']
+    pic.save()
+    return HttpResponseRedirect(reverse('profile', kwargs={'username': request.user.username}))
+
+
 

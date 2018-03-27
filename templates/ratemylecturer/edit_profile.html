@@ -5,21 +5,10 @@
 {% endblock %}
 
 {% block body_block %}
-
-    {% if is_student == True %}
-        <form id="edit_stud_profile_form" method="post" action="{% url 'edit_profile' user.username %}"
+        <form id="edit_profile_form" method="post" action="{% url 'edit_profile' user.username %}"
               enctype="multipart/form-data">
             {% csrf_token %}
-            {{ edit_stud_profile_form.as_p }}
+            {{ profile_form.as_p }}
             <input name="submit" type="submit" value="Save">
         </form>
-    {% else %}
-        <form id="edit_lec_profile_form" method="post" action="{% url 'edit_profile' user.username %}"
-              enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ edit_lec_profile_form.as_p }}
-            <input name="submit" type="submit" value="Save">
-        </form>
-    {% endif %}
-
 {% endblock %}

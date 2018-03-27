@@ -75,6 +75,23 @@ $(document).ready(function() {
     },function(){
         $("#var").html('what')
     })
+$("#id_edit_picture").hide()
+      $(".edit_pic").click(function(event) {
+          event.preventDefault()
+
+    $("input[id='id_edit_picture']").click();
+
+
+});
+$("label[for='id_edit_picture']").hide();
+$("label[for='id_picture_url']").hide();
+$("input[type='url']").hide()
+//
+  $("input[id='id_edit_picture']").change(function() {
+
+        $("#picture_form").submit()
+        alert('done post')
+    });
       $("#lecturer_name").autocomplete({
           source: name_list,
           select: function (event, ui) {

@@ -103,7 +103,8 @@ def populate():
 # creating test accounts username  can be either 'test_student or 'test_Lecturer'; password is below
     test_s=add_student('Test Student')
     test_s.user.set_password('testpassword')
-    test_s.user.save()
+    test_s.save()
+
     for lec in LecturerProfile.objects.all()[5:10]:
         add_review(lec, test_s)
 
@@ -136,7 +137,7 @@ def add_student(name):
     s.bio=random.choice(bios)
     s.course=random.choice(courses)
     s.university=random.choice(universities)
-    s.picture=random.choice(pics)
+    s.picture_url=random.choice(pics)
     s.save()
     return s
 
@@ -156,7 +157,7 @@ def add_lecturer(name,university):
     l.bio = random.choice(bios)
     l.university = university
     l.department=random.choice(departments)
-    l.picture=random.choice(pics)
+    l.picture_url=random.choice(pics)
     l.rating_avr=0
     l.save()
     return l
@@ -187,5 +188,22 @@ def add_review(lecturer,student):
     r.save()
 
 if __name__ == '__main__':
-    print("Starting Rate My Lecturer population script...")
-    populate()
+    test_s = add_student('Test Student')
+    test_s.user.set_password('testpassword')
+    test_s.save()
+
+    # for lec in LecturerProfile.objects.all()[5:10]:
+    #     add_review(lec, test_s)
+    #
+    # test_l = add_lecturer('Test Lecturer', random.choice(universities))
+    # test_l.user.set_password('testpassword')
+    # test_l.user.save()
+    # for stud in StudentProfile.objects.all()[5:10]:
+    #     add_review(test_l, stud)
+    # rating_list = []
+    # for r in Review.objects.filter(lecturer=test_l):
+    #     rating_list.append(r.rating)
+    # test_l.rating_avr = (sum(rating_list)) / len(rating_list)
+    # test_l.save()
+    # print("Starting Rate My Lecturer population script...")
+    # populate()
