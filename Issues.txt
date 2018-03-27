@@ -1,7 +1,6 @@
 Alright so here's what needs to be done:
    Font Size bigger,
 
-	On home page display add Highest Rated Lecturers and Highest rated Universities,(this mean getting the ratings of all the lecturers of that uni and finding the average lecturer rating between them and then sort them). These list should be side by side and take up width of entire page.,
 
 	Make all forms look as nice as possible (I think login is fine but if u think it can be improved go ahead),
 

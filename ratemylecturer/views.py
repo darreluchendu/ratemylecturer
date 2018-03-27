@@ -30,13 +30,12 @@ def index(request):
             rating_avg_sum += lec.rating_avr
         num_lecturer = lecturer_s.count()
         uni_avg_rating[university] = rating_avg_sum / num_lecturer
-    sorted_avg_rating = sorted(uni_avg_rating.items(), key=operator.itemgetter(1))
-    sorted_avg_rating.reverse()
-    print(sorted_avg_rating)
+    top_uni = sorted(uni_avg_rating.items(), key=operator.itemgetter(1))
+    top_uni.reverse()
     top_lect = LecturerProfile.objects.order_by('-rating_avr')[:5]
     # uni_ratings = Review.objects.filter(lecturer__university=university)
-    context_dict = {'reviews': reviews_list, 'user': request.user, 'top': top_lect, 'nbar': "home",
-                    'sorted_avg_rating': sorted_avg_rating}
+    context_dict = {'reviews': reviews_list, 'user': request.user, 'top_lecturer': top_lect, 'nbar': "home",
+                    'top_uni': top_uni[:5]}
     return render(request, 'ratemylecturer/index.html', context_dict)
 
 
@@ -197,6 +196,7 @@ def profile(request, username):
         context_dict['three_star_rating_count'] = lecturer_reviews.filter(rating=3).count()
         context_dict['four_star_rating_count'] = lecturer_reviews.filter(rating=4).count()
         context_dict['five_star_rating_count'] = lecturer_reviews.filter(rating=5).count()
+        context_dict['total_star_rating'] = 0
 
         context_dict["student_profile"] = False
     context_dict["profile_user"] = username
