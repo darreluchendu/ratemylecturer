@@ -1,5 +1,4 @@
 # forms
-from crispy_forms.helper import FormHelper
 from django import forms
 from django.contrib.auth.models import User
 
@@ -9,9 +8,6 @@ from ratemylecturer.models import LecturerProfile, StudentProfile, Review
 class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_id = ''
-        self.helper.form_class = 'form-horizontal'
 
     password = forms.CharField(widget=forms.PasswordInput())
 

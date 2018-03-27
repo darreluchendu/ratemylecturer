@@ -211,7 +211,17 @@
                     <input id="input-2" name="input-2" class="rating rating-loading pull-right"
                            value="{{ review.rating }}"
                            data-show-clear="false"
-                           readonly data-size="xs"> <br>
+                           readonly data-size="xs">
+                    <div class="float-right">
+                        <button type="button" class="btn btn-default btn-sm ">
+                            <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm ">
+                            <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
+                        </button>
+                    </div>
+
+                    <br>
 
                 </div>
             </div>
