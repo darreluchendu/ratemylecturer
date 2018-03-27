@@ -75,9 +75,9 @@
                         {% for t in top_lecturer %}
                             <tr>
                                 <td class="col-md-12">
-                                    <p><a style="font-family: 'Segoe UI Light'"
-                                          href="{% url 'profile' t.user %}">{{ t.name }}</a> {{ t.department }},
-                                        {{ t.university }}</p> <br>
+                                    <a style="font-family: 'Segoe UI Light'"
+                                       href="{% url 'profile' t.user %}">{{ t.name }}</a> {{ t.department }},
+                                    {{ t.university }} <br>
                                     <input id="input-2" name="input-2" class="rating rating-loading"
                                            value="{{ t.rating_avr }}"
                                            readonly data-show-clear="false" data-size="xs">

@@ -18,9 +18,6 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
-
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -34,7 +31,7 @@ ALLOWED_HOSTS = {'ratemylecturerr.pythonanywhere.com', '127.0.0.1', 'localhost'}
 
 # django registration framework variable
 
-#if True, users can register
+# if True, users can register
 
 # Page to redirect to after successfully log in
 LOGOUT_URL = '/ratemylecturer/logout/'
@@ -50,7 +47,7 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id,name,email',
 }
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='894678636509-aodb1fb473ccvh4k3ae4l2rl1veui4j4.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '894678636509-aodb1fb473ccvh4k3ae4l2rl1veui4j4.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'i9gJrBXlLqX_7GHfIBP_Zh8Z'
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -60,9 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
-    'ratemylecturer',
-
-
+    'ratemylecturer', 'crispy_forms',
 
 ]
 
@@ -75,16 +70,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
-    
+
 ]
 
 ROOT_URLCONF = 'rate_my_lecturer_project.urls'
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR,],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,7 +121,6 @@ SOCIAL_AUTH_PIPELINE = (
 
 WSGI_APPLICATION = 'rate_my_lecturer_project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -137,7 +130,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -156,6 +148,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
 DJANGORESIZED_DEFAULT_QUALITY = 75
 DJANGORESIZED_DEFAULT_KEEP_META = True
@@ -177,7 +170,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
@@ -189,3 +181,4 @@ MEDIA_ROOT = MEDIA_DIR
 
 MEDIA_URL = '/media/'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

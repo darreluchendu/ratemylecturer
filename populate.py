@@ -74,7 +74,7 @@ def populate():
     for n in universities:
         for name in names[start:end]:
             l=add_lecturer(name,n)
-            l.save()
+
             print("Creating Lecturer " + l.name,'-',num_users)
             for stud in StudentProfile.objects.all()[:5]:
                 add_review(l,stud)
@@ -111,8 +111,7 @@ def populate():
 
     test_l = add_lecturer('Test Lecturer',random.choice(universities))
     test_l.user.set_password('testpassword')
-    test_l.user.save()
-    test_l.save()
+
     for stud in StudentProfile.objects.all()[5:10]:
         add_review(test_l, stud)
     rating_list = []
@@ -168,7 +167,8 @@ def add_lecturer(name,university):
 def add_review(lecturer,student):
     r=Review.objects.get_or_create(lecturer=lecturer, student=student)[0]
     r.module=random.choice(modules)
-
+    r.lecturer=lecturer
+    r.student=student
     r.likes=random.randrange(1,15)
     r.dislikes=random.randrange(1,10)
     good = random.choice([True, False])

@@ -9,22 +9,22 @@
                 <h1 style="font-family: 'Segoe UI'">{{ profile.first_name }} {{ profile.surname }}</h1>
                 <h1 style="font-family: 'Segoe UI'">{{ profile.name }}</h1>
 
-
+    <img class="img-rounded img-responsive" src="/media/{{ profile.picture }}">
+            {% if owner %}
               <form class="update_pic" id="picture_form" method="post" action="{% url 'editPicture' user.username %}"
               enctype="multipart/form-data">
                   {% csrf_token %}
 
-                <img src="/media/{{ profile.picture }}">
-                      {% if owner %}
                           <div>
                           <br/>
                       <button type="submit" class="bt btn-primary edit_pic" style="width:200px">Change Profile Picture</button>
                           </div>
-                    {% endif %}
                  {{ pic_form }}
               </form>
+             {% endif %}
                   <br>
                 {% if not student_profile %}
+
 
                     <label for="input-2" class="control-label">Average Rating</label>
                     <input id="input-2" name="input-2" class="rating rating-loading"

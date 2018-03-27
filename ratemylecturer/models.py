@@ -1,19 +1,16 @@
-import os
-import tempfile
-import urllib
-from urllib.request import urlretrieve, urlopen
 
-from django.core import files
+
+
 from django.core.files.base import ContentFile
 from django_resized import ResizedImageField
-from django.core.files.temp import NamedTemporaryFile
-from PIL import Image, ImageFile
+
+from PIL import Image
 
 from django.contrib.auth.models import User
 import requests
-from django.core.files import File
+
 from django.db import models
-from io import StringIO, BytesIO
+from io import BytesIO
 
 
 # Create your models here.
@@ -24,20 +21,14 @@ class StudentProfile(models.Model):
     university = models.CharField(max_length=30, blank=True)
     course = models.CharField(max_length=30, blank=True)
     picture =ResizedImageField(size=[500, 300],upload_to='profile_images', blank=True)
-    picture_url = models.URLField(default='http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png')
+    picture_url = models.URLField()
     bio = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.user.username
 
 
-    # def get_remote_image(self):
-    #     if self.picture_url and not self.picture:
-    #         result = urllib.request.urlretrieve(self.  picture_url)
-    #         self.picture.save(
-    #             os.path.basename(self.  picture_url),
-    #             File(open(result[0]))
-    #         ,save=False)
+
     def save_image_from_url(self, url):
         if url and not self.picture:
             image_request_result = requests.get(url)
@@ -53,21 +44,9 @@ class StudentProfile(models.Model):
             image.save(image_io, format='JPEG')
             self.picture.save(file_name, ContentFile(image_io.getvalue()) ,save=False)
 
-        # r = requests.get(url)
-        #
-        # with tempfile.NamedTemporaryFile(mode='wb') as img_temp:
-        #     img_temp.write(r.content)
-        #
-        #
-        # self.picture.save(url[url.rfind("/")+1:]+'.jpg', img_temp, save=False)
-
-        # self.picture.save(url[url.rfind("/") + 1:], File(img_temp), save=True)
-        # im = Image.open(url[url.rfind("/") + 1:])
-        # rgb_im = im.convert('RGB')
-        # self.picture.save(url[url.rfind("/") + 1:] + '.jpg', rgb_im, save=True)
 
     def save(self, *args, **kwargs):
-        if not self.pk:
+        if not self.picture:
             self.save_image_from_url(self.picture_url)
         for field in ['course', 'university']:
             new_val = []
@@ -100,7 +79,7 @@ class LecturerProfile(models.Model):
     department = models.CharField(max_length=30)
     bio = models.CharField(max_length=200, blank=True)
     picture = ResizedImageField(size=[500, 300],upload_to='profile_images', blank=True)
-    picture_url = models.URLField(default='http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png',)
+    picture_url = models.URLField()
 
 
     def __str__(self):
@@ -125,20 +104,11 @@ class LecturerProfile(models.Model):
             image_io = BytesIO()
             image.save(image_io, format='JPEG')
             self.picture.save(file_name, ContentFile(image_io.getvalue()),save=False)
-    #
-    # def get_remote_image(self):
-    #     if self.picture_url and not self.picture:
-    #         result = urllib.request.urlretrieve(self.picture_url)
-    #         self.picture.save(
-    #             os.path.basename(self.picture_url),
-    #             File(open(result[0]))
-    #         )
-    #         self.save(force_update=True)
 
 
 
     def save(self, *args, **kwargs):
-        if not self.pk:
+        if not self.picture:
             self.save_image_from_url(self.picture_url)
         for field in ['department', 'university']:
             new_val = []
@@ -159,14 +129,17 @@ class LecturerProfile(models.Model):
         if Review.objects.filter(lecturer=self).count() > 0:
             self.updateRating()
 
-       # super(LecturerProfile, self).save(*args, **kwargs)
+        super(LecturerProfile, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['-rating_avr']
 
 
 class Review(models.Model):
     lecturer = models.ForeignKey(LecturerProfile, on_delete=models.CASCADE)
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     module = models.CharField(max_length=30)
-    rating = models.IntegerField(default=0)
+    rating = models.IntegerField(default=0, )
     date = models.DateField(auto_now_add=True)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
@@ -204,6 +177,5 @@ class UserMethods(User):
                 return False
         else:
          return False
-
     class Meta:
         proxy = True

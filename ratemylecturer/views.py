@@ -188,7 +188,7 @@ def profile(request, username):
     owner=UserMethods.is_owner(request.user,username)
     context_dict = {'owner':owner}
 
-    if request.user==profile_user:
+    if owner:
         if UserMethods.is_student(request.user):
             pic_form=StudPictureForm(instance=StudentProfile.objects.get(user=profile_user))
         else:
@@ -241,6 +241,8 @@ def add_review(request, username):
             review.student = student
             review.save()
             added = True
+            lec = LecturerProfile.objects.get(id=int(lecturer))
+            return profile(request, User.objects.get(pk=lec.user_id).username)
         else:  # invalid form, for whatever reason
             print(review_form.errors)
     else:  # not http POST

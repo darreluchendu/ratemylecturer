@@ -1,3 +1,4 @@
+
 Alright so here's what needs to be done:
    Font Size bigger,
 
@@ -7,8 +8,6 @@ Alright so here's what needs to be done:
 	Make all profile photos the same size,
 
 	Make reviews look better the colours are a bit jarring,
-
-	Decrease size of rating stars,
 
 	Increase size of the percentages thing for lecturers,
 
