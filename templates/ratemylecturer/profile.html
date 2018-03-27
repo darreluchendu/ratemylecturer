@@ -201,9 +201,9 @@
                     </h4>
                     <h4 class="media-heading">
                         {% if not student_profile %}<!-- if user is not a student, get student name -->
-                            <strong>{{ review.student.user }}</strong>
+                            <a href="{% url 'profile' review.student.user %}"><strong>{{ review.student.user }}</strong> </a>
                         {% else %}
-                            <strong>{{ review.lecturer.name }}</strong>
+                            <a href="{% url 'profile' review.lecturer.user %}"><strong>{{ review.lecturer.name }}</strong> </a>
                         {% endif %}
                         <small><i>Posted on {{ review.date }}</i></small>
                     </h4>
@@ -218,7 +218,7 @@
                         <button type="button" class="btn btn-default btn-sm ">
                             <span class="glyphicon glyphicon-thumbs-up"></span> Like
                         </button>
-                        <i>{{ review.likes }}</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i>{{ review.likes }}</i> &nbsp;&nbsp;&nbsp;&nbsp;
                         <button type="button" class="btn btn-default btn-sm ">
                             <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
                         </button>
