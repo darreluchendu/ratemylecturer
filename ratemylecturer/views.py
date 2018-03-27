@@ -211,7 +211,6 @@ def profile(request, username):
         context_dict["student_profile"] = False
     context_dict["profile_user"] = username
     context_dict['nbar'] = 'profile'
-    print(context_dict['percentages'][0])
     return render(request, 'ratemylecturer/profile.html', context_dict)
 
 
