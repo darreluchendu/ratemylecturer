@@ -31,6 +31,10 @@ class UserForm(forms.ModelForm):
 # LecturerProfile model's form
 
 class LecturerProfileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        self.fields.pop("user")
+        self.fields.pop("rating_avr")
     name = forms.CharField(widget=forms.TextInput(attrs={'id': 'lecturer_name'}))
     department = forms.CharField(widget=forms.TextInput(attrs={'id': 'lecturer_depart'}))
     university = forms.CharField(widget=forms.TextInput(attrs={'id': 'lecturer_uni'}))

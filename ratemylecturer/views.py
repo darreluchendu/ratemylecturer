@@ -183,6 +183,10 @@ def create_lecturer(request, user_id):
 
 # Profile
 def profile(request, username):
+    def percent(rating_count, total_rating):
+       x= int(rating_count*100/total_rating)
+       return str(x)+"%"
+
     profile_user = User.objects.get(username=username)
 
     owner=UserMethods.is_owner(request.user,username)
@@ -213,11 +217,19 @@ def profile(request, username):
         context_dict['four_star_rating_count'] = lecturer_reviews.filter(rating=4).count()
         context_dict['five_star_rating_count'] = lecturer_reviews.filter(rating=5).count()
 
+        context_dict['total_star_rating'] = lecturer_reviews.count()
+        context_dict['percentages'] = [percent(context_dict['five_star_rating_count'],context_dict['total_star_rating']),
+                                       percent(context_dict['four_star_rating_count'] , context_dict['total_star_rating']),
+                                       percent(context_dict['three_star_rating_count'] , context_dict['total_star_rating']),
+                                       percent(context_dict['two_star_rating_count'],context_dict['total_star_rating']),
+                                       percent(context_dict['one_star_rating_count'],context_dict['total_star_rating'])
+                                       ]
+
+
         context_dict['total_star_rating'] = 0
         context_dict["student_profile"] = False
     context_dict["profile_user"] = username
     context_dict['nbar'] = 'profile'
-
     return render(request, 'ratemylecturer/profile.html', context_dict)
 
 

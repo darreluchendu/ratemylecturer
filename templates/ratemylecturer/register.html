@@ -36,8 +36,8 @@
                 <form id="user_form_lecturer" method="post" action="{% url 'register' %}"
                       enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ user_form.as_p }}
-                    {{ lecturer_profile_form.as_p }}
+                    {{ user_form.as_p|crispy }}
+                    {{ lecturer_profile_form.as_p | crispy}}
                     <input class="btn btn-primary" name="register" type="submit" value="Register">
                 </form>
             </div>
