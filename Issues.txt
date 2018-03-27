@@ -2,13 +2,10 @@ Alright so here's what needs to be done:
    Font Size bigger,
 
 
-	Make all forms look as nice as possible (I think login is fine but if u think it can be improved go ahead),
-
 	Make all profile photos the same size,
 
 	Make reviews look better the colours are a bit jarring,
 
-	Increase size of the percentages thing for lecturers,
 
 	Add date, module, likes, and dislikes to review (I'll handle the liking functionality),
 
