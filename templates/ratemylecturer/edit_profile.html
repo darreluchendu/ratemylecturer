@@ -1,25 +1,29 @@
 {% extends 'ratemylecturer/base.html' %}
+{% load crispy_forms_tags %}
 {% load staticfiles %}
 {% block title_block %}
     Edit Profile
 {% endblock %}
 
 {% block body_block %}
+    <div class="container-fluid form-horizontal" style="width: 50%;">
+        {% if is_student == True %}
+            <form id="edit_stud_profile_form" method="post" action="{% url 'edit_profile' user.username %}"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ edit_stud_profile_form|crispy }}
 
-    {% if is_student == True %}
-        <form id="edit_stud_profile_form" method="post" action="{% url 'edit_profile' user.username %}"
-              enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ edit_stud_profile_form.as_p }}
-            <input name="submit" type="submit" value="Save">
-        </form>
-    {% else %}
-        <form id="edit_lec_profile_form" method="post" action="{% url 'edit_profile' user.username %}"
-              enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ edit_lec_profile_form.as_p }}
-            <input name="submit" type="submit" value="Save">
-        </form>
-    {% endif %}
+                <input class="btn btn-primary" name="submit" type="submit" value="Save">
 
+            </form>
+        {% else %}
+            <form id="edit_lec_profile_form" method="post"
+                  action="{% url 'edit_profile' user.username %}"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ edit_lec_profile_form|crispy }}
+                <input class="btn btn-primary" name="submit" type="submit" value="Save">
+            </form>
+        {% endif %}
+    </div>
 {% endblock %}

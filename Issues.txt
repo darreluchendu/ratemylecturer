@@ -8,8 +8,6 @@ Alright so here's what needs to be done:
 
 	Make reviews look better the colours are a bit jarring,
 
-	Decrease size of rating stars,
-
 	Increase size of the percentages thing for lecturers,
 
 	Add date, module, likes, and dislikes to review (I'll handle the liking functionality),

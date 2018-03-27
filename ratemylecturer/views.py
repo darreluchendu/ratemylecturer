@@ -225,6 +225,8 @@ def add_review(request, username):
             review.student = student
             review.save()
             added = True
+            lec = LecturerProfile.objects.get(id=int(lecturer))
+            return profile(request, User.objects.get(pk=lec.user_id).username)
         else:  # invalid form, for whatever reason
             print(review_form.errors)
     else:  # not http POST

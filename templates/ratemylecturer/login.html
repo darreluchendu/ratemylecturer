@@ -18,15 +18,16 @@
 
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
             {% if invalid_login %}
-            <p class="text-danger">Invalid login details, please try again.</p>
+                <p class="text-danger">Invalid login details, please try again.</p>
             {% endif %}
             {% csrf_token %}
             <label class="sr-only" for="username">Username</label>
-            <input id=username type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+            <input id=username type="text" class="form-control" name="username" placeholder="Username" required
+                   autofocus>
             <label class="sr-only" for="password">Password</label>
             <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
 
-           {% comment %} <div class="form-row">
+            {% comment %} <div class="form-row">
                 <div class="col-5">
                     <div class="form-group">
                         <label class="sr-only" for="username">Username</label>
@@ -43,24 +44,28 @@
                     </div>
                 </div>
             </div>{% endcomment %}
-            <button type="submit" class="btn btn-lg btn-primary btn-block" >Log In</button>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Log In</button>
             <br>
-        <div class="social">
-            <hr/>
-            <h4>... Or, if you are a Student</h4>
+            <div class="social">
+                <hr/>
+                <h4>... Or, if you are a Student</h4>
 
 
-    <a class="btn btn-primary btn-social btn-facebook" title="Login with Facebook" style="background-color: #3B5998;border:#3B5998;"  href="{% url 'social:begin' 'facebook' %}"><span class="fa fa-facebook"></span> Login with Facebook</a>
-    <h5>Or</h5>
-    <a class=" btn btn-primary btn-social btn-google"  title="Login with Google" style="background-color: #DD4B39;border:#DD4B39" href="{% url 'social:begin' 'google-oauth2' %}"><span class="fa fa-google"></span> Login with Google</a>
+                <a class="btn btn-primary btn-social btn-facebook" title="Login with Facebook"
+                   style="background-color: #3B5998;border:#3B5998;" href="{% url 'social:begin' 'facebook' %}"><span
+                        class="fa fa-facebook"></span> Login with Facebook</a>
+                <h5>Or</h5>
+                <a class=" btn btn-primary btn-social btn-google" title="Login with Google"
+                   style="background-color: #DD4B39;border:#DD4B39"
+                   href="{% url 'social:begin' 'google-oauth2' %}"><span class="fa fa-google"></span> Login with Google</a>
 
 
-        </div>
-        <br/>
-        <p style="font-family: 'Segoe UI Light'">
-            Don't have an account?
-            <a href="{% url 'register' %}">Register Here</a>
-        </p>
+            </div>
+            <br/>
+            <p style="font-family: 'Segoe UI Light'">
+                Don't have an account?
+                <a href="{% url 'register' %}">Register Here</a>
+            </p>
         </form>
     </div>
 {% endblock %}
