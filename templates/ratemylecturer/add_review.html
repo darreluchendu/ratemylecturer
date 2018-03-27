@@ -7,20 +7,16 @@
 {% block body_block %}
     {% if is_student == True %}
         <div class="container-fluid col" style="width: 50%">
-            <h2 class="text-left" style="font-family: 'Segoe UI'">Add a Review</h2>
+            <h1 class="text-left" style="font-family: 'Segoe UI'">Add a Review</h1>
             <br/>
 
             <form id="review_form" method="post" action="{% url 'add_review' username %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="lecturer_list" style="font-family: 'Segoe UI Light'">Select a Lecturer</label>
-                    <select class="form-control input-lg" id="lecturer_list" name="lecturer_id">
-                        {% for lec in lec_list %}
-                            <option value="{{ lec.id }}">{{ lec.name }}</option>
-                        {% endfor %}
-                    </select>
+                <h2><label for="review_rating" class="control-label">Rate {{ lecturer.name }}</label></h2>
+                <input id="review_rating" name="review_rating" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="3">
                     {{ review_form|crispy }}
-                    <button type="submit" class="btn btn-primary" style="font-family: 'Segoe UI Light'">Submit</button>
+                    <button type="submit" class="btn btn-primary" style="font-size: 18px;font-family: 'Segoe UI Light'">Submit</button>
                 </div>
             </form>
         </div>

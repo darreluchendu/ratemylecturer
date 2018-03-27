@@ -19,7 +19,19 @@ from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserM
 
 
 def index(request):
-    reviews_list = Review.objects.order_by('-date')[:3]
+    new_reviews=[]
+    new_names=[]
+    reviews_list = Review.objects.order_by('-date')
+
+
+    for i in reviews_list:
+        if i.lecturer not in new_names:
+            new_reviews.append(i)
+            new_names.append(i.lecturer)
+            if len(new_reviews)==3:
+                break
+
+
 
 
     # calculating uni average rating
@@ -41,7 +53,7 @@ def index(request):
 
     top_lect = LecturerProfile.objects.order_by('-rating_avr')[:5]
     # uni_ratings = Review.objects.filter(lecturer__university=university)
-    context_dict = {'reviews': reviews_list, 'user': request.user, 'top_lecturer': top_lect, 'nbar': "home",
+    context_dict = {'reviews': new_reviews[:3], 'user': request.user, 'top_lecturer': top_lect, 'nbar': "home",
                     'top_uni': top_uni[:5]}
     return render(request, 'ratemylecturer/index.html', context_dict)
 
@@ -96,7 +108,7 @@ def register(request):
                 if 'picture' in request.FILES:
                     student_profile.picture = request.FILES['picture']
                 else:
-                    student_profile.picture = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
+                    student_profile.picture_url = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
                 user.save()
                 student_profile.user = user
                 student_profile.save()
@@ -122,7 +134,7 @@ def register(request):
                 if 'picture' in request.FILES:
                     lecturer_profile.picture = request.FILES['picture']
                 else:
-                    lecturer_profile.picture = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
+                    lecturer_profile.picture_url = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
                 lecturer_profile.save()
             registered = True
         else:  # invalid form, for whatever reason
@@ -224,8 +236,6 @@ def profile(request, username):
                                        percent(context_dict['two_star_rating_count'],context_dict['total_star_rating']),
                                        percent(context_dict['one_star_rating_count'],context_dict['total_star_rating'])
                                        ]
-
-
         context_dict['total_star_rating'] = 0
         context_dict["student_profile"] = False
     context_dict["profile_user"] = username
@@ -233,34 +243,34 @@ def profile(request, username):
     return render(request, 'ratemylecturer/profile.html', context_dict)
 
 
-def review(request):
-    context_dict = {}
-    return render(request, 'ratemylecturer/review.html')
-
-
 @user_passes_test(UserMethods.is_student)
 @login_required()
 def add_review(request, username):
+    profile_user=User.objects.get(username=username)
     added = False
     student = StudentProfile.objects.get(user=request.user)
-    lec_list = LecturerProfile.objects.order_by('-user__date_joined')
+    lecturer = LecturerProfile.objects.get(user=profile_user)
+
     if request.method == 'POST':
         review_form = ReviewForm(data=request.POST)
-        lecturer = request.POST.get('lecturer_id')
+
         if review_form.is_valid():
             review = review_form.save(commit=False)
-            review.lecturer = LecturerProfile.objects.get(id=int(lecturer))
+            review.lecturer = lecturer
             review.student = student
+            if Review.objects.filter(lecturer=lecturer,student=student).exists():
+                Review.objects.get(lecturer=lecturer, student=student).delete()
             review.save()
             added = True
-            lec = LecturerProfile.objects.get(id=int(lecturer))
-            return profile(request, User.objects.get(pk=lec.user_id).username)
+
+            return HttpResponseRedirect(reverse('profile', kwargs={'username': username}))
         else:  # invalid form, for whatever reason
             print(review_form.errors)
     else:  # not http POST
         review_form = ReviewForm()
+    review_form.fields['rating'].widget = forms.HiddenInput()
     return render(request, 'ratemylecturer/add_review.html', {'review_form': review_form,
-                                                              'username': username, 'lec_list': lec_list})
+                                                              'username': username,'lecturer':lecturer})
 
 
 # creates student profile for user who logs in using google or facebook
@@ -285,7 +295,7 @@ def save_profile(backend, user, response, details, **kwargs):
 
     elif backend.name == 'google-oauth2':
         profile = StudentProfile.objects.get_or_create(user_id=user.id)[0]
-
+        profile.picture_url ='http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
         profile.first_name = details.get('first_name').capitalize()
         profile.surname = details.get('last_name').capitalize()
         profile.save()
@@ -320,13 +330,7 @@ def edit_profile(request, username):
             profile_form = LecturerProfileForm(request.POST, instance=LecturerProfile.objects.get(user=request.user))
         if profile_form.is_valid():
             profile = profile_form.save(commit=False)
-            # profile.user = request.user
-            # if UserMethods.is_student(profile_user):
-            #     StudentProfile.objects.filter(user=request.user).delete()
-            # else:
-            #     LecturerProfile.objects.filter(user=request.user).delete()
-            # if 'picture' in request.FILES:
-            #     profile.picture = request.FILES['picture']
+
             profile.save()
             return HttpResponseRedirect(reverse('profile', kwargs={'username': request.user.username}))
     else:

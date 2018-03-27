@@ -86,21 +86,7 @@ def populate():
         start+=3
         end+=3
 
-            # for r in Review.objects.filter(lecturer=l):
-            #     rating_list.append(r.rating)
-            # l.rating_avr = (sum(rating_list)) / len(rating_list)
-            # l.save()
-        # adding lecturers with bad reviews
-        # for i in range(1):
-        #     l = add_lecturer(n)
-        #     print("Creating Lecturer " + l.name, '-', num_users)
-        #     for stud in StudentProfile.objects.all()[5:10]:
-        #         add_review(l, stud, False)
-        #     rating_list=[]
-        #     for r in  Review.objects.filter(lecturer=l):
-        #         rating_list.append(r.rating)
-        #     l.rating_avr=(sum(rating_list))/len(rating_list)
-        #     l.save()
+
 # creating test accounts username  can be either 'test_student or 'test_Lecturer'; password is below
     test_s=add_student('Test Student')
     test_s.user.set_password('testpassword')
@@ -192,4 +178,20 @@ def add_review(lecturer,student):
 
 if __name__ == '__main__':
     print("Starting Rate My Lecturer population script...")
-    populate()
+    test_s = add_student('Test Student')
+    test_s.user.set_password('testpassword')
+    test_s.save()
+
+    for lec in LecturerProfile.objects.all()[5:10]:
+        add_review(lec, test_s)
+
+    test_l = add_lecturer('Test Lecturer', random.choice(universities))
+    test_l.user.set_password('testpassword')
+
+    for stud in StudentProfile.objects.all()[5:10]:
+        add_review(test_l, stud)
+    rating_list = []
+    for r in Review.objects.filter(lecturer=test_l):
+        rating_list.append(r.rating)
+    test_l.rating_avr = (sum(rating_list)) / len(rating_list)
+    test_l.save()

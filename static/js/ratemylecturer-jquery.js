@@ -75,6 +75,16 @@ $(document).ready(function() {
     },function(){
         $("#var").html('what')
     })
+
+      $('.register').click(function(event) {
+          $('#user_form_lecturer').submit()
+      })
+
+$("#review_rating").rating().on("rating:change", function(event, value, caption) {
+
+
+        $('#id_rating').val(value)
+    });
 $("#id_edit_picture").hide()
       $(".edit_pic").click(function(event) {
           event.preventDefault()
@@ -111,7 +121,7 @@ $("input[type='url']").hide()
       });
 
 
-  });
+  })
 
-});
+})
 

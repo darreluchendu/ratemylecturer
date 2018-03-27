@@ -9,11 +9,14 @@
     <div class="container-fluid col" style="width: 50%; margin: auto">
         {% if registered %}
             <p1 style="font-family: 'Segoe UI Light'">Thank you for registering</p1>
-            <a name="sign_in" href="{% url 'login' %}">Login</a>
+            <br/>
+
+            <a style="font-size: 25px" name="sign_in" href="{% url 'login' %}">Login</a>
 
         {% else %}
 
             <h2 id="register_header">Register as a Student</h2>
+            <div style="font-size: 15px">
             <div class="widget">
                 <fieldset>
                     <legend>Select a User type:</legend>
@@ -29,19 +32,19 @@
                     {% csrf_token %}
                     {{ user_form|crispy }}
                     {{ student_profile_form|crispy }}
-                    <input class="btn btn-primary" name="register" type="submit" value="Register">
+                    <input style="margin-bottom: 10px ;width: 150px" class="btn btn-primary register" name="register" type="submit" value="Register">
                 </form>
             </div>
             <div id="lec_id" style="width: 50%">
                 <form id="user_form_lecturer" method="post" action="{% url 'register' %}"
                       enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ user_form.as_p|crispy }}
-                    {{ lecturer_profile_form.as_p | crispy}}
-                    <input class="btn btn-primary" name="register" type="submit" value="Register">
+                    {{ user_form|crispy}}
+                    {{ lecturer_profile_form|crispy}}
+                    <input style="margin-bottom: 10px;width: 150px" class="btn btn-primary register" name="register" type="submit" value="Register">
                 </form>
             </div>
-
+</div>
         {% endif %}
     </div>
 {% endblock %}

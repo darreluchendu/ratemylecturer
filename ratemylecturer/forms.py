@@ -38,12 +38,12 @@ class LecturerProfileForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={'id': 'lecturer_name'}))
     department = forms.CharField(widget=forms.TextInput(attrs={'id': 'lecturer_depart'}))
     university = forms.CharField(widget=forms.TextInput(attrs={'id': 'lecturer_uni'}))
-    bio = forms.CharField(widget=forms.Textarea(), required=False)
+    bio = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 5}), required=False)
     picture = forms.ImageField(required=False)
 
     class Meta:
         model = LecturerProfile
-        exclude = ("",)
+        exclude = ("picture_url",)
 
 
 # StudentProfile model's form
@@ -56,12 +56,12 @@ class StudentProfileForm(forms.ModelForm):
     surname = forms.CharField(max_length=30, )
     university = forms.CharField(max_length=30, required=False, )
     course = forms.CharField(max_length=30, required=False, )
-    bio = forms.CharField(required=False, widget=forms.Textarea())
+    bio = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 5}), required=False)
     picture = forms.ImageField(required=False)
 
     class Meta:
         model = StudentProfile
-        exclude = ("",)
+        exclude = ("picture_url",)
 
 
 # Review model's form
@@ -69,21 +69,23 @@ class ReviewForm(forms.ModelForm):
 
     likes=forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     dislikes= forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-
+    rating=forms.IntegerField()
+    module=forms.CharField()
     STATUS_CHOICES = (
-        (1, 'Poor'),
-        (2, 'Fair'),
-        (3, 'Average'),
-        (4, 'Good'),
-        (5, 'Excellent'),
+        (1, 'Poor - 1 Star'),
+        (2, 'Fair - 2 Stars'),
+        (3, 'Average - 3 Stars'),
+        (4, 'Good - 4 Stars'),
+        (5, 'Excellent - 5 Stars'),
     )
-    rating = forms.ChoiceField(choices=STATUS_CHOICES,
-                               widget=forms.Select(attrs={'class': 'form-control', 'class': 'input-lg'}))
-    review_body = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
+    # rating = forms.ChoiceField(choices=STATUS_CHOICES,
+    #                            widget=forms.Select(attrs={'class': 'form-control input-lg'}))
+    review_body = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}),required=False)
 
     class Meta:
         model = Review
-        fields = ('module', 'rating', 'likes', 'dislikes', 'title', 'review_body')
+        fields = ('module',  'likes', 'dislikes','rating', 'title', 'review_body')
+
 
 class StudPictureForm(forms.ModelForm):
 	edit_picture = forms.ImageField(required=False)
