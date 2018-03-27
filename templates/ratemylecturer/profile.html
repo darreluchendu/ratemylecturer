@@ -189,7 +189,7 @@
 
         {% for review in reviews %}
 
-            <div class="media bg-info ">
+            <div class="media bg-light ">
                 <div class="media-left">
                     <img src="" class="media-object" style="width:60px">
                 </div>
@@ -207,6 +207,8 @@
                         {% endif %}
                         <small><i>Posted on {{ review.date }}</i></small>
                     </h4>
+                    <br>
+                    <p><span class="rounded">{{ review.module }}</span></p>
                     <p>{{ review.review_body }}</p><br>
                     <input id="input-2" name="input-2" class="rating rating-loading pull-right"
                            value="{{ review.rating }}"
@@ -230,7 +232,6 @@
         {% endfor %}
 
 
-    </div>
     </div>
 
 {% endblock %}
