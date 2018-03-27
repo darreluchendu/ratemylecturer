@@ -30,14 +30,17 @@ body {
     padding: 10px;
     font-size: 16px;
 }
+
 .form-signin .form-control:focus {
     z-index: 2;
 }
+
 .form-signin input[type="text"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
+
 .form-signin input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
@@ -49,7 +52,6 @@ body {
     padding: 10px;
 }
 
-
 .review > div:nth-child(even) {
     background-color: lightgray;
     padding: 10px;
@@ -57,51 +59,54 @@ body {
 
 /* Style the search box inside the navigation bar */
 
-.active{
-     background: white;
+.active {
+    background: white;
     font-weight: bolder;
-    color:#428bca;
+    color: #428bca;
 
 }
 
-.nav-item{
+.nav-item {
 
     -webkit-transition: all .3s ease;
-     color:#0276FD	;
+    color: #0276FD;
     font-weight: bold;
     font-size: 16px;
-    padding:50px
+    padding: 50px
 
 }
-.nav-item:hover{
+
+.nav-item:hover {
     /*background: rgba(255,255,255,.9);*/
-   color:#428bca;
+    color: #428bca;
     background: #3F3F3F;
 
 }
+
 .main-search {
     margin-left: 100px;
     padding: 20px 0px 20px 0px;
     height: 100%;
 
-
 }
-/*@media(min-width:1000px){*/
-    /*.nav-item {*/
 
-         /*padding:30px 10px 30px 10px;*/
-    /*}*/
+/*@media(min-width:1000px){*/
+/*.nav-item {*/
+
+/*padding:30px 10px 30px 10px;*/
+/*}*/
 /*}*/
 
-
-@media(min-width:1300px) {
+@media (min-width: 1300px) {
     .main-search {
         margin-left: 100px
     }
 }
-.autocpm{
+
+.autocpm {
     padding: 20px;
 }
+
 .ui-autocomplete {
     z-index: 2000 !important;
     max-height: 300px;
@@ -109,74 +114,99 @@ body {
     /* prevent horizontal scrollbar */
     overflow-x: hidden;
 }
-.ui-autocomplete-category{
-    background:#3F3F3F ;
+
+.ui-autocomplete-category {
+    background: #3F3F3F;
     color: white;
-    padding:10px 0px 10px 0px;
+    padding: 10px 0px 10px 0px;
     font-size: 17px;
 }
 
- #flex-container {
-     position: relative;
-     bottom: 20px;
-     height: 240px;
+#flex-container {
+    position: relative;
+    bottom: 20px;
+    height: 240px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
     border: 1px black solid;
     margin: 0 auto;
-     background-image:url('http://dice-academy.com/wp-content/uploads/2016/05/education-banner.jpg')
+    background-image: url('http://dice-academy.com/wp-content/uploads/2016/05/education-banner.jpg')
 }
 
 .flex-item {
-   position: absolute;
+    position: absolute;
     margin-top: 120px;
     width: 200px;
     height: 100px;
     border: 1px black solid;
     background: black;
-    color:white;
+    color: white;
     text-align: center;
 }
-.b1{
+
+.b1 {
     left: 783px;
 
     font-size: 18px;
 }
 
-.b2{
+.b2 {
 
-    right:583px;
-
-}
-.b3{
-    right:800px
+    right: 583px;
 
 }
-.flex-item a{
+
+.b3 {
+    right: 800px
+
+}
+
+.flex-item a {
     position: relative;
-    top:20px;
+    top: 20px;
     font-size: 18px;
 }
-.flex-item span{
+
+.flex-item span {
     display: block;
     font-size: 25px;
     font-weight: bolder;
 }
-.flex-item:hover{
-    background:#428bca;
+
+.flex-item:hover {
+    background: #428bca;
 
 }
-.result{
+
+.result {
     position: absolute;
-    left:360px;
-    top:35px;
-    height:50px;
+    left: 360px;
+    top: 35px;
+    height: 50px;
     font-weight: bolder;
     font-size: 40px;
     color: black;
 }
-.result span{
+
+.result span {
     color: #eee;
 }
+
+.gi-2x {
+    font-size: 2em;
+}
+
+.gi-3x {
+    font-size: 3em;
+}
+
+.gi-4x {
+    font-size: 4em;
+}
+
+.gi-5x {
+    font-size: 5em;
+}
+

@@ -40,47 +40,18 @@ class StudentProfile(models.Model):
     #         ,save=False)
     def save_image_from_url(self, url):
         if url and not self.picture:
-            # file=BytesIO(urlopen(url).read())
-            # im = Image.open(file)
-            # if im.mode in ("RGBA", "P"):
-            #     im = im.convert("RGB")
-            # self.picture.save(url[url.rfind("/") + 1:], im, save=False)
-            # inStream = urllib.request.urlopen(url)
-            #
-            # parser = ImageFile.Parser()
-            # while True:
-            #     s = inStream.read(1024)
-            #     if not s:
-            #         break
-            #     parser.feed(s)
-            #
-            # inImage = parser.close()
-            # # convert to RGB to avoid error with png and tiffs
-            # if inImage.mode != "RGB":
-            #     inImage = inImage.convert("RGB")
-            # img_temp = StringIO()
-            # inImage.save(img_temp, 'PNG')
-            # img_temp.seek(0)
-            #
-            # file_object = File(img_temp,url[url.rfind("/") + 1:])
-            # result = urlretrieve(url)
-            # self.picture.save(
-            #     os.path.basename(url),file_object
-            # )
-            with urllib.request.urlopen(url) as pic:
-                f = BytesIO(pic.read())
-
-            im = Image.open(f)
-            if im.mode in ("RGBA", "P"):
-                im = im.convert("RGB")
-            file_name = url[url.rfind("/") + 1 :]
-
-            self.picture = file_name
-            tempfile = im
-            tempfile_io = BytesIO()  # Will make a file-like object in memory that you can then save
-            tempfile.save(tempfile_io,)
-
-            self.picture.save(file_name, ContentFile(tempfile_io.getvalue()))
+            image_request_result = requests.get(url)
+            image = Image.open(BytesIO(image_request_result.content))
+            if image.mode in ("RGBA", "P"):
+                image = image.convert("RGB")
+            # width, height = image.size
+            # max_size = [200, 200]
+            # if width > 200 or height > 200:
+            #     image.thumbnail(max_size)
+            file_name = url[url.rfind("/") + 1:]
+            image_io = BytesIO()
+            image.save(image_io, format='JPEG')
+            self.picture.save(file_name, ContentFile(image_io.getvalue()) ,save=False)
 
         # r = requests.get(url)
         #
@@ -140,6 +111,20 @@ class LecturerProfile(models.Model):
         for r in Review.objects.filter(lecturer=self):
             rating_list.append(r.rating)
         self.rating_avr = (sum(rating_list)) / len(rating_list)
+    def save_image_from_url(self, url):
+        if url and not self.picture:
+            image_request_result = requests.get(url)
+            image = Image.open(BytesIO(image_request_result.content))
+            if image.mode in ("RGBA", "P"):
+                image = image.convert("RGB")
+            # width, height = image.size
+            # max_size = [200, 200]
+            # if width > 200 or height > 200:
+            #     image.thumbnail(max_size)
+            file_name = url[url.rfind("/") + 1:]
+            image_io = BytesIO()
+            image.save(image_io, format='JPEG')
+            self.picture.save(file_name, ContentFile(image_io.getvalue()),save=False)
     #
     # def get_remote_image(self):
     #     if self.picture_url and not self.picture:
@@ -150,17 +135,7 @@ class LecturerProfile(models.Model):
     #         )
     #         self.save(force_update=True)
 
-    def save_image_from_url(self, url):
-        r = requests.get(url)
 
-        img_temp = NamedTemporaryFile()
-        img_temp.write(r.content)
-        img_temp.flush()
-
-        self.picture.save(url[url.rfind("/")+1:], File(img_temp), save=True)
-        im = Image.open(url[url.rfind("/")+1:])
-        rgb_im = im.convert('RGB')
-        self.picture.save(url[url.rfind("/")+1:]+'.jpg',rgb_im, save=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -184,7 +159,7 @@ class LecturerProfile(models.Model):
         if Review.objects.filter(lecturer=self).count() > 0:
             self.updateRating()
 
-        super(LecturerProfile, self).save(*args, **kwargs)
+       # super(LecturerProfile, self).save(*args, **kwargs)
 
 
 class Review(models.Model):

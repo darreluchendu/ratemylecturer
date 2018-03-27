@@ -13,45 +13,116 @@
         <div class="flex-item b2"><a>Rate A<span>PROFESSOR</span></a></div>
         <div class="flex-item b3"><a>Find A<span>PROFESSOR</span></a></div>
     </div>
-    <div class="row">
-    <div class="col-sm-9">
-        <div class = "container" style="justify-content: center; border-spacing: 12px">
-            <h2 class="text-left" style="font-family: 'Segoe UI'">Welcome to Rate My Lecturer</h2>
-            {% if user.is_authenticated %}
-            <p1 style="font-family: 'Segoe UI Light'">   Hey there, {{ user.username }}! </p1>
-            {% else %}
-            <br/>
-            <p1 style="font-family: 'Segoe UI Light'">This is where the top lecturer of the week would be.</p1>
-            {% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="container" style="justify-content: center; border-spacing: 12px">
+                    <h2 class="text-left" style="font-family: 'Segoe UI'">Welcome to Rate My Lecturer</h2>
+                    {% if user.is_authenticated %}
+                        <p1 style="font-family: 'Segoe UI Light'"> Hey there, {{ user.username }}!</p1>
+                    {% else %}
+                        <br/>
+                        <p1 style="font-family: 'Segoe UI Light'">This is where the top lecturer of the week would be.
+                        </p1>
+                        <br>
+                        {% comment %}
+                    wip - university rating
+                    {% for uni in sorted_avg_rating %}
+                        <p>{{ uni.1 }}</p>
+                    {% endfor %}
+                    {% endcomment %}
+                    {% endif %}
+                </div>
+                <br/>
+                <div class="container-fluid" style="border-spacing: 12px">
+
+                    {% comment %}
+                <h2 style="font-family: 'Segoe UI'">Top Lecturers</h2>
+
+                {% endcomment %}
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="container-fluid" style="justify-content: center">
+                    <h1 style="font-family: 'Segoe UI'">Most Recent </h1>
+                    <br/>
+                    {% if reviews %}
+                        <ul>
+                            {% for review in reviews %}
+                                <li><a style="font-family: 'Segoe UI Light'"
+                                       href="{% url 'profile' review.lecturer %}">{{ review.lecturer.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p1 style="font-family:'Segoe UI Light'">There isn't any recent reviews.</p1>
+                    {% endif %}
+                </div>
+            </div>
+
+
         </div>
-        <br/>
-        <div class="container-fluid" style="border-spacing: 12px">
-            <h2 style="font-family: 'Segoe UI'">Top Lecturers</h2>
-            {% if top %}
-                <ul>
-                {% for t in top %}
-                    <li style="font-family: 'Segoe UI Light'"><a style="font-family: 'Segoe UI Light'" href="{% url 'profile' t.user %}">{{ t.name }}</a></li>
-                {% endfor %}
-                </ul>
-            {% else %}
-            <p2 style="font-family: 'Segoe UI Light'">This is where you can see the top lecturers. </p2>
-            {% endif %}
+        <div class="col-md-6">
+            <h2 class="sub-header">Top Lecturers</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <!--    <th class="col-md-12">#</th> -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if top_lecturer %}
+                        {% for t in top_lecturer %}
+                            <tr>
+                                <td class="col-md-12">
+                                    <p><a style="font-family: 'Segoe UI Light'"
+                                          href="{% url 'profile' t.user %}">{{ t.name }}</a> {{ t.department }},
+                                        {{ t.university }}</p> <br>
+                                    <input id="input-2" name="input-2" class="rating rating-loading"
+                                           value="{{ t.rating_avr }}"
+                                           readonly data-show-clear="false" data-size="xs">
+
+
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <p2 style="font-family: 'Segoe UI Light'">This is where you can see the top lecturers.</p2>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="container-fluid" style="justify-content: center">
-            <h1 style="font-family: 'Segoe UI'">Most Recent </h1>
-            <br/>
-	        {% if reviews %}
-	            <ul>
-		        {% for review in reviews %}
-                    <li><a style="font-family: 'Segoe UI Light'" href="{% url 'profile' review.lecturer %}">{{ review.lecturer.name }}</a></li>
-                {% endfor %}
-	            </ul>
-	        {% else %}
-                <p1 style="font-family:'Segoe UI Light'">There isn't any recent reviews.</p1>
-            {% endif %}
+        <div class="col-md-6">
+            <h2 class="sub-header">Top Universities</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <!--   <th class="col-md-12">#</th> -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if top_uni %}
+                        <tbody>
+                        {% for u in top_uni %}
+                            <tr>
+                                <td class="col-md-12"><a style="font-family: 'Segoe UI Light'"
+                                                         href="">{{ u.0 }}</a> <br>
+                                    <input id="input-2" name="input-2" class="rating rating-loading"
+                                           value="{{ u.1|floatformat:-2 }}"
+                                           readonly data-show-clear="false" data-size="xs">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <p2 style="font-family: 'Segoe UI Light'">This is where you can see the top
+                            universities.
+                        </p2>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
     </div>
 {% endblock %}

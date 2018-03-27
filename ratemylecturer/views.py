@@ -1,5 +1,6 @@
 import json
 import operator
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
@@ -10,7 +11,9 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
+
 from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, ReviewForm, UserForm, StudPictureForm,LecPictureForm
+
 
 from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserMethods
 
@@ -19,8 +22,27 @@ def index(request):
     reviews_list = Review.objects.order_by('-date')[:3]
 
 
+    # calculating uni average rating
+    universities = set()
+    lecturers = LecturerProfile.objects.all()
+    for lecturer in lecturers:
+        universities.add(lecturer.university)
+    # get all reviews attributed to lecturers in a university
+    uni_avg_rating = {}
+    for university in universities:
+        lecturer_s = LecturerProfile.objects.filter(university=university)
+        rating_avg_sum = 0.0
+        for lec in lecturer_s:
+            rating_avg_sum += lec.rating_avr
+        num_lecturer = lecturer_s.count()
+        uni_avg_rating[university] = rating_avg_sum / num_lecturer
+    top_uni = sorted(uni_avg_rating.items(), key=operator.itemgetter(1))
+    top_uni.reverse()
+
     top_lect = LecturerProfile.objects.order_by('-rating_avr')[:5]
-    context_dict = {'reviews': reviews_list, 'user': request.user, 'top': top_lect, 'nbar': "home"}
+    # uni_ratings = Review.objects.filter(lecturer__university=university)
+    context_dict = {'reviews': reviews_list, 'user': request.user, 'top_lecturer': top_lect, 'nbar': "home",
+                    'top_uni': top_uni[:5]}
     return render(request, 'ratemylecturer/index.html', context_dict)
 
 
@@ -162,6 +184,7 @@ def create_lecturer(request, user_id):
 # Profile
 def profile(request, username):
     profile_user = User.objects.get(username=username)
+
     owner=UserMethods.is_owner(request.user,username)
     context_dict = {'owner':owner}
 
@@ -172,13 +195,13 @@ def profile(request, username):
             pic_form = LecPictureForm(instance=LecturerProfile.objects.get(user=request.user))
         context_dict['pic_form']=pic_form
 
-
     if UserMethods.is_student(profile_user):
         student_profile = StudentProfile.objects.get(user=profile_user)
         student_reviews = Review.objects.filter(student=student_profile)
         context_dict['profile'] = student_profile
         context_dict['reviews'] = student_reviews
         context_dict["student_profile"] = True
+
     else:
         lecturer_profile = LecturerProfile.objects.get(user=profile_user)
         lecturer_reviews = Review.objects.filter(lecturer=lecturer_profile)
@@ -189,6 +212,8 @@ def profile(request, username):
         context_dict['three_star_rating_count'] = lecturer_reviews.filter(rating=3).count()
         context_dict['four_star_rating_count'] = lecturer_reviews.filter(rating=4).count()
         context_dict['five_star_rating_count'] = lecturer_reviews.filter(rating=5).count()
+
+        context_dict['total_star_rating'] = 0
         context_dict["student_profile"] = False
     context_dict["profile_user"] = username
     context_dict['nbar'] = 'profile'

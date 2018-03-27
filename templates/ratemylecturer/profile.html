@@ -9,6 +9,7 @@
                 <h1 style="font-family: 'Segoe UI'">{{ profile.first_name }} {{ profile.surname }}</h1>
                 <h1 style="font-family: 'Segoe UI'">{{ profile.name }}</h1>
 
+
               <form class="update_pic" id="picture_form" method="post" action="{% url 'editPicture' user.username %}"
               enctype="multipart/form-data">
                   {% csrf_token %}
@@ -24,10 +25,14 @@
               </form>
                   <br>
                 {% if not student_profile %}
+
                     <label for="input-2" class="control-label">Average Rating</label>
-                    <input id="input-2" name="input-2" class="rating rating-loading" value="{{ profile.rating_avr }}"
-                           readonly
-                           data-show-clear="false">
+                    <input id="input-2" name="input-2" class="rating rating-loading"
+                           value="{{ profile.rating_avr }}"
+                           readonly data-show-clear="false" data-size="xs">
+
+                    <a class="btn btn-primary" href="{% url 'add_review' profile.user %}"> <strong>Add
+                        Review</strong></a>
                 {% endif %}
             </div>
             <div class="col">
@@ -57,21 +62,22 @@
 
                                     <div class="row" row-id="5-star">
                                         <div class="pull-left">
-                                            <div class="pull-left" style="width:35px; line-height:1;">
-                                                <div style="height:9px; margin:5px 0;">5 <span
+                                            <div class="pull-left" style="width:80px; line-height:1; height: 2em">
+                                                <div class="gi-2x" style="height:2em; margin:5px 0;">5 <span
                                                         class="glyphicon glyphicon-star"></span></div>
                                             </div>
                                             <div class="pull-left" style="width:180px;">
-                                                <div class="progress" style="height:9px; margin:8px 0;">
-                                                    <div class="progress-bar progress-bar-success" role="progressbar"
+                                                <div class="progress" style="height:3em; margin:8px 0;">
+                                                    <div class="progress-bar progress-bar-success"
+                                                         role="progressbar"
                                                          aria-valuenow="5" aria-valuemin="0" aria-valuemax="5"
-                                                         style="width: 1000%">
+                                                         style="width: 10%; height: 2em">
                                                         <span class="sr-only">100% Complete (danger)</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="pull-right"
-                                                 style="margin-left:10px;">{{ five_star_rating_count }}</div>
+                                            <div class="pull-right gi-2x"
+                                                 style="margin-left:10px; height: 2em; font-size:2em">{{ five_star_rating_count }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -79,12 +85,12 @@
 
                             <div class="row" row-id="4-star">
                                 <div class="pull-left">
-                                    <div class="pull-left" style="width:35px; line-height:1;">
-                                        <div style="height:9px; margin:5px 0;">4 <span
+                                    <div class="pull-left" style="width:80px; line-height:1; height: 2em">
+                                        <div class="gi-2x" style="height:2em; margin:5px 0;">4 <span
                                                 class="glyphicon glyphicon-star"></span></div>
                                     </div>
                                     <div class="pull-left" style="width:180px;">
-                                        <div class="progress" style="height:9px; margin:8px 0;">
+                                        <div class="progress" style="height:3em; margin:8px 0;">
                                             <div class="progress-bar progress-bar-primary" role="progressbar"
                                                  aria-valuenow="4" aria-valuemin="0" aria-valuemax="5"
                                                  style="width: 80%">
@@ -92,69 +98,74 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="pull-right" style="margin-left:10px;">{{ four_star_rating_count }}</div>
+                                    <div class="pull-right gi-2x"
+                                         style="margin-left:10px; height: 2em; font-size: 2em ">{{ four_star_rating_count }}</div>
                                 </div>
                             </div>
 
                             <div class="row" row-id="3-star">
                                 <div class="pull-left">
-                                    <div class="pull-left" style="width:35px; line-height:1;">
-                                        <div style="height:9px; margin:5px 0;">3 <span
+                                    <div class="pull-left" style="width:80px; line-height:1; height: 2em">
+                                        <div class="gi-2x" style="height:2em; margin:5px 0;">3 <span
                                                 class="glyphicon glyphicon-star"></span></div>
                                     </div>
                                     <div class="pull-left" style="width:180px;">
-                                        <div class="progress" style="height:9px; margin:8px 0;">
+                                        <div class="progress" style="height:3em; margin:8px 0;">
                                             <div class="progress-bar progress-bar-info" role="progressbar"
                                                  aria-valuenow="3" aria-valuemin="0" aria-valuemax="5"
-                                                 style="width: 60%">
-                                                <span class="sr-only">80% Complete (danger)</span>
+                                                 style="width: 60%; height: 2em">
+                                                <span class="sr-only">60% Complete (danger)</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="pull-right"
-                                         style="margin-left:10px;">{{ three_star_rating_count }}</div>
+                                    <div class="pull-right gi-2x"
+                                         style="margin-left:10px; height: 2em; font-size:2em">{{ three_star_rating_count }}</div>
                                 </div>
+
                             </div>
 
                             <div class="row" row-id="2-star">
                                 <div class="pull-left">
-                                    <div class="pull-left" style="width:35px; line-height:1;">
-                                        <div style="height:9px; margin:5px 0;">2 <span
+                                    <div class="pull-left" style="width:80px; line-height:1; height: 2em">
+                                        <div class="gi-2x" style="height:2em; margin:5px 0;">2 <span
                                                 class="glyphicon glyphicon-star"></span></div>
                                     </div>
                                     <div class="pull-left" style="width:180px;">
-                                        <div class="progress" style="height:9px; margin:8px 0;">
+                                        <div class="progress" style="height:3em; margin:8px 0;">
                                             <div class="progress-bar progress-bar-warning" role="progressbar"
                                                  aria-valuenow="2" aria-valuemin="0" aria-valuemax="5"
-                                                 style="width: 40%">
-                                                <span class="sr-only">80% Complete (danger)</span>
+                                                 style="width: 40%; height: 2em">
+                                                <span class="sr-only">40% Complete (danger)</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="pull-right" style="margin-left:10px;">{{ two_star_rating_count }}</div>
+                                    <div class="pull-right gi-2x"
+                                         style="margin-left:10px; height: 2em; font-size:2em">{{ three_star_rating_count }}</div>
                                 </div>
+
                             </div>
 
                             <div class="row" row-id="1-star">
-                                <div class="pull-left">
-                                    <div class="pull-left" style="width:35px; line-height:1;">
-                                        <div style="height:9px; margin:5px 0;">1 <span
-                                                class="glyphicon glyphicon-star"></span></div>
-                                    </div>
-                                    <div class="pull-left" style="width:180px;">
-                                        <div class="progress" style="height:9px; margin:8px 0;">
-                                            <div class="progress-bar progress-bar-danger" role="progressbar"
-                                                 aria-valuenow="1" aria-valuemin="0" aria-valuemax="5"
-                                                 style="width: 20%">
-                                                <span class="sr-only">80% Complete (danger)</span>
-                                            </div>
+                                <div class="pull-left" style="width:80px; line-height:1; height: 2em">
+                                    <div class="gi-2x" style="height:2em; margin:5px 0;">1 <span
+                                            class="glyphicon glyphicon-star"></span></div>
+                                </div>
+                                <div class="pull-left" style="width:180px;">
+                                    <div class="progress" style="height:3em; margin:8px 0;">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar"
+                                             aria-valuenow="1" aria-valuemin="0" aria-valuemax="5"
+                                             style="width: 20%; height: 2em">
+                                            <span class="sr-only">20% Complete (danger)</span>
                                         </div>
                                     </div>
-                                    <div class="pull-right" style="margin-left:10px;">{{ one_star_rating_count }}</div>
                                 </div>
+                                <div class="pull-right gi-2x"
+                                     style="margin-left:10px; height: 2em; font-size:2em">{{ three_star_rating_count }}</div>
                             </div>
 
                         </div>
+
+                    </div>
                     </div>
                     <br/>
 
@@ -170,13 +181,13 @@
                         </div>
                     </div>
                 {% endif %}
-            <br/>
-        </div>
+        <br/>
+    </div>
     </div>
     </div>
     <br>
     {% if user.username == profile_user %}
-        <a href="{% url 'edit_profile' user.username %}">Edit Profile</a>
+        <a class="btn btn-primary" href="{% url 'edit_profile' user.username %}">Edit Profile</a>
     {% endif %}
     {% if not student_profile %}
         <h2 style="font-family: 'Segoe UI'">Reviews</h2>
@@ -193,7 +204,7 @@
         {% endif %}
     <input id="input-2" name="input-2" class="rating rating-loading" value="{{ review.rating }}"
            data-show-clear="false"
-           readonly></div>
+           readonly data-size="xs"></div>
     <div>{{ review.title }}</div>
     <div>{{ review.review_body }}</div>
     <br>

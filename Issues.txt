@@ -1,7 +1,6 @@
 Alright so here's what needs to be done:
    Font Size bigger,
 
-	On home page display add Highest Rated Lecturers and Highest rated Universities,(this mean getting the ratings of all the lecturers of that uni and finding the average lecturer rating between them and then sort them). These list should be side by side and take up width of entire page.,
 
 	Make all forms look as nice as possible (I think login is fine but if u think it can be improved go ahead),
 
@@ -15,12 +14,9 @@ Alright so here's what needs to be done:
 
 	Add date, module, likes, and dislikes to review (I'll handle the liking functionality),
 
-	Ensure the right links are displayed for the right user (e.g) Don't let a lecturer see the add review button
-
-	Make edit profile and add review links into nice looking buttons,
-
 	Make it so that user can change profile picture by clicking profile picture (this may or may not be possible)
 
 	If anyone can think of a better color scheme feel free to change the colors
 
 	Also when I say make something look nicer just look up  templates and examples of that thing and implement it into the site
+
