@@ -10,6 +10,19 @@ class BaseLiveServerTestCase(LiveServerTestCase):
     def setUp(self):
         super(BaseLiveServerTestCase, self).setUp()
         self.driver = webdriver.Chrome()
+        self.user = User.objects.create_user(username='alice', password='secret', email='alice@example.ac.uk')
+        self.student_user = StudentProfile.objects.create(user=self.user, first_name='Alice', surname='Mark',
+                                                          university='University of Glasgow',
+                                                          course='Computer Science', bio='super student')
+        self.user.save()
+        self.student_user.save()
+
+        self.user = User.objects.create_user(username='bob', password='swordfish', email='bob@example.ac.uk')
+
+        self.lecturer_user = LecturerProfile.objects.create(user=self.user, university='Oxford University',
+                                                            name='Einstein')
+        self.user.save()
+        self.lecturer_user.save()
 
     def TearDown(self):
         super(BaseLiveServerTestCase, self).tearDown()
