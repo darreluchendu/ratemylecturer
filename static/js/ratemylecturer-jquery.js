@@ -58,6 +58,7 @@ $(document).ready(function() {
                   var li;
                   ul.addClass('autocpm')
                   if (item.category != currentCategory) {
+
                       ul.append("<li class='ui-autocomplete-category'>" + item.category + "</li>");
                       currentCategory = item.category;
                   }

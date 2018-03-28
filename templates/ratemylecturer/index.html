@@ -9,22 +9,21 @@
 
     <div id="flex-container">
         <div class="result">Find <span id="var">what</span> you're looking for</div>
-        <div class="flex-item b1"><a>Find A<span>SCHOOL</span></a></div>
-        <div class="flex-item b2"><a>Rate A<span>PROFESSOR</span></a></div>
-        <div class="flex-item b3"><a>Find A<span>PROFESSOR</span></a></div>
+        <div class="flex-item b1"><a href="/ratemylecturer/search?q=">Find A<span>SCHOOL</span></a></div>
+        <div class="flex-item b2"><a href="/ratemylecturer/search?q=">Rate A<span>PROFESSOR</span></a></div>
+        <div class="flex-item b3"><a href="/ratemylecturer/search?q=">Find A<span>PROFESSOR</span></a></div>
     </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-9">
                 <div class="container" style="justify-content: center; border-spacing: 12px">
-                    <h2 class="text-left" style="font-family: 'Segoe UI'">Welcome to Rate My Lecturer</h2>
+                    <strong><h1 class="text-left" style="color:green;font-family: 'Segoe UI'">Welcome to Rate My Lecturer</h1></strong>
                     {% if user.is_authenticated %}
                         <p1 style="font-family: 'Segoe UI Light'"> Hey there, {{ user.username }}!</p1>
                     {% else %}
-                        <br/>
-                        <p1 style="font-family: 'Segoe UI Light'">Hey there.
+                        <p1 style="font-family: 'Segoe UI Light'">Hey there Stanger!.
                         </p1>
-                        <br>
+
                         {% comment %}
                     wip - university rating
                     {% for uni in sorted_avg_rating %}
@@ -33,7 +32,7 @@
                     {% endcomment %}
                     {% endif %}
                 </div>
-                <br/>
+
                 <div class="container-fluid" style="border-spacing: 12px">
 
                     {% comment %}

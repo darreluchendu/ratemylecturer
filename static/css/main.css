@@ -60,16 +60,16 @@ body {
 /* Style the search box inside the navigation bar */
 
 .active {
-    background: #428bca;
+    background: #DBDCE4;
     font-weight: bolder;
-    color: #428bca;
+    color: #A6A9C1;
 
 }
 
 .nav-item {
 
     -webkit-transition: all .3s ease;
-    color: #FFFFFF;
+    color: black;
     font-weight: bold;
     font-size: 16px;
     padding: 50px
@@ -78,8 +78,7 @@ body {
 
 .nav-item:hover {
     /*background: rgba(255,255,255,.9);*/
-    color: #428bca;
-    background: #3F3F3F;
+
 
 }
 
@@ -142,7 +141,7 @@ body {
     height: 100px;
     border: 1px black solid;
     background: black;
-    color: white;
+    color: greenyellow;
     text-align: center;
 }
 
@@ -176,7 +175,8 @@ body {
 }
 
 .flex-item:hover {
-    background: #428bca;
+    color: #FF841E    ;
+    background: yellowgreen       ;
 
 }
 
@@ -191,7 +191,7 @@ body {
 }
 
 .result span {
-    color: #eee;
+    color: #FF5500  ;
 }
 
 .gi-2x {
@@ -220,4 +220,13 @@ body {
 
 #create_lec{
     font-size: 13px;
+}
+.prox-but{
+    position: absolute;
+    top:0px;
+    z-index: 2000;
+}
+.prox-ser {
+    position: relative;
+    top: 60px;
 }

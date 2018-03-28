@@ -21,17 +21,6 @@ from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, Review
 
 from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserMethods
 uni_data=[]
-universities = set()
-for lecturer in LecturerProfile.objects.all():
-    universities.add(lecturer.university)
-
-for university in universities:
-    lecturer_s = LecturerProfile.objects.filter(university=university)
-    rating_avg_sum = 0.0
-    for lec in lecturer_s:
-        rating_avg_sum += lec.rating_avr
-    num_lecturer = lecturer_s.count()
-    uni_data.append({'name': university, 'rating': rating_avg_sum / num_lecturer, 'slug': slugify(university)})
 def index(request):
     global uni_data
     new_reviews=[]
@@ -438,23 +427,41 @@ def search(request):
 
     lec_filtered = LecturerProfile.objects.filter(lec)
     uni_filtered=LecturerProfile.objects.filter(uni)
+    if query == '':
+        proxy=True
+        universities = set()
+        for lecturer in LecturerProfile.objects.all():
+            universities.add(lecturer.university)
+        uni_avg_rating = []
+        for university in universities:
+            lecturer_s = LecturerProfile.objects.filter(university=university)
+            rating_avg_sum = 0.0
+            for lec in lecturer_s:
+                rating_avg_sum += lec.rating_avr
+            num_lecturer = lecturer_s.count()
+            uni_avg_rating.append(
+                {'name': university, 'rating': rating_avg_sum / num_lecturer, 'slug': slugify(university)})
+        lec_filtered=LecturerProfile.objects.all()
+    else:
+        proxy=False
+        universities = set()
+        for lecturer in uni_filtered:
+            universities.add(lecturer.university)
+        uni_avg_rating = []
+        for university in universities:
+            lecturer_s = LecturerProfile.objects.filter(university=university)
+            rating_avg_sum = 0.0
+            for lec in lecturer_s:
+                rating_avg_sum += lec.rating_avr
+            num_lecturer = lecturer_s.count()
+            uni_avg_rating.append({'name':university,'rating':rating_avg_sum / num_lecturer,'slug':slugify(university)})
 
-    universities = set()
-    for lecturer in uni_filtered:
-        universities.add(lecturer.university)
-    uni_avg_rating = []
-    for university in universities:
-        lecturer_s = LecturerProfile.objects.filter(university=university)
-        rating_avg_sum = 0.0
-        for lec in lecturer_s:
-            rating_avg_sum += lec.rating_avr
-        num_lecturer = lecturer_s.count()
-        uni_avg_rating.append({'name':university,'rating':rating_avg_sum / num_lecturer,'slug':slugify(university)})
         request.session['uni_data']=uni_avg_rating
     # uni_filtered = sorted(uni_avg_rating.items(), key=operator.itemgetter(1))
     # uni_filtered.reverse()
 
-    return render(request,'ratemylecturer/search.html',{'query':query,'lec_result':lec_filtered,"uni_result":uni_avg_rating})
+
+    return render(request,'ratemylecturer/search.html',{'proxy':proxy,'query':query,'lec_result':lec_filtered,"uni_result":uni_avg_rating})
 
 def uni_detail(request,uni_slug):
     lec_list=LecturerProfile.objects.filter(uni_slug=uni_slug)
