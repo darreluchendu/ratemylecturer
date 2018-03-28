@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 
 from ratemylecturer.models import LecturerProfile, StudentProfile, Review
 
-
+# User model's form
+# (used to create new user with a username, email and password)
 class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
@@ -15,6 +16,7 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'password')
 
+    # Checks that the email is not already used and that it is a university email address
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
@@ -25,7 +27,8 @@ class UserForm(forms.ModelForm):
 
 
 # LecturerProfile model's form
-
+# Completes the LecturerProfile model (1st part are the information from user model)
+# with name, university, department, bio and profile picture
 class LecturerProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
@@ -45,6 +48,8 @@ class LecturerProfileForm(forms.ModelForm):
 
 
 # StudentProfile model's form
+# Completes the StudentProfile model (1st part are the information from user model)
+# with first name, surname, university, course, bio and profile picture
 class StudentProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
@@ -63,6 +68,7 @@ class StudentProfileForm(forms.ModelForm):
 
 
 # Review model's form
+# Allows to write new review with a title, module, body and rating as described below in the status_choices
 class ReviewForm(forms.ModelForm):
 
     likes=forms.IntegerField(widget=forms.HiddenInput(), initial=0)
@@ -84,13 +90,14 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = ('module',  'likes', 'dislikes','rating', 'title', 'review_body')
 
-
+# Edit profile picture form for students
 class StudPictureForm(forms.ModelForm):
 	edit_picture = forms.ImageField(required=False)
 	class Meta:
 		model=StudentProfile
 		fields=("edit_picture",)
 
+# Edit profile picture form for lecturers
 class LecPictureForm(forms.ModelForm):
 	edit_picture = forms.ImageField(required=False,)
 	class Meta:
