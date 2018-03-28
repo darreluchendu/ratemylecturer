@@ -2,6 +2,9 @@
 
 
 from django.core.files.base import ContentFile
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils import timezone
 from django_resized import ResizedImageField
 
 from PIL import Image
@@ -20,7 +23,7 @@ class StudentProfile(models.Model):
     surname = models.CharField(max_length=30)
     university = models.CharField(max_length=30, blank=True)
     course = models.CharField(max_length=30, blank=True)
-    picture =ResizedImageField(size=[500, 300],upload_to='profile_images', blank=True)
+    picture =ResizedImageField(size=[600, 500],upload_to='profile_images', blank=True)
     picture_url = models.URLField()
     bio = models.CharField(max_length=200, blank=True)
 
@@ -78,18 +81,14 @@ class LecturerProfile(models.Model):
     university = models.CharField(max_length=30)
     department = models.CharField(max_length=30)
     bio = models.CharField(max_length=200, blank=True)
-    picture = ResizedImageField(size=[500, 300],upload_to='profile_images', blank=True)
+    picture = ResizedImageField(size=[600, 500],upload_to='profile_images', blank=True)
     picture_url = models.URLField()
 
 
     def __str__(self):
         return self.user.username
 
-    def updateRating(self):
-        rating_list = []
-        for r in Review.objects.filter(lecturer=self):
-            rating_list.append(r.rating)
-        self.rating_avr = (sum(rating_list)) / len(rating_list)
+
     def save_image_from_url(self, url):
         if url and not self.picture:
             image_request_result = requests.get(url)
@@ -126,8 +125,7 @@ class LecturerProfile(models.Model):
                     setattr(self, field, val.capitalize())
         name = getattr(self, 'name', False)
         setattr(self, 'name', name.title())
-        if Review.objects.filter(lecturer=self).count() > 0:
-            self.updateRating()
+
 
         super(LecturerProfile, self).save(*args, **kwargs)
 
@@ -140,20 +138,18 @@ class Review(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     module = models.CharField(max_length=30)
     rating = models.IntegerField(default=0, )
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=timezone.now)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     title = models.CharField(max_length=30)
     review_body = models.CharField(max_length=200, blank=True)
-
+    # class Meta:
+    #     ordering = ['-date']
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
-        if Review.objects.filter(lecturer=self.lecturer).count() > 0:
-            self.lecturer.updateRating()
         super(Review, self).save(*args, **kwargs)
-
 
 # for defining custom user methods
 

@@ -1,9 +1,12 @@
 import json
 import operator
 
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.forms import model_to_dict
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
@@ -21,7 +24,7 @@ from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserM
 def index(request):
     new_reviews=[]
     new_names=[]
-    reviews_list = Review.objects.order_by('-date')
+    reviews_list = reversed(Review.objects.all())
 
 
     for i in reviews_list:
@@ -30,10 +33,7 @@ def index(request):
             new_names.append(i.lecturer)
             if len(new_reviews)==3:
                 break
-
-
-
-
+    print(new_names)
     # calculating uni average rating
     universities = set()
     lecturers = LecturerProfile.objects.all()
@@ -59,7 +59,6 @@ def index(request):
 
 
 def about(request):
-
     return render(request, 'ratemylecturer/about.html', {'nbar': 'about'})
 
 
@@ -137,6 +136,12 @@ def register(request):
                     lecturer_profile.picture_url = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
                 lecturer_profile.save()
             registered = True
+            messages.info(request, "Thanks for registering. You are now logged in.")
+            new_user = authenticate(username=user_form.cleaned_data['username'],
+                                    password=user_form.cleaned_data['password'],
+                                    )
+            login(request, new_user)
+            return HttpResponseRedirect("/ratemylecturer/")
         else:  # invalid form, for whatever reason
             print(user_form.errors, student_profile_form.errors, lecturer_profile_form.errors)
 
@@ -172,17 +177,21 @@ def create_lecturer(request, user_id):
             # save user form data
             lecturer_profile = lecturer_profile_form.save(commit=False)
             rand_password = User.objects.make_random_password()
-            proxy_user_count = LecturerProfile.objects.all().count() + 1
-            proxy_user_count = str(proxy_user_count)
-            user = User.objects.create(username="proxy_user" + proxy_user_count,
-                                       email="proxy_user" + proxy_user_count + '@gmail.com')
+            num_users = str(User.objects.all().count() + 1)
+            name = lecturer_profile.first_name.lower()
+            name.replace(" ", "_")
+            if User.objects.filter(username=name).exists():
+                username = name + num_users
+            else:
+                username = name
+            user = User.objects.create(username=username,email="proxy_user" +num_users + '@gmail.com')
             user.set_password(rand_password)
             user.save()
             lecturer_profile.user = user
             if 'picture' in request.FILES:
                 lecturer_profile.picture = request.FILES['picture']
             else:
-                lecturer_profile.picture = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
+                lecturer_profile.picture_url = 'http://itccthailand.com/wp-content/uploads/2016/07/default-user-icon-profile.png'
             lecturer_profile.save()
             created = True
         else:  # invalid form, for whatever reason
@@ -196,8 +205,11 @@ def create_lecturer(request, user_id):
 # Profile
 def profile(request, username):
     def percent(rating_count, total_rating):
-       x= int(rating_count*100/total_rating)
-       return str(x)+"%"
+        if total_rating:
+            x= int(rating_count*100/total_rating)
+            return str(x)+"%"
+        else:
+            return 'No rating here'
 
     profile_user = User.objects.get(username=username)
 
@@ -213,14 +225,14 @@ def profile(request, username):
 
     if UserMethods.is_student(profile_user):
         student_profile = StudentProfile.objects.get(user=profile_user)
-        student_reviews = Review.objects.filter(student=student_profile)
+        student_reviews = Review.objects.filter(student=student_profile).order_by('-date')
         context_dict['profile'] = student_profile
         context_dict['reviews'] = student_reviews
         context_dict["student_profile"] = True
 
     else:
         lecturer_profile = LecturerProfile.objects.get(user=profile_user)
-        lecturer_reviews = Review.objects.filter(lecturer=lecturer_profile)
+        lecturer_reviews = Review.objects.filter(lecturer=lecturer_profile).order_by('-date')
         context_dict['profile'] = lecturer_profile
         context_dict['reviews'] = lecturer_reviews
         context_dict['one_star_rating_count'] = lecturer_reviews.filter(rating=1).count()
@@ -270,7 +282,7 @@ def add_review(request, username):
         review_form = ReviewForm()
     review_form.fields['rating'].widget = forms.HiddenInput()
     return render(request, 'ratemylecturer/add_review.html', {'review_form': review_form,
-                                                              'username': username,'lecturer':lecturer})
+                                                              'username': username,'lecturer':lecturer, 'nbar': 'profile'})
 
 
 # creates student profile for user who logs in using google or facebook
@@ -343,8 +355,8 @@ def edit_profile(request, username):
             lec_dict = model_to_dict(LecturerProfile.objects.filter(user=request.user)[0])
             profile_form = LecturerProfileForm(initial=lec_dict,instance=LecturerProfile())
         profile_form.fields['picture'].widget = forms.HiddenInput()
-    return render(request, 'ratemylecturer/edit_profile.html', {'profile_form': profile_form})
-
+    return render(request, 'ratemylecturer/edit_profile.html', {'profile_form': profile_form,'nbar': 'profile'})
+@login_required
 def editPicture(request,username):
 
     if UserMethods.is_student(request.user):
@@ -361,6 +373,23 @@ def editPicture(request,username):
         pic.picture = request.FILES['edit_picture']
     pic.save()
     return HttpResponseRedirect(reverse('profile', kwargs={'username': request.user.username}))
+
+@receiver(post_save, sender=LecturerProfile)
+def updateRating(sender, instance,**kwargs):
+    rating_list = []
+    for r in Review.objects.filter(lecturer=instance):
+        rating_list.append(r.rating)
+    instance.rating_avr = (sum(rating_list)) / len(rating_list)
+    instance.save()
+
+@receiver(post_save, sender=Review)
+def updateRating(sender, instance,**kwargs):
+    lecturer=instance.lecturer
+    rating_list = []
+    for r in Review.objects.filter(lecturer=lecturer):
+        rating_list.append(r.rating)
+    lecturer.rating_avr = sum(rating_list)/ len(rating_list)
+    lecturer.save()
 
 
 

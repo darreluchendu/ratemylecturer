@@ -3,74 +3,101 @@
     {{ profile.first_name }} {{ profile.surname }}{{ profile.name }}
 {% endblock %}
 {% block body_block %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col" style="justify-content: center">
-                <h1 style="font-family: 'Segoe UI'">{{ profile.first_name }} {{ profile.surname }}</h1>
-                <h1 style="font-family: 'Segoe UI'">{{ profile.name }}</h1>
 
-    <img class="img-rounded img-responsive" src="/media/{{ profile.picture }}">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col" style="justify-content: center">
+            <br/>
+            <h1 style="font-family: 'Segoe UI'">{{ profile.first_name }} {{ profile.surname }}</h1>
+            <h1 style="font-family: 'Segoe UI'">{{ profile.name }}</h1>
+
+            <img class="img-rounded img-responsive" src="/media/{{ profile.picture }}">
             {% if owner %}
-              <form class="update_pic" id="picture_form" method="post" action="{% url 'editPicture' user.username %}"
-              enctype="multipart/form-data">
-                  {% csrf_token %}
+                <form class="update_pic" id="picture_form" method="post" action="{% url 'editPicture' user.username %}"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
 
-                          <div>
-                          <br/>
-                      <button type="submit" class="bt btn-primary edit_pic" style="width:200px">Change Profile Picture</button>
-                          </div>
-                 {{ pic_form }}
-              </form>
-             {% endif %}
-                  <br>
-                {% if not student_profile %}
+                    <div>
+                        <br/>
+                        <button type="submit" class="bt btn-primary edit_pic" style="width:200px">Change Profile Picture</button>
+                    </div>
+                    {{ pic_form }}
+                </form>
+            {% endif %}
+            <br>
+        {% if not student_profile %}
+                <label for="input-2" class="control-label">Average Rating</label>
+                <input id="input-2" name="input-2" class="rating rating-loading"
+                       value="{{ profile.rating_avr }}"
+                       readonly data-show-clear="false" data-size="xs">
+        {% endif %}
+                {% if not student_profile and is_student %}
+                <a class="btn btn-primary" href="{% url 'add_review' profile_user %}"> <strong>Add
+                    Review</strong></a>
+            {% endif %}
 
+        </div>
 
-                    <label for="input-2" class="control-label">Average Rating</label>
-                    <input id="input-2" name="input-2" class="rating rating-loading"
-                           value="{{ profile.rating_avr }}"
-                           readonly data-show-clear="false" data-size="xs">
+        <div class="col">
+            <div class="row">
+                <div class="container-fluid">
 
-                    <a class="btn btn-primary" href="{% url 'add_review' profile_user %}"> <strong>Add
-                        Review</strong></a>
-                {% endif %}
-            </div>
-            <div class="col">
-                <div class="row">
-                    <div class="container-fluid">
-                        <h2 style="font-family: 'Segoe UI'; text-align: left"> Biography</h2>
-                        {% if profile.bio %}
+                {% if owner %}
+    <span><a style="margin-left: 400px;width: 200px" class="btn btn-primary" href="{% url 'edit_profile' user.username %}"><strong>Edit Profile</strong></a></span>
+{% endif %}
+                    <h2 style="font-family: 'Segoe UI'; text-align: left"> Biography</h2>
+                    {% if profile.bio %}
                         <p1 style="font-family: 'Segoe UI Light'; text-align: left">{{ profile.bio }}</p1>
-                        {% else %}
+                    {% else %}
                         <p1>There's nothing here yet</p1>
-                        {% endif %}
-                    </div>
+                    {% endif %}
                 </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="container-fluid">
+                    <h2 style="font-family: 'Segoe UI'; text-align: left"> University</h2>
+                    {% if profile.university  %}
+                        <p1 style="font-family: 'Segoe UI Light'; text-align: left">{{ profile.university }}</p1>
+                    {% else %}
+                        <p1>There's nothing here yet</p1>
+                    {% endif %}
+
+                </div>
+            </div>
+                <br/>
+            <div class="row">
+                <div class="container-fluid">
+                    {% if not student_profile %}
+                    <h2 style="font-family: 'Segoe UI'; text-align: left"> Department</h2>
+
+                    {% if profile.department  %}
+                        <p1 style="font-family: 'Segoe UI Light'; text-align: left">{{ profile.department }}</p1>
+                    {% else %}
+                        <p1>There's nothing here yet.</p1>
+                    {% endif %}
+                {% endif %}
                 <br/>
                 <div class="row">
-                    <div class="container-fluid">
-                        <h2 style="font-family: 'Segoe UI'; text-align: left"> University</h2>
-                        {% if profile.university  %}
-                        <p1 style="font-family: 'Segoe UI Light'; text-align: left">{{ profile.university }}</p1>
-                        {% else %}
-                        <p1>There's nothing here yet</p1>
-                        {% endif %}
-                    </div>
-                </div>
-                <br/>
-                {% if not student_profile %}
-                    <div class="row">
-                        <div class="container-fluid">
-                            <h2 style="font-family: 'Segoe UI'; text-align: left"> Department</h2>
-                            {% if profile.department  %}
-                                <p1 style="font-family: 'Segoe UI Light'; text-align: left">{{ profile.department }}</p1>
-                            {% else %}
-                                <p1>There's nothing here yet.</p1>
-                            {% endif %}
-                            <div class="row">
-                                <div class="container-fluid">
-                                    <h2 style="font-family: 'Segoe UI'">Ratings</h2>
-                                    <div style="font-size: 13px">
+            <div class="container-fluid">
+            {% if student_profile %}
+                <h2 style="font-family: 'Segoe UI'; text-align: left"> Course</h2>
+                {% if profile.course %}
+                    <p1 style="font-family: 'Segoe UI Light'; text-align: left">{{ profile.course }}</p1>
+                {% else %}
+                    <p1>There's nothing here yet.</p1>
+                {% endif %}
+            {% endif %}
+
+            </div>
+
+
+        </div>
+                    {% if not student_profile %}
+                        <div class="row">
+                            <div class="container-fluid">
+                                <h2 style="font-family: 'Segoe UI'">Ratings</h2>
+                                <div style="font-size: 12px;margin-left: 20px">
                                     <div class="row" row-id="5-star">
                                         <div class="pull-left">
                                             <div class="pull-left" style="width:80px; line-height:1; height: 2em">
@@ -84,154 +111,173 @@
                                                          aria-valuenow="5" aria-valuemin="0" aria-valuemax="5"
                                                          style="width: {{ percentages.0 }}; height: 2em">
                                                         <span class="sr-only">{{ percentages.0 }} Complete (danger)</span>
+
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="pull-right gi-2x"
-                                                 style="margin-left:10px; height: 2em; font-size:2em">{{ five_star_rating_count }}</div>
+                                                     style="margin-left:10px; height: 2em; font-size:2em">{{ five_star_rating_count }}</div>
                                         </div>
                                     </div>
 
-                                    <div class="row" row-id="4-star">
-                                <div class="pull-left">
-                                    <div class="pull-left" style="width:80px; line-height:1; height: 2em">
-                                        <div class="gi-2x" style="height:2em; margin:5px 0;">4 <span
-                                                class="glyphicon glyphicon-star"></span></div>
-                                    </div>
-                                    <div class="pull-left" style="width:180px;">
-                                        <div class="progress" style="height:3em; margin:8px 0;">
-                                            <div class="progress-bar progress-bar-primary" role="progressbar"
-                                                 aria-valuenow="4" aria-valuemin="0" aria-valuemax="5"
-                                                 style="width: {{ percentages.1 }}; height: 2em">
-                                                <span class="sr-only">{{ percentages.1 }} Complete (danger)</span>
+                                        <div class="row" row-id="4-star">
+                                            <div class="pull-left">
+                                                <div class="pull-left" style="width:80px; line-height:1; height: 2em">
+                                                    <div class="gi-2x" style="height:2em; margin:5px 0;">4
+                                                        <span class="glyphicon glyphicon-star"></span></div>
+                                                </div>
+                                                <div class="pull-left" style="width:180px;">
+                                                    <div class="progress" style="height:3em; margin:8px 0;">
+                                                        <div class="progress-bar progress-bar-primary"
+                                                             role="progressbar"
+                                                             aria-valuenow="4" aria-valuemin="0" aria-valuemax="5"
+                                                             style="width: {{ percentages.1 }}; height: 2em">
+                                                            <span class="sr-only">{{ percentages.1 }} Complete (danger</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pull-right gi-2x"
+                                                     style="margin-left:10px; height: 2em; font-size: 2em ">{{ four_star_rating_count }}</div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="pull-right gi-2x"
-                                         style="margin-left:10px; height: 2em; font-size: 2em ">{{ four_star_rating_count }}</div>
-                                </div>
-                            </div>
 
-                                    <div class="row" row-id="3-star">
-                                <div class="pull-left">
-                                    <div class="pull-left" style="width:80px; line-height:1; height: 2em">
-                                        <div class="gi-2x" style="height:2em; margin:5px 0;">3 <span
-                                                class="glyphicon glyphicon-star"></span></div>
-                                    </div>
-                                    <div class="pull-left" style="width:180px;">
-                                        <div class="progress" style="height:3em; margin:8px 0;">
-                                            <div class="progress-bar progress-bar-info" role="progressbar"
-                                                 aria-valuenow="3" aria-valuemin="0" aria-valuemax="5"
-                                                 style="width: {{ percentages.2 }}; height: 2em">
-                                                <span class="sr-only">{{ percentages.2 }} Complete (danger)</span>
+                                        <div class="row" row-id="3-star">
+                                            <div class="pull-left">
+                                                <div class="pull-left" style="width:80px; line-height:1; height: 2em">
+                                                    <div class="gi-2x" style="height:2em; margin:5px 0;">3 <span
+                                                            class="glyphicon glyphicon-star"></span></div>
+                                                </div>
+                                                <div class="pull-left" style="width:180px;">
+                                                    <div class="progress" style="height:3em; margin:8px 0;">
+                                                        <div class="progress-bar progress-bar-info" role="progressbar"
+                                                             aria-valuenow="3" aria-valuemin="0" aria-valuemax="5"
+                                                             style="width: {{ percentages.2 }}; height: 2em">
+                                                            <span class="sr-only">{{ percentages.2 }} Complete (danger)</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pull-right gi-2x"
+                                                     style="margin-left:10px; height: 2em; font-size:2em">{{ three_star_rating_count }}</div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="pull-right gi-2x"
-                                         style="margin-left:10px; height: 2em; font-size:2em">{{ three_star_rating_count }}</div>
-                                </div>
-                            </div>
 
-                                <div class="row" row-id="2-star">
-                                <div class="pull-left">
-                                    <div class="pull-left" style="width:80px; line-height:1; height: 2em">
-                                        <div class="gi-2x" style="height:2em; margin:5px 0;">2 <span
-                                                class="glyphicon glyphicon-star"></span></div>
-                                    </div>
-                                    <div class="pull-left" style="width:180px;">
-                                        <div class="progress" style="height:3em; margin:8px 0;">
-                                            <div class="progress-bar progress-bar-warning" role="progressbar"
-                                                 aria-valuenow="2" aria-valuemin="0" aria-valuemax="5"
-                                                 style="width: {{ percentages.3 }}; height: 2em">
-                                                <span class="sr-only">{{ percentages.3 }} Complete (danger)</span>
+                                        <div class="row" row-id="2-star">
+                                            <div class="pull-left">
+                                                <div class="pull-left" style="width:80px; line-height:1; height: 2em">
+                                                    <div class="gi-2x" style="height:2em; margin:5px 0;">2 <span
+                                                            class="glyphicon glyphicon-star"></span></div>
+                                                </div>
+                                                <div class="pull-left" style="width:180px;">
+                                                    <div class="progress" style="height:3em; margin:8px 0;">
+                                                        <div class="progress-bar progress-bar-warning"
+                                                             role="progressbar"
+                                                             aria-valuenow="2" aria-valuemin="0" aria-valuemax="5"
+                                                             style="width: {{ percentages.3 }}; height: 2em">
+                                                            <span class="sr-only">{{ percentages.3 }} Complete (danger</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pull-right gi-2x"
+                                                     style="margin-left:10px; height: 2em; font-size:2em">{{ two_star_rating_count }}</div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="pull-right gi-2x"
-                                         style="margin-left:10px; height: 2em; font-size:2em">{{ two_star_rating_count }}</div>
-                                </div>
-                            </div>
 
-                                   <div class="row" row-id="1-star">
-                                <div class="pull-left" style="width:80px; line-height:1; height: 2em">
-                                    <div class="gi-2x" style="height:2em; margin:5px 0;">1 <span
-                                            class="glyphicon glyphicon-star"></span></div>
-                                </div>
-                                <div class="pull-left" style="width:180px;">
-                                    <div class="progress" style="height:3em; margin:8px 0;">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar"
-                                             aria-valuenow="1" aria-valuemin="0" aria-valuemax="5"
-                                             style="width: {{ percentages.4 }}; height: 2em">
-                                            <span class="sr-only">{{ percentages.4 }} Complete (danger)</span>
+                                        <div class="row" row-id="1-star">
+                                            <div class="pull-left" style="width:80px; line-height:1; height: 2em">
+                                                <div class="gi-2x" style="height:2em; margin:5px 0;">1 <span
+                                                        class="glyphicon glyphicon-star"></span></div>
+                                            </div>
+                                            <div class="pull-left" style="width:180px;">
+                                                <div class="progress" style="height:3em; margin:8px 0;">
+                                                    <div class="progress-bar progress-bar-danger" role="progressbar"
+                                                         aria-valuenow="1" aria-valuemin="0" aria-valuemax="5"
+                                                         style="width: {{ percentages.4 }}; height: 2em">
+                                                        <span class="sr-only">{{ percentages.4 }} Complete (danger)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="pull-right gi-2x"
+                                                 style="margin-left:10px; height: 2em; font-size:2em">{{ one_star_rating_count }}</div>
                                         </div>
+
                                     </div>
                                 </div>
-                                <div class="pull-right gi-2x"
-                                     style="margin-left:10px; height: 2em; font-size:2em">{{ one_star_rating_count }}</div>
-                            </div>
 
-                                </div>
                             </div>
-
+{% endif %}
 
 
                         </div>
 
                     </div>
-                    </div>
-                    </div>
-                    <br/>
+                </div>
+            </div>
+
+        </div>
 
 
-
-
-                    </div>
-                {% else %}
-                    <div class="row">
-                        <div class="container-fluid">
-                            <h2 style="font-family: 'Segoe UI'; text-align: left"> Course</h2>
-                            {% if profile.course %}
-                                <p1 style="font-family: 'Segoe UI Light'; text-align: left">{{ profile.course }}</p1>
-                            {% else %}
-                                <p1>There's nothing here yet.</p1>
-                            {% endif %}
-
-                        </div>
-                    </div>
-                {% endif %}
-        <br/>
     </div>
-    </div>
-    </div>
-    <br>
-    {% if user.username == profile_user %}
-        <a style="margin-left: 17px" class="btn btn-primary" href="{% url 'edit_profile' user.username %}">Edit Profile</a>
-    {% endif %}
-    {% if not student_profile %}
-        <h2 style="font-family: 'Segoe UI'">Reviews</h2>
-    {% else %}
-        <h2 style="font-family: 'Segoe UI'">Lecturers Reviewed</h2>
-    {% endif %}
-    {% if not reviews %}
-        <p1>No reviews yet.</p1>
-    {% else %}
+</div>
+
+
+{% if not student_profile %}
+    <h2 style="font-family: 'Segoe UI'">Reviews</h2>
+{% else %}
+    <h2 style="font-family: 'Segoe UI'">Lecturers Reviewed</h2>
+{% endif %}
+
+{% if not reviews %}
+    <p style="font-size: 15px"><strong>No reviews yet.</strong></p>
+{% else %}
+
+<div class="review container-fluid">
+
+
     {% for review in reviews %}
-        <div class="review">
 
-        {% if not student_profile %}
-            <div><strong>{{ review.student.user }}</strong>
-        {% else %}
-            <div><strong>{{ review.lecturer.name }}</strong>
-        {% endif %}
-    <input id="input-2" name="input-2" class="rating rating-loading" value="{{ review.rating }}"
-           data-show-clear="false"
-           readonly data-size="xs"></div>
-    <div>{{ review.title }}</div>
-    <div>{{ review.review_body }}</div>
-    <br>
-    </div>
+        <div class="media bg-light ">
+            <div class="media-left">
+                <img src="" class="media-object" style="width:60px">
+            </div>
+            <div class="media-body">
+
+                <h4 class="media-heading">
+                    {{ review.title }}
+
+                </h4>
+                <h4 class="media-heading">
+                    {% if not student_profile %}<!-- if user is not a student, get student name -->
+                        <strong>{{ review.student.user }}</strong>
+                    {% else %}
+                        <strong>{{ review.lecturer.name }}</strong>
+                    {% endif %}
+                    <small><i>Posted on {{ review.date }}</i></small>
+                </h4>
+                <br>
+                <p><span class="rounded">{{ review.module }}</span></p>
+                <p>{{ review.review_body }}</p><br>
+                <input id="input-2" name="input-2" class="rating rating-loading pull-right"
+                       value="{{ review.rating }}"
+                       data-show-clear="false"
+                       readonly data-size="xs">
+                <div class="float-right">
+                    <button type="button" class="btn btn-default btn-sm ">
+                        <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm ">
+                        <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
+                    </button>
+                </div>
+
+                <br>
+
+            </div>
+        </div>
+        <hr>
 
     {% endfor %}
 
+
+</div>
 {% endif %}
 {% endblock %}

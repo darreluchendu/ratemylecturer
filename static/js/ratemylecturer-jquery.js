@@ -98,9 +98,7 @@ $("label[for='id_picture_url']").hide();
 $("input[type='url']").hide()
 //
   $("input[id='id_edit_picture']").change(function() {
-
         $("#picture_form").submit()
-        alert('done post')
     });
       $("#lecturer_name").autocomplete({
           source: name_list,

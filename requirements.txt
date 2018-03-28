@@ -31,3 +31,4 @@ virtualenv-clone==0.2.6
 virtualenvwrapper==4.7.2
 virtualenvwrapper-win==1.2.1
 django-crispy-forms==1.7.2
+

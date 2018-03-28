@@ -1,16 +1,6 @@
-
 Alright so here's what needs to be done:
-   Font Size bigger,
-
-
-	Make all profile photos the same size,
 
 	Make reviews look better the colours are a bit jarring,
-
-
-	Add date, module, likes, and dislikes to review (I'll handle the liking functionality),
-
-	Make it so that user can change profile picture by clicking profile picture (this may or may not be possible)
 
 	If anyone can think of a better color scheme feel free to change the colors
 
