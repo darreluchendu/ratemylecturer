@@ -93,6 +93,8 @@ $("#id_edit_picture").hide()
 
 
 });
+
+
 $("label[for='id_edit_picture']").hide();
 $("label[for='id_picture_url']").hide();
 $("input[type='url']").hide()

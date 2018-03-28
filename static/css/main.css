@@ -47,15 +47,15 @@ body {
     border-top-right-radius: 0;
 }
 
-.review > div {
-    background-color: cadetblue;
-    padding: 10px;
-}
+/*.review > div {*/
+    /*background-color: cadetblue;*/
+    /*padding: 10px;*/
+/*}*/
 
-.review > div:nth-child(even) {
-    background-color: lightgray;
-    padding: 10px;
-}
+/*.review > div:nth-child(even) {*/
+    /*background-color: lightgray;*/
+
+/*}*/
 
 /* Style the search box inside the navigation bar */
 
@@ -213,4 +213,7 @@ body {
 .edit_pic{
     font-size: 15px;
     height: 30px;
+}
+.review_wrapper{
+    font-size: 15px;
 }

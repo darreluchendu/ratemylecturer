@@ -242,13 +242,18 @@ def profile(request, username):
         context_dict['five_star_rating_count'] = lecturer_reviews.filter(rating=5).count()
 
         context_dict['total_star_rating'] = lecturer_reviews.count()
-        context_dict['percentages'] = [percent(context_dict['five_star_rating_count'],context_dict['total_star_rating']),
-                                       percent(context_dict['four_star_rating_count'] , context_dict['total_star_rating']),
-                                       percent(context_dict['three_star_rating_count'] , context_dict['total_star_rating']),
-                                       percent(context_dict['two_star_rating_count'],context_dict['total_star_rating']),
-                                       percent(context_dict['one_star_rating_count'],context_dict['total_star_rating'])
-                                       ]
-        context_dict['total_star_rating'] = 0
+
+        if context_dict['total_star_rating']!=0:
+            context_dict['percentages'] = [
+                    percent(context_dict['five_star_rating_count'], context_dict['total_star_rating']),
+                    percent(context_dict['four_star_rating_count'], context_dict['total_star_rating']),
+                    percent(context_dict['three_star_rating_count'], context_dict['total_star_rating']),
+                    percent(context_dict['two_star_rating_count'], context_dict['total_star_rating']),
+                    percent(context_dict['one_star_rating_count'], context_dict['total_star_rating'])
+                    ]
+        else:
+            context_dict['percentages']=["0%","0%","0%","0%","0%"]
+
         context_dict["student_profile"] = False
     context_dict["profile_user"] = username
     context_dict['nbar'] = 'profile'
