@@ -18,13 +18,3 @@ class IndexViewTests(TestCase):
 
     def test_recent_reviews_displayed(self):
         response = self.client.get((reverse("index")))  # returns the home page
-
-    def test_display_lecturer_Of_the_week_image(self):
-        """
-        ensures that index page display image for lecturer of the
-        week.
-        """
-        response = self.client.get((reverse("index")))
-        self.assertContains(response, 'profile_image')
-
-

@@ -10,31 +10,32 @@ class BaseLiveServerTestCase(LiveServerTestCase):
     def setUp(self):
         super(BaseLiveServerTestCase, self).setUp()
         self.driver = webdriver.Chrome()
-        #
-        #
-        # # Get the list of all users before the tests.
-        # # Must evaluate the QuerySet or it will be lazily-evaluated later, which is wrong.
-        # self.users_before = list(User.objects.values_list('id', flat=True).order_by('id'))
-        # print(self.users_before)
 
     def TearDown(self):
         super(BaseLiveServerTestCase, self).tearDown()
         self.driver.quit()
 
-        # # Get the list of all users after the tests.
-        # users_after = list(User.objects.values_list('id', flat=True).order_by('id'))
-        #
-        # # Calculate the set difference.
-        # users_to_remove = sorted(list(set(users_after) - set(self.users_before)))
-        # print(users_to_remove)
-        #
-        # # Delete that difference from the database.
-        # User.objects.filter(id__in=users_to_remove).delete()
-
 
 class BaseRegistrationTestCase(TestCase):
 
     # Base class for the test cases; this sets up two users
+
+    @classmethod
+    def setUpTestData(cls):
+        super(BaseRegistrationTestCase, cls).setUp()
+        cls.user = User.objects.create_user(username='alice', password='secret', email='alice@example.ac.uk')
+        cls.student_user = StudentProfile.objects.create(user=cls.user, first_name='Alice', surname='Mark',
+                                                         university='University of Glasgow',
+                                                         course='Computer Science', bio='super student')
+        cls.user.save()
+        cls.student_user.save()
+
+        cls.user = User.objects.create_user(username='bob', password='swordfish', email='bob@example.ac.uk')
+
+        cls.lecturer_user = LecturerProfile.objects.create(user=cls.user, university='Oxford University',
+                                                           name='Einstein')
+        cls.user.save()
+        cls.lecturer_user.save()
 
     def setUp(self):
         super(BaseRegistrationTestCase, self).setUp()
