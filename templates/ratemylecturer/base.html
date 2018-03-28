@@ -2,7 +2,7 @@
 {% load staticfiles %}
 <html lang="en">
 <head>
-<!--links to css file, bootstrap, js and jquery -->
+<!-- The links to css file, bootstrap, js and jquery -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
@@ -23,7 +23,7 @@
         {% endblock %}
     </head>
 <body>
-<!-- navbar for the other pages to inherit from -->
+<!-- the navbar for all other pages to inherit -->
 <nav class="navbar navbar-expand-xl navbar-light fixed-top " style="background-color:darkgray    ">
     <a class="navbar-brand " href="{% url 'index' %}">
         <img src="{% static 'images/logopic.png' %}" alt=""></a>
@@ -69,7 +69,7 @@
     {% block sidebar_block %}
     {% endblock %}
 </div>
-<!-- The scripts for the bootstrap to work -->
+<!-- links to make the bootstrap work -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"

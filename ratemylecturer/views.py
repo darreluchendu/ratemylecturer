@@ -232,6 +232,7 @@ def profile(request, username):
             return 'No rating here'
 
     profile_user = User.objects.get(username=username)
+<<<<<<< Updated upstream
 
     owner=UserMethods.is_owner(request.user,username)
     context_dict = {'owner':owner}
@@ -242,6 +243,13 @@ def profile(request, username):
         else:
             pic_form = LecPictureForm(instance=LecturerProfile.objects.get(user=request.user))
         context_dict['pic_form']=pic_form
+=======
+    context_dict = {}
+
+    def percent(rating,review):
+        x = (rating/review)*100
+        return str(int(x))+"%"
+>>>>>>> Stashed changes
 
     if UserMethods.is_student(profile_user):
         student_profile = StudentProfile.objects.get(user=profile_user)
@@ -255,6 +263,7 @@ def profile(request, username):
         lecturer_reviews = Review.objects.filter(lecturer=lecturer_profile).order_by('-date')
         context_dict['profile'] = lecturer_profile
         context_dict['reviews'] = lecturer_reviews
+<<<<<<< Updated upstream
         context_dict['one_star_rating_count'] = lecturer_reviews.filter(rating=1).count()
         context_dict['two_star_rating_count'] = lecturer_reviews.filter(rating=2).count()
         context_dict['three_star_rating_count'] = lecturer_reviews.filter(rating=3).count()
@@ -273,6 +282,23 @@ def profile(request, username):
                     ]
         else:
             context_dict['percentages']=["0%","0%","0%","0%","0%"]
+=======
+        context_dict['five']=Review.objects.filter(lecturer=lecturer_profile,rating=5)
+        context_dict['four'] = Review.objects.filter(lecturer=lecturer_profile, rating=4)
+        context_dict['three'] = Review.objects.filter(lecturer=lecturer_profile, rating=3)
+        context_dict['two'] = Review.objects.filter(lecturer=lecturer_profile, rating=2)
+        context_dict['one'] = Review.objects.filter(lecturer=lecturer_profile, rating=1)
+        five=context_dict['five'].count()
+        four=context_dict['four'].count()
+        three=context_dict['three'].count()
+        two= context_dict['two'].count()
+        one= context_dict['one'].count()
+        total=context_dict['reviews'].count()
+        context_dict['percentages']=[percent(five,total),percent(four,total),percent(three,total),percent(two,total),percent(one,total)]
+        print(context_dict['percentages'][0])
+        # Yusuf - average rating
+        # rating_sum =
+>>>>>>> Stashed changes
 
         context_dict["student_profile"] = False
     context_dict["profile_user"] = username
