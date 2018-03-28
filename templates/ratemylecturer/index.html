@@ -4,9 +4,9 @@
 {% block title_block %}
     Home
 {% endblock %}
-
+<!--Homepage-->
 {% block body_block %}
-
+<!-- buttons for quick search-->
     <div id="flex-container">
         <div class="result">Find <span id="var">what</span> you're looking for</div>
         <div class="flex-item b1"><a href="/ratemylecturer/search?q=">Find A<span>SCHOOL</span></a></div>
@@ -18,7 +18,7 @@
             <div class="col-sm-9">
                 <div class="container" style="justify-content: center; border-spacing: 12px">
                     <strong><h1 class="text-left" style="color:green;font-family: 'Segoe UI'">Welcome to Rate My Lecturer</h1></strong>
-                    {% if user.is_authenticated %}
+                    {% if user.is_authenticated %} <!-- greeting message depends on whether if a user is registered -->
                         <p1 style="font-family: 'Segoe UI Light'"> Hey there, {{ user.username }}!</p1>
                     {% else %}
                         <p1 style="font-family: 'Segoe UI Light'">Hey there Stanger!.
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="col-sm-3">
-                <div class="container-fluid" style="justify-content: center">
+                <div class="container-fluid" style="justify-content: center"> <!-- most recent list of reviews -->
                     <h1 style="font-family: 'Segoe UI'">Most Recent </h1>
                     <br/>
                     {% if reviews %}
@@ -61,7 +61,7 @@
 
         </div>
         <div class="col-md-6">
-            <h2 class="sub-header">Top Lecturers</h2>
+            <h2 class="sub-header">Top Lecturers</h2> <!-- top lecturers sorted by average rating -->
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -73,7 +73,7 @@
                     {% if top_lecturer %}
                         {% for t in top_lecturer %}
                             <tr>
-                                <td class="col-md-12">
+                                <td class="col-md-12"> <!-- displays lecturers, name, uni, and rating link to profile and department -->
                                     <a style="font-family: 'Segoe UI Light'"
                                        href="{% url 'profile' t.user %}">{{ t.name }}</a> {{ t.department }},
                                     {{ t.university }} <br>
@@ -93,7 +93,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h2 class="sub-header">Top Universities ranked by Lecturers</h2>
+            <h2 class="sub-header">Top Universities ranked by Lecturers</h2> <!-- Universities ranked by average ratings of lecturers in that uni -->
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -107,7 +107,7 @@
                         {% for u in top_uni %}
                             <tr>
                                 <td class="col-md-12"><a style="font-family: 'Segoe UI Light'"
-                                                         href="{% url 'universities' u.0|slug %}">{{ u.0 }}</a> <br>
+                                                         href="{% url 'universities' u.0|slug %}">{{ u.0 }}</a> <br> <!-- displays link to the uni and the rating-->
                                     <input id="input-2" name="input-2" class="rating rating-loading"
                                            value="{{ u.1|floatformat:-2 }}"
                                            readonly data-show-clear="false" data-size="xs">
