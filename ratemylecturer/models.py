@@ -4,6 +4,7 @@
 from django.core.files.base import ContentFile
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django_resized import ResizedImageField
 
@@ -79,6 +80,7 @@ class LecturerProfile(models.Model):
     name = models.CharField(max_length=30)
     rating_avr = models.FloatField(default=0)
     university = models.CharField(max_length=30)
+    uni_slug=models.CharField(max_length=30)
     department = models.CharField(max_length=30)
     bio = models.CharField(max_length=200, blank=True)
     picture = ResizedImageField(size=[600, 500],upload_to='profile_images', blank=True)
@@ -107,6 +109,7 @@ class LecturerProfile(models.Model):
 
 
     def save(self, *args, **kwargs):
+        self.uni_slug = slugify(self.university)
         if not self.picture:
             self.save_image_from_url(self.picture_url)
         for field in ['department', 'university']:

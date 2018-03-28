@@ -1,22 +1,23 @@
 {% extends 'ratemylecturer/base.html' %}
 {% load staticfiles %}
-
+{% load crispy_forms_tags %}
 {% block title_block %}
     Add a Lecturer
 {% endblock %}
 
 {% block body_block %}
-    <h1>Add a Lecturer</h1>
+
     {% if created %}
         <strong>Thank you for Adding a Lecturer</strong>
         <a href="{% url 'index' %}">Return to homepage</a>
     {% else %}
 
-        <form id="user_form" method="post" action="{% url 'create_lecturer' user_id %}" enctype="multipart/form-data">
+        <form style="margin-left:100px; width: 600px" id="create_lec user_form" method="post" action="{% url 'create_lecturer' user_id %}" enctype="multipart/form-data">
+        <h1>Add a Lecturer</h1>
             {% csrf_token %}
             <!-- display form -->
-            {{ lecturer_profile_form.as_p }}
-            <input type="submit", name="submit" value="Add Lecturer">
+            {{ lecturer_profile_form|crispy }}
+            <input class="btn-lg btn btn-primary" type="submit", name="submit" value="Add Lecturer">
         </form>
     {% endif %}
 
@@ -24,6 +25,6 @@
 {% block script_block %}
     <script language="JavaScript" type="text/javascript">
         $("label[for=id_bio],#id_bio").hide();
-        $()
+        var uni_list={{ uni_list|safe}}
     </script>
 {% endblock %}

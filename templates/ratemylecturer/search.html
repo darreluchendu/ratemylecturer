@@ -7,19 +7,72 @@
 
 {% block body_block %}
     <div class="container-fluid">
-        <h2 class="text-left" style="font-family: 'Segoe UI'">
-            Results...
-        </h2>
-        <br/>
-        {% for lecturer in lecturers %}
-            <div class="container" style="border-spacing:12px">
-            <h3 style="font-family: 'Segoe UI Light'">{{lecturer.name}}</h3>
-            <p1 style="font-family: 'Segoe UI Light'">{{lecturer.university}}</p1>
-            <p1 style="font-family: 'Segoe UI Light'">{{lecturer.department}}</p1>
-            <p1 style="font-family: 'Segoe UI Light'">{{lecturer.rating_avr}}</p1>
+       <div style="font-size: 22px" class="widget">
+                <fieldset>
+                    <legend id="search_legend">Search for Lecturers:</legend>
+                    <label for="lec_search">Lecturers</label>
+                    <input class="search_radio" id="lec_search" type="radio" name="search" value="lecturer">
+                    <label for="uni_radio">Universities</label>
+                    <input class="search_radio" id="uni_radio" type="radio" name="search" value="uni">
+                </fieldset>
             </div>
-        {% endfor %}
         <br/>
+        <div class="col-md-6">
+            <h3 class="sub-header">Search for "{{ query }}":</h3>
+
+        <hr>
+
+            <div id="lec_data" class="table-responsive">
+                <table style="width: 600px" class="table table-striped">
+
+                    <tbody>
+                    {% if lec_result %}
+                        {% for lec in lec_result %}
+                            <tr>
+                                <td class="col-md-12">
+                                    <a style="font-family: 'Segoe UI Light'"
+                                       href="{% url 'profile' lec.user %}">{{ lec.name }}</a> {{ lec.department }},
+                                    {{ lec.university }} <br>
+                                    <input id="input-2" name="input-2" class="rating rating-loading"
+                                           value="{{ lec.rating_avr }}"
+                                           readonly data-show-clear="false" data-size="xs">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                     {% else %}
+                      <h3 style="color:red;font-family: 'Segoe UI Light'"><strong>No matching lecturer was found, why dont you add them!</strong></h3>
+                        <a class="btn btn-lg btn-block btn-primary" href="{% url 'create_lecturer' user.id %}">Add a Lecturer</a>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div style="margin-left: 20px" id="uni_data" class="table-responsive">
+                <table style="width: 600px" class="table table-striped">
+
+                    <tbody>
+                    {% if uni_result %}
+                        {% for uni in uni_result %}
+                            <tr>
+                                <td class="col-md-12">
+                                    <a style="font-family: 'Segoe UI Light'"
+                                       href="{% url 'universities' uni.slug %}">{{ uni.name}}</a>  <br>
+                                    <input id="input-2" name="input-2" class="rating rating-loading"
+                                           value="{{ uni.rating|floatformat:-2 }}"
+                                           readonly data-show-clear="false" data-size="xs">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                      <h3 style="color:red;font-family: 'Segoe UI Light'"><strong>No matching University was found. Are you sure it exists?</strong></h3>
+                    <a style="width: 600px" class="btn btn-lg btn-block btn-primary" href="{% url 'create_lecturer' user.id %}">Add a Lecturer from your University</a>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
     </div>
 {%  endblock %}

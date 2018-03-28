@@ -4,6 +4,8 @@ from ratemylecturer import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^universities/(?P<uni_slug>[\w\-]+)/$', views.uni_detail, name='universities'),
+    url(r'^search$', views.search, name='search'),
     url(r'^about/$', views.about, name='about'),
     url(r'^add_lecturer/(?P<user_id>[\w\-]+)/$', views.create_lecturer, name='create_lecturer'),
     url(r'^profile/(?P<username>[\w\-]+)/$', views.profile, name='profile'),
@@ -14,4 +16,6 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^profile/(?P<username>[\w\-]+)/edit_profile/$', views.edit_profile, name='edit_profile'),
     url(r'^profile/(?P<username>[\w\-]+)/edit_picture/$', views.editPicture, name='editPicture'),
+
+
 ]

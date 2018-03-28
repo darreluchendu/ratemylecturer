@@ -1,6 +1,6 @@
 {% extends 'ratemylecturer/base.html' %}
 {% load staticfiles %}
-
+{% load lecturertags %}
 {% block title_block %}
     Home
 {% endblock %}
@@ -94,7 +94,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h2 class="sub-header">Top Universities</h2>
+            <h2 class="sub-header">Top Universities ranked by Lecturers</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -108,7 +108,7 @@
                         {% for u in top_uni %}
                             <tr>
                                 <td class="col-md-12"><a style="font-family: 'Segoe UI Light'"
-                                                         href="">{{ u.0 }}</a> <br>
+                                                         href="{% url 'universities' u.0|slug %}">{{ u.0 }}</a> <br>
                                     <input id="input-2" name="input-2" class="rating rating-loading"
                                            value="{{ u.1|floatformat:-2 }}"
                                            readonly data-show-clear="false" data-size="xs">

@@ -14,7 +14,7 @@
                 {% csrf_token %}
                 <div class="form-group">
                 <h2><label for="review_rating" class="control-label">Rate {{ lecturer.name }}</label></h2>
-                <input id="review_rating" name="review_rating" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="3">
+                <input id="review_rating" name="review_rating" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="0">
                     {{ review_form|crispy }}
                     <button type="submit" class="btn btn-primary" style="font-size: 18px;font-family: 'Segoe UI Light'">Submit</button>
                 </div>

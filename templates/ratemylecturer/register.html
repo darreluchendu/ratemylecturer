@@ -52,7 +52,9 @@
 {% endblock %}
 {% block script_block %}
     <script type="text/javascript">
+     var uni_list={{ uni_list|safe }}
         var name_list ={{ name_list|safe }}
+
 
     </script>
 {% endblock %}

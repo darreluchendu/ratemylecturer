@@ -1,10 +1,10 @@
 $(document).ready(function() {
-        $(".user_radio" ).checkboxradio({
+        $(".user_radio ,.search_radio" ).checkboxradio({
             icon:false
         })
 
         $('#lec_id').hide();
-
+        $('#student_radio').click()
         $('.user_radio').click(function () {
             var user = this.value;
             if (user === "lecturer") {
@@ -18,12 +18,30 @@ $(document).ready(function() {
                 $("#lec_id").hide();
                 $("#register_header").html("Register as a Student");
             }
+
+
+
         });
-  $.getJSON('/static/js/uni_ranking.json', function(data) {
+          $("#uni_data").hide();
+           $('#lec_search').click()
+        $('.search_radio').click(function () {
+            var user = this.value;
+            if (user === "lecturer") {
+                $("#uni_data").hide();
+                $("#lec_data").show();
+                $('#search_legend').html("Search for Lecturers")
+
+            }
+            else {
+                $("#uni_data").show();
+                $("#lec_data").hide();
+                $('#search_legend').html("Search for Universities")
+            }
+        });
+
+
       var data_list = []
-      data.forEach(function (dict) {
-          data_list.push({"label": dict["name"], "category": "University"})
-      });
+
       lecturers.forEach(function (dict) {
         data_list.push(dict)
     });
@@ -55,9 +73,15 @@ $(document).ready(function() {
           delay: 0,
           minLength: 2,
           source: data_list,
-          select: function (event, ui) {
+          select: function (event, ui,item) {
               event.preventDefault();
-             window.location.href = '/ratemylecturer/profile/'+ui.item.username
+              if (ui.item.category=='University'){
+                   window.location.href = '/ratemylecturer/universities/' + ui.item.slug
+
+              }else{
+                 window.location.href = '/ratemylecturer/profile/' + ui.item.username
+              }
+
           }
       });
     $(".b1").hover(function() {
@@ -94,6 +118,11 @@ $("#id_edit_picture").hide()
 
 });
 
+$(".search-button").click(function(event) {
+    $(".search_form").submit();
+
+
+});
 
 $("label[for='id_edit_picture']").hide();
 $("label[for='id_picture_url']").hide();
@@ -119,9 +148,17 @@ $("input[type='url']").hide()
               })
           }
       });
+      data_list.forEach(function(dict,index, object){
+
+      })
+      $("#lecturer_uni, #lecturer_uni").autocomplete({
+          minLength:1,
+          source: uni_list,
+
+      });
 
 
   })
 
-})
+
 

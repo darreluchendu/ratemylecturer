@@ -1,6 +1,7 @@
 import json
 import operator
-
+from django.template.defaultfilters import slugify
+from simple_search import search_filter
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -19,13 +20,23 @@ from ratemylecturer.forms import LecturerProfileForm, StudentProfileForm, Review
 
 
 from ratemylecturer.models import Review, StudentProfile, LecturerProfile, UserMethods
+uni_data=[]
+universities = set()
+for lecturer in LecturerProfile.objects.all():
+    universities.add(lecturer.university)
 
-
+for university in universities:
+    lecturer_s = LecturerProfile.objects.filter(university=university)
+    rating_avg_sum = 0.0
+    for lec in lecturer_s:
+        rating_avg_sum += lec.rating_avr
+    num_lecturer = lecturer_s.count()
+    uni_data.append({'name': university, 'rating': rating_avg_sum / num_lecturer, 'slug': slugify(university)})
 def index(request):
+    global uni_data
     new_reviews=[]
     new_names=[]
     reviews_list = reversed(Review.objects.all())
-
 
     for i in reviews_list:
         if i.lecturer not in new_names:
@@ -33,7 +44,7 @@ def index(request):
             new_names.append(i.lecturer)
             if len(new_reviews)==3:
                 break
-    print(new_names)
+
     # calculating uni average rating
     universities = set()
     lecturers = LecturerProfile.objects.all()
@@ -48,6 +59,8 @@ def index(request):
             rating_avg_sum += lec.rating_avr
         num_lecturer = lecturer_s.count()
         uni_avg_rating[university] = rating_avg_sum / num_lecturer
+        uni_data.append({'name': university, 'rating': rating_avg_sum / num_lecturer, 'slug': slugify(university)})
+        request.session['uni_data'] = uni_data
     top_uni = sorted(uni_avg_rating.items(), key=operator.itemgetter(1))
     top_uni.reverse()
 
@@ -152,6 +165,8 @@ def register(request):
     name_list_raw = []
     request.session["is_ajax"] = False
     name_list = []
+    uni_list=[]
+    result_uni=[]
     for user in User.objects.filter(email__startswith="proxy_user"):
 
         name_list_raw = LecturerProfile.objects.filter(user=user).values_list("name", 'university', "user_id",
@@ -160,10 +175,17 @@ def register(request):
             data = {"name": name, "uni": uni, "value": name + " - " + uni, "user": user, "depart": depart}
             name_list.append(data)
     js_data = json.dumps(name_list)
+    uni_list_raw = LecturerProfile.objects.all().values_list('university')
+    for uni in uni_list_raw:
+        if uni not in uni_list:
+            uni_list.append(uni)
+    for uni in uni_list:
+        if uni not in result_uni:
+            result_uni.append(uni[0])
 
     return render(request, 'ratemylecturer/register.html',
                   {"user_form": user_form, 'registered': registered, 'lecturer_profile_form': lecturer_profile_form,
-                   'student_profile_form': student_profile_form, "name_list": js_data, 'nbar': "register"})
+                   'student_profile_form': student_profile_form, "name_list": js_data, 'nbar': "register",'uni_list':result_uni})
 
 
 @user_passes_test(UserMethods.is_student)
@@ -178,8 +200,8 @@ def create_lecturer(request, user_id):
             lecturer_profile = lecturer_profile_form.save(commit=False)
             rand_password = User.objects.make_random_password()
             num_users = str(User.objects.all().count() + 1)
-            name = lecturer_profile.first_name.lower()
-            name.replace(" ", "_")
+            name = lecturer_profile.name.lower()
+            name=name.replace(" ", "_")
             if User.objects.filter(username=name).exists():
                 username = name + num_users
             else:
@@ -198,8 +220,17 @@ def create_lecturer(request, user_id):
             print(lecturer_profile_form.errors)
     else:  # not http POST
         lecturer_profile_form = LecturerProfileForm()
+    uni_list = []
+    result_uni = []
+    uni_list_raw = LecturerProfile.objects.all().values_list('university')
+    for uni in uni_list_raw:
+        if uni not in uni_list:
+            uni_list.append(uni)
+    for uni in uni_list:
+        if uni not in result_uni:
+            result_uni.append(uni[0])
     return render(request, 'ratemylecturer/create_lecturer.html',
-                  {'created': created, 'lecturer_profile_form': lecturer_profile_form, "user_id": user_id, })
+                  {'created': created, 'lecturer_profile_form': lecturer_profile_form, "user_id": user_id,'uni_list':result_uni})
 
 
 # Profile
@@ -397,4 +428,43 @@ def updateRating(sender, instance,**kwargs):
     lecturer.save()
 
 
+def search(request):
+
+
+    query = request.GET.get('q', '')
+
+    lec = search_filter(['name'], query)
+    uni = search_filter(['university'], query)
+
+    lec_filtered = LecturerProfile.objects.filter(lec)
+    uni_filtered=LecturerProfile.objects.filter(uni)
+
+    universities = set()
+    for lecturer in uni_filtered:
+        universities.add(lecturer.university)
+    uni_avg_rating = []
+    for university in universities:
+        lecturer_s = LecturerProfile.objects.filter(university=university)
+        rating_avg_sum = 0.0
+        for lec in lecturer_s:
+            rating_avg_sum += lec.rating_avr
+        num_lecturer = lecturer_s.count()
+        uni_avg_rating.append({'name':university,'rating':rating_avg_sum / num_lecturer,'slug':slugify(university)})
+        request.session['uni_data']=uni_avg_rating
+    # uni_filtered = sorted(uni_avg_rating.items(), key=operator.itemgetter(1))
+    # uni_filtered.reverse()
+
+    return render(request,'ratemylecturer/search.html',{'query':query,'lec_result':lec_filtered,"uni_result":uni_avg_rating})
+
+def uni_detail(request,uni_slug):
+    lec_list=LecturerProfile.objects.filter(uni_slug=uni_slug)
+    name=LecturerProfile.objects.filter(uni_slug=uni_slug)[0].university
+    lecturer_s = LecturerProfile.objects.filter(university=name)
+    rating_avg_sum = 0.0
+    for lec in lecturer_s:
+        rating_avg_sum += lec.rating_avr
+    num_lecturer =lecturer_s.count()
+    rating=rating_avg_sum / num_lecturer
+
+    return render(request,'ratemylecturer/university.html',{'lec_list':lec_list,'name':name,'rating':rating})
 
