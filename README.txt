@@ -1,5 +1,10 @@
-Use of external sources:
+Sources used:
 
+Django
+	The main Django Framework
+	Social Authentication: To implement Google+ and Facebook
+	Django Crispy: form layout
+	Django Resized
 JavaScript
 jQuery
 Ajax: To make calls to external server
